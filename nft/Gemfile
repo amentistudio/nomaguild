@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+gem 'rake'
+gem 'name-generator'
+gem 'pickup'
+gem 'chunky_png'
+gem 'ruby-progressbar'
+gem 'awesome_print'
+gem 'dotenv'
+gem 'aws-sdk-s3'
+gem 'byebug'
+gem 'rspec'
+gem 'guard-rspec', require: false
+gem 'insensitive_hash'
+gem 'rspec-time_stop'
+gem 'arweave', '~> 1.0.0'
+gem 'activesupport-inflector'

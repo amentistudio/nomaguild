@@ -1,0 +1,40 @@
+service: noma-whitelist-triggers
+
+custom:
+  UserPoolName: ${cf:noma-whitelist-cognito-${self:provider.stage}.UserPoolName}
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-central-1
+  lambdaHashingVersion: "20201221"
+
+functions:
+  createAuthChallenge:
+    handler: createAuthChallenge.handler
+    events:
+      - cognitoUserPool:
+          pool: ${self:custom.UserPoolName}
+          trigger: CreateAuthChallenge
+          existing: true
+  defineAuthChallenge:
+    handler: defineAuthChallenge.handler
+    events:
+      - cognitoUserPool:
+          pool: ${self:custom.UserPoolName}
+          trigger: DefineAuthChallenge
+          existing: true
+  preSignUp:
+    handler: preSignUp.handler
+    events:
+      - cognitoUserPool:
+          pool: ${self:custom.UserPoolName}
+          trigger: PreSignUp
+          existing: true
+  verifyAuthChallenge:
+    handler: verifyAuthChallenge.handler
+    events:
+      - cognitoUserPool:
+          pool: ${self:custom.UserPoolName}
+          trigger: VerifyAuthChallengeResponse
+          existing: true

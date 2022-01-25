@@ -1,0 +1,132 @@
+$LOAD_PATH.unshift(File.dirname(__FILE__) + "/lib")
+
+require 'rspec/core/rake_task'
+require 'byebug'
+require 'dotenv/tasks'
+require 'json'
+require 'nft/collection/generate_seed'
+require 'nft/collection/eliminate_collection'
+require 'nft/collection/cut_collection'
+require 'nft/collection/generate_collection'
+require 'nft/collection/generate_art'
+require 'nft/collection/generate_metadata'
+require 'nft/collection/check_traits_usage'
+require 'nft/traits/generate_thumbs'
+require_relative 'configurator'
+
+task :default => :spec
+
+namespace :collection  do
+  desc "Generate seed"
+  task generate_seed: :dotenv do
+    result = Nft::Collection::GenerateSeed.new(
+      ENV['SEED_SIZE'],
+      ENV['COLLECTION_NAME'],
+      Configurator.traits,
+      Configurator.dnp,
+      Configurator.edp
+    ).run
+    Configurator.seed = result[:seed]
+    Configurator.trait_count_table = result[:trait_count_table]
+  end
+
+  desc "Eliminate"
+  task eliminate: :dotenv do
+    Configurator.collection = Nft::Collection::EliminateCollection.new(
+      Configurator.collection,
+      Configurator.elimination
+    ).run
+  end
+
+  desc "Cut collection"
+  task cut: :dotenv do
+    Configurator.collection = Nft::Collection::CutCollection.new(
+      Configurator.collection,
+      ENV['FINAL_COLLECTION_SIZE']
+    ).run
+  end
+
+  desc "Generate collection"
+  task generate_collection: :dotenv do
+    result = Nft::Collection::GenerateCollection.new(
+      ENV['COLLECTION_SIZE'],
+      Configurator.seed,
+      Configurator.trait_count_table,
+      Configurator.distribution
+    ).run
+    Configurator.collection = result[:collection]
+    Configurator.final_distribution = result[:final_distribution]
+  end
+
+  desc "Generate art"
+  task generate_art: :dotenv do
+    Nft::Collection::GenerateArt.new(
+      Configurator.images_dir,
+      Configurator.collection,
+      Configurator.traits,
+      ENV['TRAITS_PATH'],
+      ENV['USE_THUMBS'] == "true"
+    ).run
+  end
+
+  desc "Generate metadata"
+  task generate_metadata: :dotenv do
+    Nft::Collection::GenerateMetadata.new(
+      ENV['CHAIN'],
+      ENV['COLLECTION_NAME'],
+      ENV['COLLECTION_DESCRIPTION'],
+      ENV['COLLECTION_FAMILY'],
+      ENV['SELLER_FEE'],
+      ENV['SELLER_WALLET'],
+      Configurator.collection,
+      Configurator.metadata_dir,
+      ENV['IPFS_HASH'],
+      ENV['USE_THUMBS'] == "true"
+    ).run
+  end
+
+  desc "Check real traits"
+  task check_real_traits: :dotenv do
+    Nft::Collection::CheckTraitsUsage.new(
+      ENV['COLLECTION_NAME'],
+      Configurator.collection,
+      Configurator.traits,
+      ENV['COLLECTION_PATH'],
+    ).run
+  end
+
+  desc "Upload collection to Arweave"
+  task upload_to_arweave: :dotenv do
+    Nft::Storage::UploadToArweave.new(
+      Configurator.collection,
+      ENV['COLLECTION_PATH'],
+      ENV['USE_THUMBS'] == "true"
+    )
+  end
+
+  desc "Upload collection to AWS"
+  task upload_to_arweave: :dotenv do
+    Nft::Storage::UploadToAws.new(
+      Configurator.collection,
+      ENV['COLLECTION_PATH'],
+      ENV['USE_THUMBS'] == "true"
+    )
+  end
+
+  desc "Generate seed + collection"
+  task generate: :dotenv do
+    Rake::Task['collection:generate_seed'].execute
+    Rake::Task['collection:generate_collection'].execute
+  end
+end
+
+namespace :traits do
+  desc "Generate thumbs for traits"
+  task generate_thumbs: :dotenv do
+    Nft::Traits::GenerateThumbs.new(
+      ENV['THUMB_RATIO'],
+      ENV['TRAITS_PATH'],
+      Configurator.traits
+    ).run
+  end
+end

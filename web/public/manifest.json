@@ -1,0 +1,19 @@
+{
+  "short_name": "No Mummy Allowed Club",
+  "name": "No Mummy Allowed Club",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0e0e0e"
+}

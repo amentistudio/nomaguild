@@ -1,0 +1,129 @@
+{
+  "head_pharaon": [
+    "eyes_glasses_3D", "mouth_alien", "mouth_mech_chin", "mouth_rose", "mouth_facemask",
+    "mouth_chewing_gum", "mouth_pipe", "mouth_ripped_tongue", "accessories_tattoo_cards",
+    "accessories_tattoo_love", "accessories_tattoo_roses"
+  ],
+  "head_brain_electro": ["eyes_glasses_3D"],
+  "head_space_viking": ["eyes_glasses_3D", "eyes_pirate", "eyes_pirate_gold", "eyes_glasses_killing_machine]"],
+  "head_archaeologist": ["eyes_glasses_3D", "eyes_pirate", "eyes_pirate_gold"],
+  "head_scafander": [
+    "mouth_facemask", "mouth_mech_chin", "mouth_rose", "mouth_alien", "mouth_pipe", "mouth_chewing_gum",
+    "accessories_earing", "accessories_earplunt", "accessories_battle_worm", "accessories_ear_stick",
+    "accessories_earpod", "accessories_tattoo_cards", "accessories_tattoo_love", "accessories_tattoo_roses",
+    "skin_biohazard_dose"
+  ],
+  "skin_diamond": [
+    "eyes_biohazard_eyes_to_eyes", "eyes_biohazard_mad", "eyes_biohazard_suspicious", "eyes_biohazard_wondering"
+  ],
+  "head_snapback_black": ["accessories_ear_stick"],
+  "head_snapback_blue": ["accessories_ear_stick"],
+  "head_aquarium": ["eyes_pirate", "eyes_pirate_gold", "accessories_ear_stick"],
+  "head_bandage_1": [
+    "eyes_pirate", "eyes_pirate_gold", "eyes_glasses_special", "eyes_out", "eyes_glasses_3D",
+    "eyes_glasses_round", "eyes_glasses_broken", "eyes_glasses_killing_machine", "mouth_alien",
+    "mouth_facemask", "mouth_chewing_gum", "mouth_rose", "mouth_mech_chin", "eyes_glasses_gold",
+    "eyes_glasses_killing_machine", "mouth_monster", "eyes_glasses_broken", "eyes_glasses_round",
+    "accessories_earing", "accessories_tag", "accessories_earpod", "mouth_mech_chin", "mouth_facemask",
+    "mouth_biohazard_mask", "clothes_spoiled", "skin_biohazard_dose", "accessories_tattoo_cards",
+    "accessories_tattoo_love", "accessories_tattoo_roses"
+  ],
+  "head_bandage_2": [
+    "eyes_pirate", "eyes_pirate_gold", "eyes_glasses_special", "eyes_out", "eyes_glasses_3D",
+    "eyes_glasses_round", "eyes_glasses_broken", "eyes_glasses_killing_machine", "mouth_alien",
+    "mouth_facemask", "mouth_chewing_gum", "mouth_rose", "mouth_mech_chin", "accessories_tag",
+    "mouth_mech_chin", "mouth_mech_chin", "accessories_tattoo_cards", "accessories_tattoo_love",
+    "accessories_tattoo_roses", "accessories_earpod", "skin_biohazard_dose", "accessories_earing",
+    "mouth_facemask", "mouth_biohazard_mask"
+  ],
+  "head_bandage_3": [
+    "eyes_pirate", "eyes_pirate_gold", "eyes_glasses_special", "eyes_out", "eyes_glasses_3D",
+    "eyes_glasses_round", "eyes_glasses_broken", "eyes_glasses_killing_machine", "mouth_alien",
+    "mouth_facemask", "mouth_chewing_gum", "mouth_rose", "mouth_mech_chin", "accessories_tag",
+    "mouth_mech_chin", "clothes_spoiled", "accessories_tattoo_cards", "accessories_tattoo_love",
+    "accessories_tattoo_roses", "accessories_earpod", "skin_biohazard_dose", "accessories_earing"
+  ],
+  "head_horns": ["eyes_pirate", "eyes_pirate_gold", "mouth_facemask", "mouth_alien", "mouth_mech_chin"],
+  "head_fire": ["eyes_pirate", "eyes_pirate_gold"],
+  "head_headset_gold": [
+      "eyes_glasses_3D", "eyes_glasses_round", "eyes_glasses_broken", "eyes_pirate", "eyes_pirate_gold",
+      "eyes_glasses_killing_machine", "mouth_chewing_gum", "mouth_facemask", "mouth_alien", "mouth_mech_chin",
+      "accessories_earplunt"
+  ],
+  "head_headset_blue": [
+      "eyes_glasses_3D", "eyes_glasses_round", "eyes_glasses_broken", "eyes_pirate", "eyes_pirate_gold",
+      "eyes_glasses_killing_machine", "mouth_chewing_gum", "mouth_facemask", "mouth_alien",
+      "mouth_mech_chin", "mouth_rose", "eyes_glasses_gold", "eyes_glasses_killing_machine",
+      "accessories_battle_worm", "accessories_earpod", "accessories_earplunt"
+  ],
+  "head_headset_yellow": [
+    "mouth_rose", "eyes_glasses_gold", "eyes_glasses_killing_machine", "accessories_battle_worm",
+    "accessories_earpod", "accessories_earplunt"
+  ],
+  "head_punk": ["eyes_glasses_3D"],
+  "head_flash": ["eyes_glasses_3D"],
+  "head_chef": ["eyes_pirate", "eyes_pirate_gold"],
+  "head_medic_helmet": [
+    "accessories_battle_worm", "accessories_tag"
+  ],
+  "head_viking": [
+    "accessories_battle_worm"
+  ],
+  "clothes_assasin": [
+    "accessories_tattoo_love", "accessories_tattoo_roses"
+  ],
+  "clothes_michael": [
+    "accessories_tattoo_love", "accessories_tattoo_roses"
+  ],
+  "accessories_tattoo_roses": [
+    "head_snapback_black", "head_snapback_blue"
+  ],
+  "head_vr_headset": [
+    "eyes_pirate", "eyes_pirate_gold"
+  ],
+  "eyes_robotic": [
+    "mouth_facemask", "mouth_biohazard_mask", "mouth_monster"
+  ],
+  "accessories_gold_wolf": [
+      "clothes_doctor", "clothes_spoiled", "clothes_michael", "clothes_assasin", "clothes_funny_guy",
+      "clothes_fallout", "clothes_player", "clothes_ruler_of_the_stars", "clothes_flashsoldier",
+      "mouth_alien"
+    ],
+    "accessories_wolf": [
+      "clothes_doctor", "clothes_spoiled", "clothes_michael", "clothes_assasin", "clothes_funny_guy",
+      "clothes_fallout", "clothes_player", "clothes_ruler_of_the_stars", "clothes_flashsoldier",
+      "mouth_alien"
+    ],
+    "accessories_ring": [
+      "clothes_doctor", "clothes_spoiled", "clothes_michael", "clothes_assasin", "clothes_funny_guy",
+      "clothes_fallout", "clothes_player", "clothes_ruler_of_the_stars", "clothes_flashsoldier",
+      "mouth_alien"
+    ],
+    "mouth_alien": [
+      "accessories_tattoo_cards", "accessories_tattoo_love", "accessories_tattoo_roses", 
+      "eyes_robotic"
+    ],
+    "mouth_mech_chin": [
+      "eyes_robotic", "eyes_pirate", "eyes_pirate_gold", "accessories_tattoo_love"
+    ],
+    "skin_biohazard_dose": [
+      "head_bandage_1", "clothes_morty", "accessories_tattoo_cards", "accessories_tattoo_love", 
+      "accessories_tattoo_roses", "clothes_demonic_tattoo", "head_snapback_blue", "head_snapback_black"
+    ],
+    "clothes_demonic_tattoo": [
+      "accessories_tattoo_cards", "accessories_tattoo_roses", "accessories_tattoo_love"
+    ],
+    "head_meat_chopper": [
+      "eyes_glasses_gold", "eyes_glasses_3D", "eyes_glasses_killing_machine"
+    ],
+    "eyes_biohazard_suspicious": [
+      "skin_original", "skin_silver", "skin_gold", "skin_diamond", "skin_bronze", "skin_trip",
+      "skin_bright", "skin_statue", "skin_devil", "skin_red"
+    ],
+    "clothes_spoiled": [
+      "accessories_tattoo_cards", "accessories_tattoo_love", "accessories_tattoo_roses"
+    ],
+    "skin_trip": [
+      "accessories_tattoo_cards", "accessories_tattoo_love", "accessories_tattoo_roses"
+    ]
+}
