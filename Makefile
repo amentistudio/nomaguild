@@ -20,3 +20,5 @@ deploy-whitelist-signup: cmd-exists-serverless cmd-exists-yarn
 deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-aws
 	cd backend/whitelist-verification && . deploy.sh && cd ../..
 	scripts/dotenv -f ${ENV_FILE} set VERIFICATION_HTTP_API_URL=$(shell cat ./backend/whitelist-verification/.httpapiurl)
+	scripts/dotenv -f ${ENV_FILE} set MERKLE_TREE_ROOT=$(shell node ./scripts/merkletree.js ./backend/whitelist-verification/data/list.txt)
+	
