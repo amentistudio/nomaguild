@@ -23,14 +23,14 @@ truffle develop --log
 migrate --reset
 
 truffle console
-let mummyInstance;
-Mummy.deployed().then((instance) => { mummyInstance = instance; });
+let cinstance;
+NoMaClub.deployed().then((instance) => { cinstance = instance; });
 
 let proof = ['0x47ced7e2503ebf284d4ac57cad2afbd44e07138655ca00b8460c4bc487a1cc71']
 let address = '0xb99d1e85a8a220dbbde535f17aea3a89909cfd4e'
 let root = '0x52bb5b1e07663deb785d8ef245bbdc9cfb84774d19071b6d4c1586a39a76581d'
-mummyInstance.setPause(false)
-mummyInstance.mint(proof, { from: address})
+cinstance.setPause(false)
+cinstance.mint(proof, { from: address})
 web3.eth.getAccounts();
 ```
 

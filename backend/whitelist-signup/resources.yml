@@ -2,10 +2,11 @@ service: noma-whitelist-cognito
 
 custom:
   USER_POOL_NAME: noma-whitelist
+  REGION: ${env:REGION, 'eu-central-1'}
 
 provider:
   name: aws
-  region: eu-central-1
+  region: ${self:custom.REGION}
   runtime: nodejs14.x
   lambdaHashingVersion: "20201221"
 
@@ -43,7 +44,7 @@ resources:
       Value:
         Ref: UserPool
     UserPoolDomain:
-      Value: ${self:custom.USER_POOL_NAME}.auth.eu-central-1.amazoncognito.com
+      Value: ${self:custom.USER_POOL_NAME}.auth.${self:custom.REGION}.amazoncognito.com
     UserPoolArn:
       Value:
         Fn::GetAtt: [UserPool, Arn]

@@ -1,13 +1,4 @@
 {
-  "name": "triggers",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Amenti Studio <hello@amentistudio.com>",
-  "license": "ISC",
   "dependencies": {
     "ethereumjs-util": "^7.1.0",
     "web3": "^1.5.2"
