@@ -1,0 +1,68 @@
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'development'
+> Network id:      5777
+> Block gas limit: 6721975 (0x6691b7)
+
+
+1_initial_migration.js
+======================
+
+   Replacing 'Migrations'
+   ----------------------
+   > transaction hash:    0x3b03aa9bbc95238bd70693484ff95d3f68c7f14710ec9312f2db30dd58cb68bb
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x5C320CB9a5d587f7Dc9A7603A0F5C303aa3BaF6E
+   > block number:        13
+   > block timestamp:     1643313165
+   > account:             0xBf2fF032CE5e4c8A6D6241Fa61187818A3b176FF
+   > balance:             99.72661136
+   > gas used:            248854 (0x3cc16)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00497708 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00497708 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Replacing 'NoMaClub'
+   --------------------
+   > transaction hash:    0xdb05f26de20485d420ad51aa63e95b3010d9de735017ee9a14986a6aeaac7bf5
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xC7B01F70772Ec857407c415b5e3877f667e60d4B
+   > block number:        15
+   > block timestamp:     1643313166
+   > account:             0xBf2fF032CE5e4c8A6D6241Fa61187818A3b176FF
+   > balance:             99.64266818
+   > gas used:            4154646 (0x3f6516)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.08309292 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.08309292 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.08807 ETH
+
+

@@ -5,7 +5,7 @@
 npm intall -g truffle
 
 truffle compile
-truffle migrate
+truffle migrate --network ID (inside truffle-config.js)
 ```
 
 ### Local blockchain
