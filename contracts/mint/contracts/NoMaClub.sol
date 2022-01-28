@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
-
 // TODO: Make Burnable + use Counter
 contract NoMaClub is ERC721Enumerable, Ownable {
     using SafeMath for uint256;
@@ -40,18 +39,18 @@ contract NoMaClub is ERC721Enumerable, Ownable {
         setBaseURI(baseURI);
     }
 
-    modifier notSoldOut {
+    modifier notSoldOut() {
         require(mummiesMinted() <= MAX_MUMMIES, "Soldout!");
         _;
     }
 
-    modifier whitelistSaleIsOpen {
+    modifier whitelistSaleIsOpen() {
         require(mummiesMinted() <= MAX_MUMMIES, "Soldout!");
         require(WHITELIST_SALE, "Whitelist sales not open");
         _;
     }
 
-    modifier publicSaleIsOpen {
+    modifier publicSaleIsOpen() {
         require(mummiesMinted() <= MAX_MUMMIES, "Soldout!");
         require(PUBLIC_SALE, "Public sales not open");
         _;
@@ -65,7 +64,11 @@ contract NoMaClub is ERC721Enumerable, Ownable {
         return totalSupply();
     }
 
-    function whitelistMint(bytes32[] calldata _merkleProof) public payable whitelistSaleIsOpen {
+    function whitelistMint(bytes32[] calldata _merkleProof)
+        public
+        payable
+        whitelistSaleIsOpen
+    {
         address _to = msg.sender;
 
         // Verify not minted yet
@@ -75,7 +78,10 @@ contract NoMaClub is ERC721Enumerable, Ownable {
 
         // Verify whitelisted address with MerkleProof
         bytes32 leaf = keccak256(abi.encodePacked(_to));
-        require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), "Not whitelisted");
+        require(
+            MerkleProof.verify(_merkleProof, merkleRoot, leaf),
+            "Not whitelisted"
+        );
 
         // Mint
         saleClaimed[_to] = true;
@@ -98,7 +104,7 @@ contract NoMaClub is ERC721Enumerable, Ownable {
     // Only OWNER
 
     function giveawayMint(address _to) public onlyOwner notSoldOut {
-        saleClaimed[_to] = true; 
+        saleClaimed[_to] = true;
         _mintAnMummy(_to, mummiesMinted());
     }
 
@@ -130,6 +136,4 @@ contract NoMaClub is ERC721Enumerable, Ownable {
 
         emit MummyMinted(_mummyId, _to);
     }
-
-
 }

@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "lite-server"
+    "dev": "lite-server",
+    "prettier": "prettier --write 'contracts/**/*.sol'"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.1",
@@ -11,6 +12,8 @@
     "@openzeppelin/test-helpers": "^0.5.15",
     "keccak256": "^1.0.6",
     "lite-server": "^2.3.0",
-    "merkletreejs": "^0.2.27"
+    "merkletreejs": "^0.2.27",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19"
   }
 }
