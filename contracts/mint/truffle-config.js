@@ -21,6 +21,8 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 const getEnv = env => {
+  if (typeof process.env["STAGE"] === 'undefined')
+    return null;
   const value = process.env[env];
   if (typeof value === 'undefined') {
     throw new Error(`${env} has not been set.`);
