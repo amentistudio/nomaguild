@@ -26,3 +26,11 @@ deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-
 deploy-mint-contract: cmd-exists-yarn cmd-exists-truffle
 	cd contracts/mint && . deploy.sh && cd ../..
 	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address)"
+
+.PHONY: truffle-console-ropsten
+ truffle-console-ropsten: cmd-exists-truffle
+	cd contracts/mint && truffle console --network ropsten && cd ../..
+
+.PHONY: truffle-console-mainnet
+ truffle-console-mainnet: cmd-exists-truffle
+	cd contracts/mint && truffle console --network mainnet && cd ../..

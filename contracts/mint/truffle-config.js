@@ -19,8 +19,19 @@
  */
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const fs = require('fs');
-const mnemonic = fs.readFileSync(".secret").toString().trim();
+
+const getEnv = env => {
+  const value = process.env[env];
+  if (typeof value === 'undefined') {
+    throw new Error(`${env} has not been set.`);
+  }
+  return value;
+};
+
+const mnemonic = getEnv("MNEMONIC");
+const ropsten_rpc_url = `https://ropsten.infura.io/v3/${getEnv("INFURA_PROJECT_ID")}`;
+const mainnet_rpc_url = `https://mainnet.infura.io/v3/${getEnv("INFURA_PROJECT_ID")}`;
+const mainnet_from_address = getEnv("MAINNET_FROM_ADDRESS");
 
 module.exports = {
   /**
@@ -41,33 +52,10 @@ module.exports = {
     // options below to some value.
     //
     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
     },
-    // POLYGON:
-    // Why? https://ethereum.stackexchange.com/questions/102302/unable-to-connect-to-polygon-mumbai-test-network-using-truffle
-    // We need to create new app id for each possible app:
-    // https://rpc.maticvigil.com/apps/673d478590c96d533f750e5b47f7ff0c5ccfb223
-    mumbai_test: {
-      provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.maticvigil.com/v1/673d478590c96d533f750e5b47f7ff0c5ccfb223`),
-      network_id: 80001,
-      confirmations: 2,
-      timeoutBlocks: 200,
-      skipDryRun: true,
-      networkCheckTimeout: 100000,
-      gas: 6000000,
-      gasPrice: 10000000000,
-    },
-    matic_prod: {
-      provider: () => new HDWalletProvider(mnemonic, `https://rpc-mainnet.maticvigil.com/v1/673d478590c96d533f750e5b47f7ff0c5ccfb223`),
-      network_id: 80001,
-      confirmations: 2,
-      timeoutBlocks: 200,
-      skipDryRun: true,
-      networkCheckTimeout: 100000,
-    },
-    // end POLYGON
 
     // Another network with more advanced options...
     // advanced: {
@@ -80,14 +68,23 @@ module.exports = {
     // },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    // ropsten: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
-    // network_id: 3,       // Ropsten's id
-    // gas: 5500000,        // Ropsten has a lower block limit than mainnet
-    // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-    // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-    // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    // },
+    ropsten: {
+      provider: () => new HDWalletProvider(mnemonic, ropsten_rpc_url),
+      network_id: 3,       // Ropsten's id
+      gas: 5500000,        // Ropsten has a lower block limit than mainnet
+      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
+    mainnet: {
+      provider: () => new HDWalletProvider(mnemonic, mainnet_rpc_url),
+      network_id: 1,
+      from: mainnet_from_address,
+      gas: 5000000,
+      gasPrice: 5e9,
+      confirmations: 2,
+      timeoutBlocks: 200,
+    },
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),

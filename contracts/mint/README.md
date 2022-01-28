@@ -17,6 +17,8 @@ solc-select use 0.8.1
 
 ### Local blockchain
 
+https://blockheroes.dev/test-smart-contracts-on-mainnet/
+
 - Ganache (https://trufflesuite.com/ganache/)
 
 - Metamask setup (https://dapp-world.com/blogs/01/how-to-connect-ganache-with-metamask-and-deploy-smart-contracts-on-remix-without-1619847868947)
