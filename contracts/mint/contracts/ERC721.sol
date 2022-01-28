@@ -266,7 +266,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * - `from` cannot be the zero address.
      * - `to` cannot be the zero address.
      * - `tokenId` token must exist and be owned by `from`.
-     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
+     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received},
+     *   which is called upon a safe transfer.
      *
      * Emits a {Transfer} event.
      */
@@ -324,7 +325,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * Requirements:
      *
      * - `tokenId` must not exist.
-     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received}, which is called upon a safe transfer.
+     * - If `to` refers to a smart contract, it must implement {IERC721Receiver-onERC721Received},
+     *   which is called upon a safe transfer.
      *
      * Emits a {Transfer} event.
      */

@@ -92,7 +92,7 @@ contract("NoMaClub", async accounts => {
       it("should not allow calling withdraw all to not owners", async () => {
         await instance.setPublicSale(true)
         await instance.publicMint({
-          from: accounts[1], value: web3.utils.toWei(".2", "ether")
+          from: accounts[1], value: web3.utils.toWei(".05", "ether")
         })
         let developer_balance_bm_wei = await web3.eth.getBalance(accounts[2]);
         truffleAssert.reverts(
@@ -104,7 +104,7 @@ contract("NoMaClub", async accounts => {
         expect(Number(await instance.totalSupply())).to.equal(1)
         // Owner
         let owner_balance_wei = await web3.eth.getBalance(instance.address);
-        expect(owner_balance_wei).to.equal(web3.utils.toWei("0.2", "ether"));
+        expect(owner_balance_wei).to.equal(web3.utils.toWei("0.05", "ether"));
         // Developer
         let developer_balance_wei = await web3.eth.getBalance(accounts[2]);
         expect(developer_balance_wei).to.equal(developer_balance_bm_wei);
@@ -197,12 +197,12 @@ contract("NoMaClub", async accounts => {
           proof = merkleTree.getHexProof(leafs[0]);
           await instance.setWhitelistSale(true)
           await instance.whitelistMint(proof, {
-            from: accounts[0], value: web3.utils.toWei(".2", "ether")
+            from: accounts[0], value: web3.utils.toWei(".05", "ether")
           })
 
           expect(Number(await instance.totalSupply())).to.equal(1)
           let balance_wei = await web3.eth.getBalance(instance.address);
-          expect(balance_wei).to.equal(web3.utils.toWei(".2", "ether"));
+          expect(balance_wei).to.equal(web3.utils.toWei(".05", "ether"));
         });
 
         it("should not mint an mummy with incorrect price", async () => {
@@ -210,7 +210,7 @@ contract("NoMaClub", async accounts => {
           await instance.setWhitelistSale(true)
           truffleAssert.reverts(
             instance.whitelistMint(proof, {
-              from: accounts[0], value: web3.utils.toWei(".1", "ether")
+              from: accounts[0], value: web3.utils.toWei(".01", "ether")
             }),
             null,
             "not enough money for mint"
@@ -227,7 +227,7 @@ contract("NoMaClub", async accounts => {
           truffleAssert.reverts(
             instance.whitelistMint(proof, {
               // hint: account[2] isn't part of whitelist
-              from: accounts[2], value: web3.utils.toWei(".2", "ether")
+              from: accounts[2], value: web3.utils.toWei(".05", "ether")
             }),
             null,
             "incorrect proof"
@@ -267,7 +267,7 @@ contract("NoMaClub", async accounts => {
           await instance.setPublicSale(true)
           truffleAssert.reverts(
             instance.publicMint({
-              from: accounts[1], value: web3.utils.toWei(".1", "ether"),
+              from: accounts[1], value: web3.utils.toWei(".01", "ether"),
             }),
             null,
             "price must be at least 0.2 ether"

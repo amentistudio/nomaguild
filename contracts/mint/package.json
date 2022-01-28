@@ -1,7 +1,11 @@
 {
   "scripts": {
     "dev": "lite-server",
-    "prettier": "prettier --write 'contracts/**/*.sol'"
+    "prettier": "prettier --write 'contracts/**/*.sol'",
+    "solhint": "solhint 'contracts/**/*.sol'",
+    "coverage": "truffle run coverage",
+    "compile": "truffle compile",
+    "console": "truffle console"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.1",
@@ -14,6 +18,9 @@
     "lite-server": "^2.3.0",
     "merkletreejs": "^0.2.27",
     "prettier": "^2.5.1",
-    "prettier-plugin-solidity": "^1.0.0-beta.19"
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint": "^3.3.6",
+    "solhint-plugin-prettier": "^0.0.5",
+    "solidity-coverage": "^0.7.18"
   }
 }
