@@ -3,13 +3,11 @@ import Amplify, { Auth } from 'aws-amplify';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { ArrowRightIcon, CalendarIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
 import { Dialog, Transition } from '@headlessui/react';
-import MummyContract from '../contracts/Mummy.json';
+import MummyContract from '../contracts/NoMaClub.json';
 import getWeb3 from '../getWeb3';
 
 function MintHome() {
-  const [user, setUser] = useState(null);
   const [contract, setContract] = useState(null);
-  const [accounts, setAccounts] = useState([]);
   const [myWeb3, setMyWeb3] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -35,7 +33,7 @@ function MintHome() {
       console.log('Web3: ', web3);
     }
     initialize();
-  }, [contract, accounts, myWeb3]);
+  }, [contract, myWeb3]);
 
   const onSignIn = async () => {
     if (MetaMaskOnboarding.isMetaMaskInstalled() && myWeb3) {
@@ -44,7 +42,7 @@ function MintHome() {
         let instance;
         setLoading(true);
         const networkId = await myWeb3.eth.net.getId();
-        if (networkId == 137 || networkId == 80001) {
+        if (networkId === 137 || networkId === 80001) {
           // Polygon main or testnet
           const address = '6eb8eC4c24F459A30839A5DFeD88bad925eCDA57';
           instance = new myWeb3.eth.Contract(MummyContract.abi, address);
@@ -117,7 +115,6 @@ function MintHome() {
   const checkUser = async (contract, account, web3) => {
     try {
       const _user = await Auth.currentAuthenticatedUser();
-      setUser(_user);
 
       let verificationResponse = await fetch(getProofEndpointUrl, {
         method: 'GET',
@@ -140,7 +137,6 @@ function MintHome() {
       });
       setLoading(false);
     } catch (err) {
-      setUser(null);
       console.error('checkUser error', err);
       setError(`Something went wrong: ${JSON.stringify(err)}`);
       setLoading(false);
@@ -269,7 +265,7 @@ function MintHome() {
               data-aos="fade-up"
               data-aos-delay="450"
             >
-              <img src={require('../images/sarcofag.png').default} alt="Sarcofag" />
+              <img src={require('../images/sarcofag.png')} alt="Sarcofag" />
             </div>
           </div>
         </div>

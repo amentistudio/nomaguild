@@ -20,35 +20,35 @@ function TraitsAndRarity() {
             className="absolute bottom-0"
             style={{ left: '15vw' }}
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-common.png').default}
+            src={require('../images/rarity/mummy-common.png')}
             alt="Common rarity mummy"
           />
           <img
             className="absolute bottom-0"
             style={{ left: '27vw' }}
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-extraordinary.png').default}
+            src={require('../images/rarity/mummy-extraordinary.png')}
             alt="Extraordinary rarity mummy"
           />
           <img
             className="absolute bottom-0"
             style={{ left: '67vw' }}
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-rare.png').default}
+            src={require('../images/rarity/mummy-rare.png')}
             alt="Rare rarity mummy"
           />
           <img
             className="absolute bottom-0"
             style={{ left: '55vw' }}
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-exceptional.png').default}
+            src={require('../images/rarity/mummy-exceptional.png')}
             alt="Exceptional rarity mummy"
           />
           <img
             className="absolute bottom-0"
             style={{ left: '39vw' }}
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-legendary.png').default}
+            src={require('../images/rarity/mummy-legendary.png')}
             alt="Legendary rarity mummy"
           />
         </div>

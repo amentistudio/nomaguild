@@ -10,9 +10,9 @@ function HeroHome() {
   useEffect(() => {
     Amplify.configure({
       Auth: {
-        region: 'eu-central-1',
-        userPoolId: 'eu-central-1_Jrcnu0Nyl',
-        userPoolWebClientId: 'hu64j7h72t09eacjjiglbmh5r',
+        region: process.env.REACT_APP_REGION,
+        userPoolId: process.env.REACT_APP_USER_POOL_ID,
+        userPoolWebClientId: process.env.REACT_APP_USER_POOL_WEB_CLIENT,
         authenticationFlowType: 'CUSTOM_AUTH',
       },
     });
@@ -51,14 +51,14 @@ function HeroHome() {
     return nr.toString(16).padStart(2, '0');
   };
 
-  const onSignOut = async () => {
-    try {
-      await Auth.signOut();
-      await checkUser();
-    } catch (err) {
-      console.error('onSignOut error: ', err);
-    }
-  };
+  // const onSignOut = async () => {
+  //   try {
+  //     await Auth.signOut();
+  //     await checkUser();
+  //   } catch (err) {
+  //     console.error('onSignOut error: ', err);
+  //   }
+  // };
 
   const handleAmplifySignIn = async (address) => {
     try {
@@ -141,7 +141,7 @@ function HeroHome() {
               data-aos="fade-up"
               data-aos-delay="450"
             >
-              <img src={require('../images/sarcofag.png').default} alt="Sarcofag" />
+              <img src={require('../images/sarcofag.png')} alt="Sarcofag" />
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: 'class',
   theme: {
     extend: {
       boxShadow: {
@@ -135,7 +136,5 @@ module.exports = {
     },
   },
   plugins: [
-    // eslint-disable-next-line global-require
-    require('@tailwindcss/forms'),
   ],
 };

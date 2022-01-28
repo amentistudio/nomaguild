@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
-
-import './css/style.scss';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import AOS from 'aos';
 import { focusHandling } from 'cruip-js-toolkit';
@@ -30,14 +28,10 @@ function App() {
 
   return (
     <>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/mint">
-          <Mint />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/mint" element={<Mint />} />
+      </Routes>
     </>
   );
 }

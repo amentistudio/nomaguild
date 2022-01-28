@@ -6,7 +6,7 @@ function FAQHero() {
       className="mt-20"
       style={{
         height: 660,
-        background: `top center url(${require('../images/press-conference-concept-II.png').default}) no-repeat`,
+        background: `top center url(${require('../images/press-conference-concept-II.png')}) no-repeat`,
       }}
     >
       <div className="max-w-5xl mx-auto px-4">

@@ -10,7 +10,7 @@ function Team() {
       </h1>
       <div className="md:grid md:grid-cols-12 gap-6">
         <div className="col-span-3 text-left">
-          <img className="mb-4" src={require('../images/team/amenti-a-web.png').default} alt="Amenti Studio Team" />
+          <img className="mb-4" src={require('../images/team/amenti-a-web.png')} alt="Amenti Studio Team" />
           <h3 className="h3 lg:text-xl mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Amenti Studio
           </h3>
@@ -20,7 +20,7 @@ function Team() {
           </p>
         </div>
         <div className="col-span-3 text-left">
-          <img className="mb-4" src={require('../images/team/mummy-ladi.png').default} alt="Ladi / Developer" />
+          <img className="mb-4" src={require('../images/team/mummy-ladi.png')} alt="Ladi / Developer" />
           <h3 className="h3 lg:text-xl mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Ladi / Developer
           </h3>
@@ -30,7 +30,7 @@ function Team() {
           </p>
         </div>
         <div className="col-span-3 text-left">
-          <img className="mb-4" src={require('../images/team/mummy-jan.png').default} alt="Jan - Design" />
+          <img className="mb-4" src={require('../images/team/mummy-jan.png')} alt="Jan - Design" />
           <h3 className="h3 lg:text-xl mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Jan / Design
           </h3>
@@ -40,7 +40,7 @@ function Team() {
           </p>
         </div>
         <div className="col-span-3 text-left">
-          <img className="mb-4" src={require('../images/team/mummy-simon.png').default} alt="Šimon - Illustrator" />
+          <img className="mb-4" src={require('../images/team/mummy-simon.png')} alt="Šimon - Illustrator" />
           <h3 className="h3 lg:text-xl mb-2 font-red-hat-display" data-aos="fade-down">
             Simon / Illustrator
           </h3>

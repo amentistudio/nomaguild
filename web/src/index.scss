@@ -2,17 +2,10 @@
 
 @tailwind base;
 @tailwind components;
-
-// Additional styles
-@import 'additional-styles/utility-patterns.scss';
-@import 'additional-styles/range-slider.scss';
-@import 'additional-styles/toggle-switch.scss';
-@import 'additional-styles/theme.scss';
-
 @tailwind utilities;
 
 // Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive
-@responsive {
+@layer {
   .rtl {
     direction: rtl;
   }

@@ -10,7 +10,7 @@ yarn build
 cd dist
 
 # if you are deploying to a custom domain
-echo 'pixtory.io' > CNAME
+echo 'nomummyallowed.com' > CNAME
 
 git init
 git add -A
@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:martincik/pixtory.io.git master:gh-pages
+git push -f git@github.com:amentistudio/nomaclub.git master:gh-pages
 
 cd -

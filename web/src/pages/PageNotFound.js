@@ -25,7 +25,7 @@ function PageNotFound() {
                 <div className="relative inline-flex justify-center items-center">
                   <img
                     className="hidden sm:block opacity-50 md:opacity-80"
-                    src={require('../images/404.jpg').default}
+                    src={require('../images/404.jpg')}
                     width="768"
                     height="432"
                     alt="404"

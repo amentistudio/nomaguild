@@ -25,7 +25,12 @@ deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-
 .PHONY: deploy-mint-contract
 deploy-mint-contract: cmd-exists-yarn cmd-exists-truffle
 	cd contracts/mint && . deploy.sh && cd ../..
+	cp contracts/mint/build/contracts/NoMaClub.json web/src/contracts/NoMaClub.json
 	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address)"
+
+.PHONY: truffle-console-dev
+ truffle-console-dev: cmd-exists-truffle
+	cd contracts/mint && truffle console && cd ../..
 
 .PHONY: truffle-console-ropsten
  truffle-console-ropsten: cmd-exists-truffle
@@ -34,3 +39,7 @@ deploy-mint-contract: cmd-exists-yarn cmd-exists-truffle
 .PHONY: truffle-console-mainnet
  truffle-console-mainnet: cmd-exists-truffle
 	cd contracts/mint && truffle console --network mainnet && cd ../..
+
+.PHONY: web-start
+ web-start: cmd-exists-yarn
+	cd web && yarn start && cd ../..
