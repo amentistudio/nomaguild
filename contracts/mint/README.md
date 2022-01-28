@@ -8,6 +8,13 @@ truffle compile
 truffle migrate --network ID (inside truffle-config.js)
 ```
 
+Solidity tools:
+```sh
+pip3 install slither-analyzer
+pip3 install solc-select
+solc-select use 0.8.1
+```
+
 ### Local blockchain
 
 - Ganache (https://trufflesuite.com/ganache/)
