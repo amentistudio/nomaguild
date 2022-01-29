@@ -15,11 +15,7 @@ function FAQHero() {
           FAQ
         </h1>
         <div className="pl-20 text-xl text-white text-center">
-          If you are interested in something specific, please email us at{' '}
-          <a className="underline text-yellow-300" href="mailto:hello@amentistudio.com">
-            hello@amentistudio.com
-          </a>
-          <br /> or join our{' '}
+          If you are interested in something else, please join our&nbsp;
           <a className="underline text-yellow-300" href="https://discord.gg/qJDaaYBAkF">
             Discord
           </a>

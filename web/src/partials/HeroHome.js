@@ -101,17 +101,13 @@ function HeroHome() {
             {/* Content */}
             <div className="md:col-span-5 lg:col-span-5 mb-8 md:mb-0 text-center md:text-left sm:pb-12">
               <h1 className="h1 lg:text-5xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
-                No Mummy Allowed Club
+                Welcome to the NoMA club
               </h1>
               <p className="text-xl text-white" data-aos="fade-down" data-aos-delay="150">
-                Welcome to the gaming club for all the people who love games beyond the grave.
+                <b>No Mummy Allowed</b> is a club for all the people who love games beyond the grave. 
                 <br />
                 <br />
-                All (10k) mummies will rise on{' '}
-                <span className="whitespace-nowrap">
-                  <CalendarIcon className="h-6 w-6 ml-2 mr-2 inline" />
-                  22.02.2022
-                </span>
+                8 192 unique mummies will rise on 02/22/2022. Get on the whitelist to claim your spot!
               </p>
               {!user && (
                 <button
@@ -132,7 +128,6 @@ function HeroHome() {
                   Already, part of the whitelist! Congratz!
                 </button>
               )}
-              <p className="mt-2 text-sm">Get on the whitelist to claim your spot!</p>
             </div>
 
             {/* Mobile mockup */}

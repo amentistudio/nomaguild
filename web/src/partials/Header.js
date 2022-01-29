@@ -33,10 +33,9 @@ function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Site branding */}
           <div className="flex flex-row mr-5 items-center">
-            <Link to="/" className="pr-4" aria-label="Homepage">
-              <img src={require('../images/logo.svg').default} width="30" alt="Logo" />
+            <Link to="/" className="pr-4 pt-5" aria-label="Homepage">
+              <img src={require('../images/NoMA-wtext.svg').default} width="174" alt="Logo" />
             </Link>
-            <h3 className="h4">NoMA Club</h3>
           </div>
 
           {/* Desktop navigation */}

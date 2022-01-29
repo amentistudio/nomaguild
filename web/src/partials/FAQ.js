@@ -7,7 +7,7 @@ const faqs = {
     {
       question: 'Why is it called the No Mummy Allowed Gaming Club?',
       answer:
-        'Because on dark nights we still wake up sweaty from the nightmare of our mothers ripping power cords out of the wall and screaming at us that gaming won’t feed us. So…we spent the next 20 years gathering the experience to prove them wrong. So no mothers allowed in our club. Only mummies.',
+        'The end of the millennium saw the rise of the internet and the birth of many gaming legends. Back then, as teenagers, we were fascinated by this technological advance and could play games late into the night. However, our parents, especially our mothers, had a hard time with it. What will you become? They were scared because they didn’t understand it. Gaming won’t feed you, they said. Go to law school or medical school, secure your future! They were concerned about our well-being, but they were wrong. In just 20 years, the gaming market has grown to nearly $180 billion (2021). Now we stand on the cusp of a similar revolution. The metaverse is coming. And just like our parents 20 years ago, we don’t understand it now, but we study it diligently every day. And we still love gaming beyond the grave and will do our best to guide you through this new fascinating world and show you how to utilize blockchain technology to do what we love. No more career advice from mums :) P.S. We love you!'
     },
     {
       question: 'How is No Mummy Allowed Gaming Club different?',
@@ -95,7 +95,7 @@ function FAQ() {
                       </Disclosure.Button>
                     </dt>
                     <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                      <p className="text-base">{faq.answer}</p>
+                      <p className="text-base text-gray-400">{faq.answer}</p>
                     </Disclosure.Panel>
                   </>
                 )}
