@@ -37,7 +37,7 @@ function Team() {
           </p>
         </div>
         <div className="col-span-3 text-left">
-          <img className="mb-4 sm:mx-auto md:mx-0" src={require('../images/NoMA-Mummy.svg').default} style={{ maxWidth: 100, maxHeight: 265, margin: '0 auto' }} alt="Mummy Boy - Guide" />
+          <img className="mb-4 sm:mx-auto md:mx-0" src={require('../images/NoMA-Mummy.svg').default} style={{ width: 100, height: 265, margin: '0 auto' }} alt="Mummy Boy - Guide" />
           <h3 className="h3 sm:text-xl sm:text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Mummy Boy / Guide
           </h3>
