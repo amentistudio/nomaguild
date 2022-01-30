@@ -7,7 +7,7 @@ set -e
 yarn build
 
 # navigate into the build output directory
-cd dist
+cd build
 
 # if you are deploying to a custom domain
 echo 'nomummyallowed.com' > CNAME
@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:amentistudio/nomaclub.git master:gh-pages
+git push -f git@github.com:amentistudio/nomaclub.git main:gh-pages
 
 cd -

@@ -43,3 +43,7 @@ deploy-mint-contract: cmd-exists-yarn cmd-exists-truffle
 .PHONY: web-start
  web-start: cmd-exists-yarn
 	cd web && yarn start && cd ../..
+
+.PHONY: web-deploy
+ web-deploy: cmd-exists-yarn
+	cd web && ./deploy.sh && cd ../..
