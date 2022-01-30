@@ -12,7 +12,9 @@ function Footer() {
               <li>
                 <a
                   className="flex justify-center items-center text-white bg-gray-500 dark:text-gray-500 dark:bg-gray-800 hover:underline hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
-                  href="#0"
+                  href="https://twitter.com/nomaclub"
+                  rel="noreferrer"
+                  target="_blank"
                   aria-label="Twitter"
                 >
                   <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +25,7 @@ function Footer() {
             </ul>
 
             {/* Copyrights note */}
-            <div className="text-gray-200 text-sm mr-4">All rights reserved 2021 @Amenti Studio</div>
+            <div className="text-gray-200 text-sm mr-4">All rights reserved &copy; 2022 NoMA team</div>
           </div>
         </div>
       </div>

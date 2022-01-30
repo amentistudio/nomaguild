@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Amplify, { Auth } from 'aws-amplify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { ArrowRightIcon, CalendarIcon } from '@heroicons/react/outline';
+import { ArrowRightIcon } from '@heroicons/react/outline';
 
 function HeroHome() {
   const [user, setUser] = useState(null);
@@ -107,7 +107,9 @@ function HeroHome() {
                 <b>No Mummy Allowed</b> is a club for all the people who love games beyond the grave. 
                 <br />
                 <br />
-                <span title="8192">2<sup>^13</sup></span> unique mummies will rise on <span title="EU: 22.02.2022">02/22/2022</span>. Get on the whitelist to claim your spot!
+                <span title="8192">2<sup>13</sup></span> unique mummies will rise on <span title="EU: 22.02.2022">02/22/2022</span>.
+                <br />
+                Get on the whitelist to claim your spot!
               </p>
               {!user && (
                 <button

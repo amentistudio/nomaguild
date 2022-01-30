@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Transition from '../utils/Transition.js';
 
 function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -41,14 +40,14 @@ function Header() {
           <nav className="hidden md:flex md:flex-grow">
             <ul className="flex justify-end flex-grow items-center">
               <li>
-                <Link to="#" className="text-white font-bold ml-6">
+                <a href="https://discord.gg/qJDaaYBAkF" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
                   Discord
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="#" className="text-white font-bold ml-6">
+                <a href="https://twitter.com/nomaclub" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
                   Twitter
-                </Link>
+                </a>
               </li>
             </ul>
           </nav>
