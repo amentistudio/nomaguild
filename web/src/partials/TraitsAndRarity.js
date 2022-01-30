@@ -6,7 +6,7 @@ function TraitsAndRarity() {
       <section style={{ borderBottom: '1px solid #444' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="pt-16 md:pt-20"></div>
-          <h1 className="h1 lg:text-5xl mb-8 text-center font-red-hat-display font-extrabold" data-aos="fade-down">
+          <h1 className="h1 lg:text-5xl md:text-4xl sm:text-3xl mb-8 text-center font-red-hat-display font-extrabold" data-aos="fade-down">
             Traits and rarity
           </h1>
           <div className="mx-auto max-w-3xl text-xl text-center text-white">

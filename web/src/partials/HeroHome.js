@@ -100,14 +100,14 @@ function HeroHome() {
           <div className="md:grid md:grid-cols-12 md:gap-0 lg:gap-0 items-center relative">
             {/* Content */}
             <div className="md:col-span-5 lg:col-span-5 mb-8 md:mb-0 text-center md:text-left sm:pb-12">
-              <h1 className="h1 lg:text-5xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
+              <h1 className="h1 lg:text-5xl md:text-4xl sm:text-3xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
                 Welcome to the NoMA club
               </h1>
-              <p className="text-xl text-white" data-aos="fade-down" data-aos-delay="150">
+              <p className="text-xl md:mx-0 sm:mx-20 text-white" data-aos="fade-down" data-aos-delay="150">
                 <b>No Mummy Allowed</b> is a club for all the people who love games beyond the grave. 
                 <br />
                 <br />
-                8 192 unique mummies will rise on 02/22/2022. Get on the whitelist to claim your spot!
+                <span title="8192">2<sup>^13</sup></span> unique mummies will rise on <span title="EU: 22.02.2022">02/22/2022</span>. Get on the whitelist to claim your spot!
               </p>
               {!user && (
                 <button
