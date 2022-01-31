@@ -18,7 +18,13 @@ function GetToKnowUs() {
               <br />
               We are on the mission to create a community-owned studio that allows players
               to become investors and decision-makers in the game they want to play.
+              <br />
+              <br />
+              You can use the NoMA project and our know-how as the blueprint for starting your studio.
             </div>
+          </div>
+          <div className="col-span-5 mb-8 md:mb-0 text-right">
+            <img src={require('../images/noma-propaganda-poster.jpg')} className="sm:mx-auto" alt="Propaganda poster" />
           </div>
         </div>
       </div>

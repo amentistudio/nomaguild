@@ -6,7 +6,7 @@ function FAQHero() {
       className="mt-20"
       style={{
         height: 660,
-        background: `top center url(${require('../images/press-conference-concept-II.png')}) no-repeat`,
+        background: `top center url(${require('../images/noma-press-final.jpg')}) no-repeat`,
       }}
     >
       <div className="max-w-5xl mx-auto px-4">
@@ -15,9 +15,9 @@ function FAQHero() {
           FAQ
         </h1>
         <div className="pl-20 text-xl text-white text-center">
-          If you are interested in something else, please join our&nbsp;
-          <a className="underline text-yellow-300" href="https://discord.gg/qJDaaYBAkF">
-            Discord
+          If you have any questions, please follow and DM us on &nbsp;
+          <a className="underline text-yellow-300" href="https://twitter.com/nomaclub">
+            Twitter
           </a>
           .
         </div>
