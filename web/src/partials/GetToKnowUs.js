@@ -8,7 +8,7 @@ function GetToKnowUs() {
         <div className="md:grid md:grid-cols-12 md:gap-2 lg:gap-4">
           <div className="col-span-7 mb-8 md:mb-0 text-center md:text-left sm:pb-12">
             <h5 className="h5 mb-4 font-bold text-yellow-300">VISION</h5>
-            <h1 className="h1 lg:text-5xl md:mx-0 sm:mx-10 md:text-4xl sm:text-3xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
+            <h1 className="h1 lg:text-5xl md:mx-0 sm:mx-10 md:text-4xl text-3xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
               Game industry challenges we're addressing
             </h1>
             <div className="text-xl text-white md:mx-0 sm:mx-20">
