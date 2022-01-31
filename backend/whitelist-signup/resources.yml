@@ -1,14 +1,13 @@
 service: noma-whitelist-cognito
 
 custom:
-  USER_POOL_NAME: noma-whitelist
+  USER_POOL_NAME: noma-whitelist-${opt:stage,self:provider.stage}
   REGION: ${env:REGION, 'eu-central-1'}
 
 provider:
   name: aws
   region: ${self:custom.REGION}
   runtime: nodejs14.x
-  lambdaHashingVersion: "20201221"
 
 resources:
   Resources:

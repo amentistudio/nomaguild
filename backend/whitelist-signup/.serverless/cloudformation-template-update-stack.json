@@ -74,25 +74,25 @@
     "CreateAuthChallengeLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-dev-createAuthChallenge"
+        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-prod-createAuthChallenge"
       }
     },
     "DefineAuthChallengeLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-dev-defineAuthChallenge"
+        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-prod-defineAuthChallenge"
       }
     },
     "PreSignUpLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-dev-preSignUp"
+        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-prod-preSignUp"
       }
     },
     "VerifyAuthChallengeLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-dev-verifyAuthChallenge"
+        "LogGroupName": "/aws/lambda/noma-whitelist-triggers-prod-verifyAuthChallenge"
       }
     },
     "IamRoleLambdaExecution": {
@@ -121,7 +121,7 @@
                 "-",
                 [
                   "noma-whitelist-triggers",
-                  "dev",
+                  "prod",
                   "lambda"
                 ]
               ]
@@ -137,7 +137,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/noma-whitelist-triggers-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/noma-whitelist-triggers-prod*:*"
                     }
                   ]
                 },
@@ -148,7 +148,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/noma-whitelist-triggers-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/noma-whitelist-triggers-prod*:*:*"
                     }
                   ]
                 }
@@ -162,7 +162,7 @@
             "-",
             [
               "noma-whitelist-triggers",
-              "dev",
+              "prod",
               {
                 "Ref": "AWS::Region"
               },
@@ -179,11 +179,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/noma-whitelist-triggers/dev/1642150472444-2022-01-14T08:54:32.444Z/noma-whitelist-triggers.zip"
+          "S3Key": "serverless/noma-whitelist-triggers/prod/1643635507775-2022-01-31T13:25:07.775Z/noma-whitelist-triggers.zip"
         },
         "Handler": "createAuthChallenge.handler",
         "Runtime": "nodejs14.x",
-        "FunctionName": "noma-whitelist-triggers-dev-createAuthChallenge",
+        "FunctionName": "noma-whitelist-triggers-prod-createAuthChallenge",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -204,11 +204,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/noma-whitelist-triggers/dev/1642150472444-2022-01-14T08:54:32.444Z/noma-whitelist-triggers.zip"
+          "S3Key": "serverless/noma-whitelist-triggers/prod/1643635507775-2022-01-31T13:25:07.775Z/noma-whitelist-triggers.zip"
         },
         "Handler": "defineAuthChallenge.handler",
         "Runtime": "nodejs14.x",
-        "FunctionName": "noma-whitelist-triggers-dev-defineAuthChallenge",
+        "FunctionName": "noma-whitelist-triggers-prod-defineAuthChallenge",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -229,11 +229,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/noma-whitelist-triggers/dev/1642150472444-2022-01-14T08:54:32.444Z/noma-whitelist-triggers.zip"
+          "S3Key": "serverless/noma-whitelist-triggers/prod/1643635507775-2022-01-31T13:25:07.775Z/noma-whitelist-triggers.zip"
         },
         "Handler": "preSignUp.handler",
         "Runtime": "nodejs14.x",
-        "FunctionName": "noma-whitelist-triggers-dev-preSignUp",
+        "FunctionName": "noma-whitelist-triggers-prod-preSignUp",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -254,11 +254,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/noma-whitelist-triggers/dev/1642150472444-2022-01-14T08:54:32.444Z/noma-whitelist-triggers.zip"
+          "S3Key": "serverless/noma-whitelist-triggers/prod/1643635507775-2022-01-31T13:25:07.775Z/noma-whitelist-triggers.zip"
         },
         "Handler": "verifyAuthChallenge.handler",
         "Runtime": "nodejs14.x",
-        "FunctionName": "noma-whitelist-triggers-dev-verifyAuthChallenge",
+        "FunctionName": "noma-whitelist-triggers-prod-verifyAuthChallenge",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -272,44 +272,44 @@
         "VerifyAuthChallengeLogGroup"
       ]
     },
-    "CreateAuthChallengeLambdaVersionoPanuMPYyKHJLTdksiMzIUjU4WokflMzRDcgzI0g": {
+    "CreateAuthChallengeLambdaVersiongtXIAbcbsXMMqsCwrEtwLAA9wIInTcKpW2C7eXhSE9c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateAuthChallengeLambdaFunction"
         },
-        "CodeSha256": "4hy8mmkpHc538uv2YA7xCH1jUZ0C8PGgyEZhUZzrdr0="
+        "CodeSha256": "ruIQ0EkMeK5xPvKoj6TBdptql7cLlKFIW2sqf6yEHP4="
       }
     },
-    "DefineAuthChallengeLambdaVersionK28HFHjgDhBPrEuLIRPAA8eCPz3CycNNvI0d5Nlw": {
+    "DefineAuthChallengeLambdaVersionRWAUYPqyDY06VMYbwUuf3oU113lzLiagnWYBSyv91k": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DefineAuthChallengeLambdaFunction"
         },
-        "CodeSha256": "4hy8mmkpHc538uv2YA7xCH1jUZ0C8PGgyEZhUZzrdr0="
+        "CodeSha256": "ruIQ0EkMeK5xPvKoj6TBdptql7cLlKFIW2sqf6yEHP4="
       }
     },
-    "PreSignUpLambdaVersion6254sq9NPlzCZ9IqLv4fxRJhljISrJoYlDc1VpKA": {
+    "PreSignUpLambdaVersiondENw6FQX4PUztpeBB7GvUOJJkuhvR4jceD0oe0eE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PreSignUpLambdaFunction"
         },
-        "CodeSha256": "4hy8mmkpHc538uv2YA7xCH1jUZ0C8PGgyEZhUZzrdr0="
+        "CodeSha256": "ruIQ0EkMeK5xPvKoj6TBdptql7cLlKFIW2sqf6yEHP4="
       }
     },
-    "VerifyAuthChallengeLambdaVersiontpDkTzUDr0lCClDpabQZXJHQblRacemptezjQ4qM5c": {
+    "VerifyAuthChallengeLambdaVersionP0je87fkWmySGofieNJCbuPgY7PCM6pyJcuneD8qw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "VerifyAuthChallengeLambdaFunction"
         },
-        "CodeSha256": "4hy8mmkpHc538uv2YA7xCH1jUZ0C8PGgyEZhUZzrdr0="
+        "CodeSha256": "ruIQ0EkMeK5xPvKoj6TBdptql7cLlKFIW2sqf6yEHP4="
       }
     },
     "CreateAuthChallengeCustomCognitoUserPool1": {
@@ -326,8 +326,8 @@
             "Arn"
           ]
         },
-        "FunctionName": "noma-whitelist-triggers-dev-createAuthChallenge",
-        "UserPoolName": "noma-whitelist",
+        "FunctionName": "noma-whitelist-triggers-prod-createAuthChallenge",
+        "UserPoolName": "noma-whitelist-prod",
         "UserPoolConfigs": [
           {
             "Trigger": "CreateAuthChallenge"
@@ -350,8 +350,8 @@
             "Arn"
           ]
         },
-        "FunctionName": "noma-whitelist-triggers-dev-defineAuthChallenge",
-        "UserPoolName": "noma-whitelist",
+        "FunctionName": "noma-whitelist-triggers-prod-defineAuthChallenge",
+        "UserPoolName": "noma-whitelist-prod",
         "UserPoolConfigs": [
           {
             "Trigger": "DefineAuthChallenge"
@@ -374,8 +374,8 @@
             "Arn"
           ]
         },
-        "FunctionName": "noma-whitelist-triggers-dev-preSignUp",
-        "UserPoolName": "noma-whitelist",
+        "FunctionName": "noma-whitelist-triggers-prod-preSignUp",
+        "UserPoolName": "noma-whitelist-prod",
         "UserPoolConfigs": [
           {
             "Trigger": "PreSignUp"
@@ -398,8 +398,8 @@
             "Arn"
           ]
         },
-        "FunctionName": "noma-whitelist-triggers-dev-verifyAuthChallenge",
-        "UserPoolName": "noma-whitelist",
+        "FunctionName": "noma-whitelist-triggers-prod-verifyAuthChallenge",
+        "UserPoolName": "noma-whitelist-prod",
         "UserPoolConfigs": [
           {
             "Trigger": "VerifyAuthChallengeResponse"
@@ -432,7 +432,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "dev",
+                  "prod",
                   "noma-whitelist-triggers",
                   "custom-resources-lambda"
                 ]
@@ -453,7 +453,7 @@
                 {
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-dev-createAuthChallenge"
+                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-prod-createAuthChallenge"
                   },
                   "Action": [
                     "lambda:AddPermission",
@@ -463,7 +463,7 @@
                 {
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-dev-defineAuthChallenge"
+                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-prod-defineAuthChallenge"
                   },
                   "Action": [
                     "lambda:AddPermission",
@@ -473,7 +473,7 @@
                 {
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-dev-preSignUp"
+                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-prod-preSignUp"
                   },
                   "Action": [
                     "lambda:AddPermission",
@@ -483,7 +483,7 @@
                 {
                   "Effect": "Allow",
                   "Resource": {
-                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-dev-verifyAuthChallenge"
+                    "Fn::Sub": "arn:${AWS::Partition}:lambda:*:*:function:noma-whitelist-triggers-prod-verifyAuthChallenge"
                   },
                   "Action": [
                     "lambda:AddPermission",
@@ -512,12 +512,12 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/noma-whitelist-triggers/dev/1642150472444-2022-01-14T08:54:32.444Z/custom-resources.zip"
+          "S3Key": "serverless/noma-whitelist-triggers/prod/1643635507775-2022-01-31T13:25:07.775Z/custom-resources.zip"
         },
-        "FunctionName": "noma-whitelist-triggers-dev-custom-resource-existing-cup",
-        "Handler": "cognitoUserPool/handler.handler",
+        "FunctionName": "noma-whitelist-triggers-prod-custom-resource-existing-cup",
+        "Handler": "cognito-user-pool/handler.handler",
         "MemorySize": 1024,
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 180,
         "Role": {
           "Fn::GetAtt": [
@@ -537,43 +537,43 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-noma-whitelist-triggers-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-noma-whitelist-triggers-prod-ServerlessDeploymentBucketName"
       }
     },
     "CreateAuthChallengeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateAuthChallengeLambdaVersionoPanuMPYyKHJLTdksiMzIUjU4WokflMzRDcgzI0g"
+        "Ref": "CreateAuthChallengeLambdaVersiongtXIAbcbsXMMqsCwrEtwLAA9wIInTcKpW2C7eXhSE9c"
       },
       "Export": {
-        "Name": "sls-noma-whitelist-triggers-dev-CreateAuthChallengeLambdaFunctionQualifiedArn"
+        "Name": "sls-noma-whitelist-triggers-prod-CreateAuthChallengeLambdaFunctionQualifiedArn"
       }
     },
     "DefineAuthChallengeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DefineAuthChallengeLambdaVersionK28HFHjgDhBPrEuLIRPAA8eCPz3CycNNvI0d5Nlw"
+        "Ref": "DefineAuthChallengeLambdaVersionRWAUYPqyDY06VMYbwUuf3oU113lzLiagnWYBSyv91k"
       },
       "Export": {
-        "Name": "sls-noma-whitelist-triggers-dev-DefineAuthChallengeLambdaFunctionQualifiedArn"
+        "Name": "sls-noma-whitelist-triggers-prod-DefineAuthChallengeLambdaFunctionQualifiedArn"
       }
     },
     "PreSignUpLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PreSignUpLambdaVersion6254sq9NPlzCZ9IqLv4fxRJhljISrJoYlDc1VpKA"
+        "Ref": "PreSignUpLambdaVersiondENw6FQX4PUztpeBB7GvUOJJkuhvR4jceD0oe0eE"
       },
       "Export": {
-        "Name": "sls-noma-whitelist-triggers-dev-PreSignUpLambdaFunctionQualifiedArn"
+        "Name": "sls-noma-whitelist-triggers-prod-PreSignUpLambdaFunctionQualifiedArn"
       }
     },
     "VerifyAuthChallengeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "VerifyAuthChallengeLambdaVersiontpDkTzUDr0lCClDpabQZXJHQblRacemptezjQ4qM5c"
+        "Ref": "VerifyAuthChallengeLambdaVersionP0je87fkWmySGofieNJCbuPgY7PCM6pyJcuneD8qw"
       },
       "Export": {
-        "Name": "sls-noma-whitelist-triggers-dev-VerifyAuthChallengeLambdaFunctionQualifiedArn"
+        "Name": "sls-noma-whitelist-triggers-prod-VerifyAuthChallengeLambdaFunctionQualifiedArn"
       }
     }
   }

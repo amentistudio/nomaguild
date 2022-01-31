@@ -1,14 +1,13 @@
 service: noma-whitelist-triggers
 
 custom:
-  USER_POOL_NAME: ${cf:noma-whitelist-cognito-${self:provider.stage}.UserPoolName}
+  USER_POOL_NAME: ${cf:noma-whitelist-cognito-${opt:stage,self:provider.stage}.UserPoolName}
   REGION: ${env:REGION, 'eu-central-1'}
 
 provider:
   name: aws
   region: ${self:custom.REGION}
   runtime: nodejs14.x
-  lambdaHashingVersion: "20201221"
 
 functions:
   createAuthChallenge:
