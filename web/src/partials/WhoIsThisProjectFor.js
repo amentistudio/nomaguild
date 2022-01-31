@@ -1,5 +1,4 @@
 import React from 'react';
-import { ShieldCheckIcon, ShieldExclamationIcon } from '@heroicons/react/outline';
 
 function WhoIsThisProjectFor() {
   return (

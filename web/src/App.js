@@ -3,12 +3,16 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 
 import AOS from 'aos';
 import { focusHandling } from 'cruip-js-toolkit';
+import ReactGA from 'react-ga';
 
 import Home from './pages/Home';
-import Mint from './pages/Mint';
 
 function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     AOS.init({
