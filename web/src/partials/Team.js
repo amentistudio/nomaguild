@@ -11,6 +11,9 @@ function Team() {
       <div className="md:grid md:grid-cols-12 gap-6">
         <div className="col-span-3 text-left sm:mb-10 md:mb-0">
           <img className="mb-4 sm:mx-auto md:mx-0" src={require('../images/team/mummy-ladi.png')} alt="Ladi / Developer" />
+          <div class="w-20 h-20 -mt-14 mb-5 rounded-full overflow-hidden">
+            <img src={require('../images/team/real/ladi.png')} alt="Profile picture of Ladi" class="w-full h-full object-cover" />
+          </div>
           <h3 className="h3 sm:text-xl sm:text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Ladi / Developer
           </h3>
@@ -20,6 +23,9 @@ function Team() {
         </div>
         <div className="col-span-3 text-left">
           <img className="mb-4 sm:mx-auto md:mx-0" src={require('../images/team/mummy-jan.png')} alt="Jan - Design" />
+          <div class="w-20 h-20 -mt-14 mb-5 rounded-full overflow-hidden">
+            <img src={require('../images/team/real/jan.png')} alt="Profile picture of Jan" class="w-full h-full object-cover" />
+          </div>
           <h3 className="h3 sm:text-xl sm:text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Jan / Design
           </h3>
@@ -29,6 +35,9 @@ function Team() {
         </div>
         <div className="col-span-3 text-left">
           <img className="mb-4 sm:mx-auto md:mx-0" src={require('../images/team/mummy-simon.png')} alt="Šimon - Illustrator" />
+          <div class="w-20 h-20 -mt-14 mb-5 rounded-full overflow-hidden">
+            <img src={require('../images/team/real/simon.png')} alt="Profile picture of Simon" class="w-full h-full object-cover" />
+          </div>
           <h3 className="h3 sm:text-xl sm:text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Simon / Illustrator
           </h3>
@@ -38,6 +47,9 @@ function Team() {
         </div>
         <div className="col-span-3 text-left">
           <img className="mb-4 sm:mx-auto md:mx-0" src={require('../images/team/mummy-guide.png')} alt="Mummy Boy - Guide" />
+          <div class="w-20 h-20 -mt-14 mb-5 rounded-full overflow-hidden bg-white">
+            <img src={require('../images/team/real/mummy.png')} alt="Profile picture of Jan" class="w-full h-full object-cover" />
+          </div>
           <h3 className="h3 sm:text-xl sm:text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
             Mummy Boy / Guide
           </h3>
