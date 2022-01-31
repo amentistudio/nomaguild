@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AcademicCapIcon, ArchiveIcon, ChatIcon, AtSymbolIcon } from '@heroicons/react/outline';
+import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon } from '@heroicons/react/outline';
 
 function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -50,12 +50,6 @@ function Header() {
                 <a href="https://delightful-octopus-60f.notion.site/NoMA-Wiki-138fcb2696b342589d3ac8131ce7b2f2" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
                   <ArchiveIcon className="h-5 w-5 mr-2 inline" />
                   Wiki
-                </a>
-              </li>
-              <li>
-                <a href="https://discord.gg/qJDaaYBAkF" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
-                  <ChatIcon className="h-5 w-5 mr-2 inline" />
-                  Discord
                 </a>
               </li>
               <li>
