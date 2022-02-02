@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter, faLinkedin, faArtstation, faTumblrSquare } from "@fortawesome/free-brands-svg-icons";
 
 function Team() {
   return (
@@ -58,6 +60,34 @@ function Team() {
           </p>
         </div>
       </div>
+
+      <div className="md:grid md:grid-cols-12 gap-6">
+        <div className="col-span-3 text-left sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.linkedin.com/in/martincik/" target="_blank" rel="noreferrer" className="pr-2">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+            <a href="https://twitter.com/martincik" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faTwitter} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-3 text-left sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.linkedin.com/in/jan-brat%C4%8Denkov-4a11011b5/" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-3 text-left sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.artstation.com/imonbouzek" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faArtstation} />
+            </a>
+          </p>
+        </div>
+      </div>
+
       <div className="md:grid md:grid-cols-12 gap-6 mt-20">
         <div className="col-span-2 text-center sm:mb-10 md:mb-0">
           <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
@@ -114,6 +144,49 @@ function Team() {
           <p>Game Design</p>
         </div>
       </div>
+
+      <div className="md:grid md:grid-cols-12 gap-6">
+        <div className="col-span-2 text-center sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.linkedin.com/in/marek-karaba-2bb06b1b7" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-2 text-center sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.artstation.com/kristnakazdov" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faArtstation} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-2 text-center sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.linkedin.com/in/tomasoliva1" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-2 text-center sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://discofield.com" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faTumblrSquare} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-2 text-center sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+            <a href="https://www.artstation.com/dosal" target="_blank" rel="noreferrer">
+              <FontAwesomeIcon icon={faArtstation} />
+            </a>
+          </p>
+        </div>
+        <div className="col-span-2 text-center sm:mb-10 md:mb-0">
+          <p className="text-gray-600 mt-5 text-2xl">
+          </p>
+        </div>
+      </div>
+
     </section>
   );
 }
