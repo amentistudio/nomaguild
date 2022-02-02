@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 
 import AOS from 'aos';
 import { focusHandling } from 'cruip-js-toolkit';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 import Home from './pages/Home';
 
@@ -11,7 +11,7 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
   }, [location.pathname, location.search]);
 
   useEffect(() => {
