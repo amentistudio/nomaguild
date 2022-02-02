@@ -7,6 +7,8 @@ import ReactGA from 'react-ga4';
 
 import Home from './pages/Home';
 
+window.addEventListener('load', AOS.refresh);
+
 function App() {
   const location = useLocation();
 
@@ -16,11 +18,11 @@ function App() {
 
   useEffect(() => {
     AOS.init({
-      once: true,
       disable: 'phone',
       duration: 750,
       easing: 'ease-out-quart',
     });
+    AOS.refreshHard();
   });
 
   useEffect(() => {
