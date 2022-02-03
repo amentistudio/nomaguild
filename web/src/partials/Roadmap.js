@@ -110,13 +110,15 @@ function Roadmap() {
         </div>
 
         <div className="max-w-4xl mx-auto mb-20 text-center" style={{ width: 400 }}>
-          <button
-            className="text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
+          <a
+            href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf"
+            className="button inline-block text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
             style={{ background: '#0e0e0e' }}
+            target="_blank" rel="noreferrer"
           >
-            Show whitepaper
+            Read our Whitepaper
             <DownloadIcon className="h-5 w-5 ml-3 inline" />
-          </button>
+          </a>
         </div>
       </div>
     </section>

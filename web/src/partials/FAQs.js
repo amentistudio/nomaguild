@@ -54,9 +54,9 @@ function FAQs() {
             <ul className="list-disc ml-5">
               <li>We are not starting from 0 but we already have a capital we work with ($200k) that is helping us run Amenti studio (see our Whitepaper for more details)</li>
               <li>We're here to stay long term, to prove it we've exposed our names and professions</li>
-              <li>We will not spend the mint money or royalties, but instead invest it and increase our capital that generates monthly income that is helping us run the projects (how? see Whitepaper)</li>
+              <li>We will not spend the mint money or royalties, but instead invest it and increase our capital that generates monthly income that is helping us run the projects (how? see <a href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf" className="text-yellow-400" target="_blank" rel="noreferrer">Whitepaper</a>)</li>
               <li>We are doers with passion for games and game making (proof? see “Amenti studio” and “The Book of Aaru” game we're building over a year)</li>
-              <li>And many more... (see our Whitepaper)</li>
+              <li>And many more... (see our <a href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf" className="text-yellow-400" target="_blank" rel="noreferrer">Whitepaper</a>)</li>
             </ul>
           </FAQ>
           <FAQ question="When are you launching?">
@@ -133,7 +133,7 @@ function FAQs() {
         <h2 className="text-left font-extrabold text-3xl">More questions?</h2>
         <dl className="mt-6 max-w-4xl space-y-6 divide-y divide-gray-800">
           <FAQ question="TLDR version?">
-            Read our <a className="text-yellow-500" href="#" target="_blank" rel="noreferrer">Whitepaper</a>.
+            Read our <a className="text-yellow-500" href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf" target="_blank" rel="noreferrer">Whitepaper</a>.
           </FAQ>
           <FAQ question="Long version?">
             Read our <a className="text-yellow-500" href="https://delightful-octopus-60f.notion.site/NoMA-Wiki-138fcb2696b342589d3ac8131ce7b2f2" target="_blank" rel="noreferrer">Wiki</a>.

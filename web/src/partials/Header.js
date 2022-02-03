@@ -41,7 +41,7 @@ function Header() {
           <nav className="hidden md:flex md:flex-grow">
             <ul className="flex justify-end flex-grow items-center">
               <li>
-                <a href="#" target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
+                <a href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf" target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
                   <AcademicCapIcon className="h-5 w-5 mr-2 inline" />
                   Whitepaper
                 </a>
