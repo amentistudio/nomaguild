@@ -8,7 +8,7 @@ import TraitsAndRarity from '../partials/TraitsAndRarity';
 import Roadmap from '../partials/Roadmap';
 import Team from '../partials/Team';
 import FAQHero from '../partials/FAQHero';
-import FAQ from '../partials/FAQ';
+import FAQs from '../partials/FAQs';
 import Footer from '../partials/Footer';
 
 function Home() {
@@ -24,7 +24,7 @@ function Home() {
         <Roadmap />
         <Team />
         <FAQHero />
-        <FAQ />
+        <FAQs />
       </main>
 
       <Footer />
