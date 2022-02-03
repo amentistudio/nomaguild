@@ -74,7 +74,7 @@ function classNames(...classes) {
 
 function FAQ() {
   return (
-    <section className="my-20 sm:mx-10">
+    <section className="my-20 mx-10">
       {Object.keys(faqs).map((key) => (
         <div className="max-w-4xl mx-auto pb-20" key={key}>
           <h2 className="text-left font-extrabold text-3xl">{key}</h2>

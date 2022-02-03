@@ -6,7 +6,7 @@ function Roadmap() {
     <section>
       <div className="max-w-6xl lg:mx-auto px-4 sm:px-6 mt-20 md:mx-10">
         <div className="pt-16 md:pt-20"></div>
-        <h1 className="h1 lg:text-5xl md:text-4xl sm:text-3xl mb-8 text-center font-red-hat-display font-extrabold" data-aos="fade-down">
+        <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 text-center font-red-hat-display font-extrabold" data-aos="fade-down">
           Roadmap to decentralization
         </h1>
         <div className="mx-20 text-xl text-white text-center">
@@ -28,7 +28,7 @@ function Roadmap() {
             data-aos="fade-right"
           >
             <div className="mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 font-red-hat-display font-extrabold">
                 Core Team Est.
                 <span className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-green-400">DONE</span>
               </h3>
@@ -38,7 +38,7 @@ function Roadmap() {
               </p>
             </div>
             <div className="mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 font-red-hat-display font-extrabold">
                 Funds expansion
                 <span className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-yellow-300">NEXT</span>
               </h3>
@@ -47,7 +47,7 @@ function Roadmap() {
               </p>
             </div>
             <div className="mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
                 NoMA DAO &amp; Treasury
               </h3>
               <p className="text-gray-400 text-center md:text-left sm:mx-20 md:mx-0">
@@ -56,7 +56,7 @@ function Roadmap() {
               </p>
             </div>
             <div className="mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
                 Tokenomics
               </h3>
               <p className="text-gray-400 text-center md:text-left sm:mx-20 md:mx-0">
@@ -69,7 +69,7 @@ function Roadmap() {
 
           <div className="col-start-8 col-span-5 mb-20 md:mt-20" data-aos="fade-left">
             <div className="mb-20 pt-20 mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
                 Secure funding
                 <span className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-green-400">DONE</span>
               </h3>
@@ -79,7 +79,7 @@ function Roadmap() {
               </p>
             </div>
             <div className="mb-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
                 Community Teams
               </h3>
               <p className="text-gray-400 text-center md:text-left sm:mx-20 md:mx-0">
@@ -88,7 +88,7 @@ function Roadmap() {
               </p>
             </div>
             <div className="mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
                 Community Projects
               </h3>
               <p className="text-gray-400 text-center md:text-left sm:mx-20 md:mx-0">
@@ -97,7 +97,7 @@ function Roadmap() {
               </p>
             </div>
             <div className="mt-20">
-              <h3 className="h3 sm:text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
+              <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-red-hat-display font-extrabold">
                 Decentralization
               </h3>
               <ul className="md:list-disc text-gray-400 text-center md:text-left sm:mx-20 md:ml-5 md:mr-0">
