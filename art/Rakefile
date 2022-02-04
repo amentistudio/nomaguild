@@ -11,6 +11,7 @@ require 'nft/collection/generate_collection'
 require 'nft/collection/generate_art'
 require 'nft/collection/generate_metadata'
 require 'nft/collection/check_traits_usage'
+require 'nft/collection/resuffle_collection'
 require 'nft/traits/generate_thumbs'
 require_relative 'configurator'
 
@@ -43,6 +44,13 @@ namespace :collection  do
     Configurator.collection = Nft::Collection::CutCollection.new(
       Configurator.collection,
       ENV['FINAL_COLLECTION_SIZE']
+    ).run
+  end
+
+  desc "Resuffle collection"
+  task resuffle: :dotenv do
+    Configurator.collection = Nft::Collection::ResuffleCollection.new(
+      Configurator.collection
     ).run
   end
 
