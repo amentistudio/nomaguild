@@ -1,6 +1,8 @@
 import React from 'react';
 import { DownloadIcon } from '@heroicons/react/outline';
 
+const whitePaperUrl = 'https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMA-whitepaper-v1.0.pdf';
+
 function Roadmap() {
   return (
     <section>
@@ -194,7 +196,7 @@ function Roadmap() {
           Would you like to know more?
         </h2>
         <a
-          href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf"
+          href={whitePaperUrl}
           className="button inline-block text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
           style={{ background: '#0e0e0e' }}
           target="_blank" rel="noreferrer"

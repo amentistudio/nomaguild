@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon } from '@heroicons/react/outline';
+
+const whitePaperUrl = 'https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMA-whitepaper-v1.0.pdf';
 
 function Footer() {
   return (
@@ -11,7 +12,7 @@ function Footer() {
       <div className="max-w-6xl py-12 md:py-16 -mt-px mx-auto">
         <ul className="flex justify-end flex-grow items-center">
           <li>
-            <a href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf" target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
+            <a href={whitePaperUrl} target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
               <AcademicCapIcon className="h-5 w-5 mr-2 inline" />
               Whitepaper
             </a>

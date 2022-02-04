@@ -1,5 +1,7 @@
 import React from 'react';
 
+const whitePaperUrl = 'https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMA-whitepaper-v1.0.pdf';
+
 function FAQHero() {
   return (
     <section
@@ -15,7 +17,7 @@ function FAQHero() {
           FAQ
         </h1>
         <div className="mx-10 text-xl text-white text-center">
-          If FAQ is not helpful, please read our <a className="underline text-yellow-300" target="_blank" rel="noreferrer" href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf">Whitepaper</a> plus visit our <a className="underline text-yellow-300" target="_blank" rel="noreferrer" href="https://delightful-octopus-60f.notion.site/NoMA-Wiki-138fcb2696b342589d3ac8131ce7b2f2">Wiki</a> or DM us on &nbsp;
+          If FAQ is not helpful, please read our <a className="underline text-yellow-300" target="_blank" rel="noreferrer" href={whitePaperUrl}>Whitepaper</a> plus visit our <a className="underline text-yellow-300" target="_blank" rel="noreferrer" href="https://delightful-octopus-60f.notion.site/NoMA-Wiki-138fcb2696b342589d3ac8131ce7b2f2">Wiki</a> or DM us on &nbsp;
           <a className="underline text-yellow-300" href="https://twitter.com/nomaclub">
             Twitter
           </a>

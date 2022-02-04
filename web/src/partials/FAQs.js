@@ -6,6 +6,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
+const whitePaperUrl = "https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMA-whitepaper-v1.0.pdf";
+
 const FAQ = ({ question, children }) =>
   <Disclosure as="div" key={question} className="pt-6">
     {({ open }) => (
@@ -131,7 +133,7 @@ function FAQs() {
         <h2 className="text-left font-extrabold text-3xl">More questions?</h2>
         <dl className="mt-6 max-w-4xl space-y-6 divide-y divide-gray-800">
           <FAQ question="TLDR version?">
-            Read our <a className="text-yellow-500" href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf" target="_blank" rel="noreferrer">Whitepaper</a>.
+            Read our <a className="text-yellow-500" href={whitePaperUrl} target="_blank" rel="noreferrer">Whitepaper</a>.
           </FAQ>
           <FAQ question="Long version?">
             Read our <a className="text-yellow-500" href="https://delightful-octopus-60f.notion.site/NoMA-Wiki-138fcb2696b342589d3ac8131ce7b2f2" target="_blank" rel="noreferrer">Wiki</a>.
