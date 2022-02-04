@@ -11,7 +11,7 @@ function FAQHero() {
     >
       <div className="max-w-5xl mx-auto px-4">
         <div className="pt-8"></div>
-        <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 text-center font-red-hat-display font-extrabold" data-aos="fade-down">
+        <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 text-center font-extrabold" data-aos="fade-down">
           FAQ
         </h1>
         <div className="mx-10 text-xl text-white text-center">

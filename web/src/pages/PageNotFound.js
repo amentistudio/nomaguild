@@ -35,7 +35,7 @@ function PageNotFound() {
                     aria-hidden="true"
                   ></div>
                   <div className="sm:absolute w-full">
-                    <h1 className="h3 font-red-hat-display mb-8">
+                    <h1 className="h3 mb-8">
                       Hm, the page you were looking for doesn't exist anymore.
                     </h1>
                     <Link className="btn text-white bg-teal-500 hover:bg-teal-400 inline-flex items-center" to="/">

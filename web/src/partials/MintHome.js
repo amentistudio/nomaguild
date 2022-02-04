@@ -212,7 +212,7 @@ function MintHome() {
           <div className="md:grid md:grid-cols-12 md:gap-0 lg:gap-0 items-center relative">
             {/* Content */}
             <div className="md:col-span-5 lg:col-span-5 mb-8 md:mb-0 text-center md:text-left sm:pb-12">
-              <h1 className="h1 lg:text-5xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
+              <h1 className="h1 lg:text-5xl mb-8 font-extrabold" data-aos="fade-down">
                 Mint
               </h1>
               <p className="text-xl text-white" data-aos="fade-down" data-aos-delay="150">

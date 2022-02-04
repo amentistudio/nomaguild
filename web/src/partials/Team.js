@@ -7,7 +7,7 @@ function Team() {
     <section className="max-w-6xl mx-auto px-10 pb-20">
       <div className="pt-20"></div>
       <h5 className="h5 mb-4 font-bold text-yellow-300 md:text-left text-center">WHO IS BEHIND THIS PROJECT?</h5>
-      <h1 className="h1 lg:text-5xl md:text-4xl text-center md:text-left text-3xl mb-8 font-red-hat-display font-extrabold" data-aos="fade-down">
+      <h1 className="h1 lg:text-5xl md:text-4xl text-center md:text-left text-3xl mb-8 font-extrabold" data-aos="fade-down">
         Team
       </h1>
       <div className="md:grid md:grid-cols-12 gap-6 mt-20 md:mt-0">
@@ -16,7 +16,7 @@ function Team() {
           <div className="w-20 h-20 -mt-14 mb-5 mx-auto md:mx-0 rounded-full overflow-hidden">
             <img src={require('../images/team/real/ladi.png')} alt="Ladi" className="w-full h-full object-cover" />
           </div>
-          <h3 className="h3 text-xl text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
+          <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Ladi / Developer
           </h3>
           <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
@@ -36,7 +36,7 @@ function Team() {
           <div className="w-20 h-20 -mt-14 mb-5 mx-auto md:mx-0 rounded-full overflow-hidden">
             <img src={require('../images/team/real/jan.png')} alt="Jan" className="w-full h-full object-cover" />
           </div>
-          <h3 className="h3 text-xl text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
+          <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Jan / Design
           </h3>
           <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
@@ -53,7 +53,7 @@ function Team() {
           <div className="w-20 h-20 -mt-14 mb-5 mx-auto md:mx-0 rounded-full overflow-hidden">
             <img src={require('../images/team/real/simon.png')} alt="Simon" className="w-full h-full object-cover" />
           </div>
-          <h3 className="h3 text-xl text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
+          <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Simon / Illustrator
           </h3>
           <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
@@ -70,7 +70,7 @@ function Team() {
           <div className="w-20 h-20 -mt-14 mb-5 mx-auto md:mx-0 rounded-full overflow-hidden bg-white">
             <img src={require('../images/team/real/mummy.png')} alt="Jan" className="w-full h-full object-cover" />
           </div>
-          <h3 className="h3 text-xl text-center md:text-left mb-2 font-red-hat-display font-extrabold" data-aos="fade-down">
+          <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Mummy Boy / Guide
           </h3>
           <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
@@ -107,7 +107,7 @@ function Team() {
       </div>
 
       <div className="mt-20 text-center">
-        <h5 className="h5 text-center mx-8 text-yellow-300 font-red-hat-display font-extrabold" data-aos="fade-down">
+        <h5 className="h5 text-center mx-8 text-yellow-300 font-extrabold" data-aos="fade-down">
           AMENTI CREW
         </h5>
         <div className="grid grid-cols-4 md:grid-cols-12 gap-6 mt-20">
@@ -115,7 +115,7 @@ function Team() {
             <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
               <img src={require('../images/team/real/marek.png')} alt="Marek" className="w-full h-full object-cover" />
             </div>
-            <h3 className="h3 sm:text-xl text-center mt-2 font-red-hat-display font-bold" data-aos="fade-down">
+            <h3 className="h3 sm:text-xl text-center mt-2 font-bold" data-aos="fade-down">
               Marek
             </h3>
             <p>Developer</p>
@@ -129,7 +129,7 @@ function Team() {
             <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
               <img src={require('../images/team/real/kristyna.png')} alt="Kristyna" className="w-full h-full object-cover" />
             </div>
-            <h3 className="h3 sm:text-xl text-center mt-2 font-red-hat-display font-bold" data-aos="fade-down">
+            <h3 className="h3 sm:text-xl text-center mt-2 font-bold" data-aos="fade-down">
               Kristyna
             </h3>
             <p>Concept Art</p>
@@ -143,7 +143,7 @@ function Team() {
             <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
               <img src={require('../images/team/real/tomas.png')} alt="Tomas" className="w-full h-full object-cover" />
             </div>
-            <h3 className="h3 sm:text-xl text-center mt-2 font-red-hat-display font-bold" data-aos="fade-down">
+            <h3 className="h3 sm:text-xl text-center mt-2 font-bold" data-aos="fade-down">
               Tomas
             </h3>
             <p>Music</p>
@@ -157,7 +157,7 @@ function Team() {
             <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
               <img src={require('../images/team/real/honza.png')} alt="Honza" className="w-full h-full object-cover" />
             </div>
-            <h3 className="h3 sm:text-xl text-center mt-2 font-red-hat-display font-bold" data-aos="fade-down">
+            <h3 className="h3 sm:text-xl text-center mt-2 font-bold" data-aos="fade-down">
               Honza
             </h3>
             <p>SFX</p>
@@ -171,7 +171,7 @@ function Team() {
             <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
               <img src={require('../images/team/real/lukas.png')} alt="Lukas" className="w-full h-full object-cover" />
             </div>
-            <h3 className="h3 sm:text-xl text-center mt-2 font-red-hat-display font-bold" data-aos="fade-down">
+            <h3 className="h3 sm:text-xl text-center mt-2 font-bold" data-aos="fade-down">
               Lukas
             </h3>
             <p>3D &amp; VFX</p>
@@ -185,7 +185,7 @@ function Team() {
             <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
               <img src={require('../images/team/real/davidtomas.png')} alt="David Tomas" className="w-full h-full object-cover" />
             </div>
-            <h3 className="h3 sm:text-xl text-center mt-2 font-red-hat-display font-bold" data-aos="fade-down">
+            <h3 className="h3 sm:text-xl text-center mt-2 font-bold" data-aos="fade-down">
               David Tomas
             </h3>
             <p>Game Design</p>
