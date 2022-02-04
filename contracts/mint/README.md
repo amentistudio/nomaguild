@@ -1,6 +1,5 @@
 ### Mint contract
 
-
 ```sh
 npm intall -g truffle
 
@@ -8,7 +7,7 @@ truffle compile
 truffle migrate --network ID (inside truffle-config.js)
 ```
 
-Solidity tools:
+### Solidity tools
 ```sh
 pip3 install slither-analyzer
 pip3 install solc-select
@@ -20,12 +19,10 @@ solc-select use 0.8.1
 https://blockheroes.dev/test-smart-contracts-on-mainnet/
 
 - Ganache (https://trufflesuite.com/ganache/)
-
 - Metamask setup (https://dapp-world.com/blogs/01/how-to-connect-ganache-with-metamask-and-deploy-smart-contracts-on-remix-without-1619847868947)
 
 
 ```sh
-
 # Truffle debugging
 truffle develop --log
 
@@ -48,5 +45,5 @@ web3.eth.getAccounts();
 truffle migrate --network mumbai
 ```
 
-### Get whitelist
+### Get list of user in the whitelist 
 aws cognito-idp list-users --user-pool-id eu-central-1_Jrcnu0Nyl --limit 5 | grep -o '"Username": "[^"]*' | grep -o '[^"]*$'

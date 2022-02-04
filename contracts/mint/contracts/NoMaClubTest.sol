@@ -12,16 +12,19 @@ contract NoMaClubTest is NoMaClub {
         string memory _symbol,
         string memory _name,
         string memory baseURI,
-        bytes32 _merkleRoot,
-        address _creatorsAdreess
-    ) NoMaClub(_symbol, _name, baseURI, _merkleRoot, _creatorsAdreess) {}
+        bytes32 _merkleRoot
+    ) NoMaClub(_symbol, _name, baseURI, _merkleRoot) {}
 
     function openPublicSale() public view returns (bool) {
-        return PUBLIC_SALE;
+        return IS_PUBLIC_SALE_OPEN;
     }
 
     function openWhitelistSale() public view returns (bool) {
-        return WHITELIST_SALE;
+        return IS_WHITELIST_SALE_OPEN;
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return mummiesMinted();
     }
 
     function getBaseURI() public view returns (string memory) {

@@ -28,8 +28,7 @@ contract("NoMaClub", async accounts => {
       beforeEach(async () => {
         instance = await NoMaClub.new(
           "NOMA", "NoMa", "baseURL",
-          root,
-          "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+          root
         );
       })
 
@@ -45,8 +44,7 @@ contract("NoMaClub", async accounts => {
       beforeEach(async () => {
         instance = await NoMaClub.new(
           "NOMA", "NoMa", "baseURL",
-          root,
-          "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+          root
         );
       })
 
@@ -67,47 +65,48 @@ contract("NoMaClub", async accounts => {
       beforeEach(async () => {
         instance = await NoMaClub.new(
           "NOMA", "NoMa", "baseURL",
-          root,
-          accounts[2]
+          root
         );
       })
 
-      it("should allow withdraw all to owner", async () => {
+      it("should allow widthdraw to owner", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint({
+        await instance.publicMint(1, {
           from: accounts[1], value: web3.utils.toWei(".2", "ether")
         })
-        let developer_balance_bm_wei = await web3.eth.getBalance(accounts[2]);
-        await instance.withdrawAll();
+        let owner = await instance.owner();
+        let owner_balance_bm_wei = await web3.eth.getBalance(owner);
+        await instance.widthdraw();
 
         expect(Number(await instance.totalSupply())).to.equal(1)
+        // Contract
+        let contract_balance_wei = await web3.eth.getBalance(instance.address);
+        expect(contract_balance_wei).to.equal(web3.utils.toWei("0", "ether"));
         // Owner
-        let owner_balance_wei = await web3.eth.getBalance(instance.address);
-        expect(owner_balance_wei).to.equal(web3.utils.toWei("0", "ether"));
-        // Developer
-        let developer_balance_wei = await web3.eth.getBalance(accounts[2]);
-        expect(Number(developer_balance_wei)).to.be.above(Number(developer_balance_bm_wei));
+        let owner_balance_wei = await web3.eth.getBalance(owner);
+        expect(Number(owner_balance_wei)).to.be.above(Number(owner_balance_bm_wei));
       });
 
-      it("should not allow calling withdraw all to not owners", async () => {
+      it("should not allow calling widthdraw to not owners", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint({
-          from: accounts[1], value: web3.utils.toWei(".05", "ether")
+        await instance.publicMint(1, {
+          from: accounts[1], value: web3.utils.toWei(".2", "ether")
         })
-        let developer_balance_bm_wei = await web3.eth.getBalance(accounts[2]);
+        let owner = await instance.owner();
+        let owner_balance_bm_wei = await web3.eth.getBalance(owner);
         truffleAssert.reverts(
-          instance.withdrawAll({ from: accounts[2] }),
+          instance.widthdraw({ from: accounts[2] }),
           null,
           "only owner able to withdraw all"
         );
 
         expect(Number(await instance.totalSupply())).to.equal(1)
+        // Contract
+        let contract_balance_wei = await web3.eth.getBalance(instance.address);
+        expect(contract_balance_wei).to.equal(web3.utils.toWei("0.2", "ether"));
         // Owner
-        let owner_balance_wei = await web3.eth.getBalance(instance.address);
-        expect(owner_balance_wei).to.equal(web3.utils.toWei("0.05", "ether"));
-        // Developer
-        let developer_balance_wei = await web3.eth.getBalance(accounts[2]);
-        expect(developer_balance_wei).to.equal(developer_balance_bm_wei);
+        let owner_balance_wei = await web3.eth.getBalance(owner);
+        expect(owner_balance_wei).to.equal(owner_balance_bm_wei);
       });
     });
 
@@ -116,8 +115,7 @@ contract("NoMaClub", async accounts => {
       beforeEach(async () => {
         instance = await NoMaClub.new(
           "NOMA", "NoMa", "baseURL",
-          root,
-          "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+          root
         );
       })
 
@@ -152,8 +150,7 @@ contract("NoMaClub", async accounts => {
       beforeEach(async () => {
         instance = await NoMaClub.new(
           "NOMA", "NoMa", "baseURL",
-          root,
-          "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+          root
         );
       })
 
@@ -188,15 +185,14 @@ contract("NoMaClub", async accounts => {
         beforeEach(async () => {
           instance = await NoMaClub.new(
             "NOMA", "NoMa", "baseURL",
-            root,
-            "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+            root
           );
         })
 
         it("should mint an mummy with correct price", async () => {
           proof = merkleTree.getHexProof(leafs[0]);
           await instance.setWhitelistSale(true)
-          await instance.whitelistMint(proof, {
+          await instance.whitelistMint(proof, 1, {
             from: accounts[0], value: web3.utils.toWei(".05", "ether")
           })
 
@@ -209,7 +205,7 @@ contract("NoMaClub", async accounts => {
           proof = merkleTree.getHexProof(leafs[0]);
           await instance.setWhitelistSale(true)
           truffleAssert.reverts(
-            instance.whitelistMint(proof, {
+            instance.whitelistMint(proof, 1, {
               from: accounts[0], value: web3.utils.toWei(".01", "ether")
             }),
             null,
@@ -225,7 +221,7 @@ contract("NoMaClub", async accounts => {
           proof = merkleTree.getHexProof(leafs[0]);
           await instance.setWhitelistSale(true)
           truffleAssert.reverts(
-            instance.whitelistMint(proof, {
+            instance.whitelistMint(proof, 1, {
               // hint: account[2] isn't part of whitelist
               from: accounts[2], value: web3.utils.toWei(".05", "ether")
             }),
@@ -247,14 +243,13 @@ contract("NoMaClub", async accounts => {
         beforeEach(async () => {
           instance = await NoMaClub.new(
             "NOMA", "NoMa", "baseURL",
-            root,
-            "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+            root
           );
         })
 
         it("should mint an mummy with correct price", async () => {
           await instance.setPublicSale(true)
-          await instance.publicMint({
+          await instance.publicMint(1, {
             from: accounts[0], value: web3.utils.toWei(".2", "ether")
           })
 
@@ -266,7 +261,7 @@ contract("NoMaClub", async accounts => {
         it("should mint an mummy with bellow price", async () => {
           await instance.setPublicSale(true)
           truffleAssert.reverts(
-            instance.publicMint({
+            instance.publicMint(1, {
               from: accounts[1], value: web3.utils.toWei(".01", "ether"),
             }),
             null,
@@ -280,15 +275,14 @@ contract("NoMaClub", async accounts => {
         beforeEach(async () => {
           instance = await NoMaClub.new(
             "NOMA", "NoMa", "baseURL",
-            root,
-            "0x1f794DFb9Bf6a540dEf3f2540c76a08d46D1abE5"
+            root
           );
         })
 
         it("should not mint an mummy", async () => {
           await instance.setPublicSale(false)
           truffleAssert.reverts(
-            instance.publicMint({
+            instance.publicMint(1, {
               from: accounts[2], value: web3.utils.toWei(".2", "ether")
             }),
             null,
