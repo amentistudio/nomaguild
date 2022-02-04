@@ -104,7 +104,7 @@ function HeroHome() {
                 Welcome to the NoMA club
               </h1>
               <p className="text-xl md:mx-0 sm:mx-20 text-white" data-aos="fade-down" data-aos-delay="150">
-                <b>No Mummy Allowed</b> is a club for all the people who love games beyond the grave. 
+                We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the game they want to play.
                 <br />
                 <br />
                 <span title="8192">2<sup>13</sup></span> unique mummies will rise on <span title="EU: 22.02.2022">02/22/2022</span>.

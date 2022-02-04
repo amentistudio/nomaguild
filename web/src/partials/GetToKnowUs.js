@@ -16,10 +16,6 @@ function GetToKnowUs() {
               Shareholders' wallets have replaced them. And we hate it.
               <br />
               <br />
-              We are on the mission to create a community-owned studio that allows players
-              to become investors and decision-makers in the game they want to play.
-              <br />
-              <br />
               You can use the NoMA project and our know-how as the blueprint for starting your studio.
             </div>
           </div>
