@@ -99,15 +99,16 @@ function HeroHome() {
           {/* Hero content */}
           <div className="md:grid md:grid-cols-12 md:gap-0 lg:gap-0 items-center relative">
             {/* Content */}
-            <div className="md:col-span-5 lg:col-span-5 mb-8 md:mb-0 text-center md:text-left sm:pb-12">
+            <div className="md:col-span-6 lg:col-span-6 mb-8 text-center md:text-left sm:pb-12">
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
                 Welcome to the NoMA club
               </h1>
               <p className="text-xl md:mx-0 sm:mx-20 text-white" data-aos="fade-down" data-aos-delay="150">
+                No Mummy Allowed is a club for all the people who love games beyond the grave.
+                <br />
+                <br />
                 We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the game they want to play.
                 <br />
-                <br />
-                <span title="8192">2<sup>13</sup></span> unique mummies will rise on <span title="EU: 22.02.2022">02/22/2022</span>.
                 <br />
                 Get on the whitelist to claim your spot!
               </p>
@@ -134,7 +135,7 @@ function HeroHome() {
 
             {/* Mobile mockup */}
             <div
-              className="md:col-span-7 lg:col-span-7 place-self-end text-center md:text-right"
+              className="md:col-span-6 lg:col-span-6 place-self-end text-center md:text-right"
               data-aos="fade-up"
               data-aos-delay="450"
             >

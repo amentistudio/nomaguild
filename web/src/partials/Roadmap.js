@@ -99,7 +99,7 @@ function Roadmap() {
         </div>
       </div>
 
-      <div className="max-w-4xl lg:mx-auto md:mx-10 sm:hidden md:block">
+      <div className="max-w-4xl lg:mx-auto md:mx-10 hidden md:block">
         <div className="md:grid md:grid-cols-12">
           <div
             className="col-start-1 col-end-7 md:pt-20 md:pr-20"
@@ -187,18 +187,21 @@ function Roadmap() {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="max-w-4xl mx-auto mb-20 text-center" style={{ width: 400 }}>
-          <a
-            href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf"
-            className="button inline-block text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
-            style={{ background: '#0e0e0e' }}
-            target="_blank" rel="noreferrer"
-          >
-            Read our Whitepaper
-            <DownloadIcon className="h-5 w-5 ml-3 inline" />
-          </a>
-        </div>
+      <div className="max-w-4xl mx-auto mb-20 text-center" style={{ width: 400 }}>
+        <h2 className="h2 text-2xl text-center md:text-left mt-20 mb-8 md:my-8 text-left font-extrabold">
+          Would you like to know more?
+        </h2>
+        <a
+          href="https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMa-whitepaper-web.pdf"
+          className="button inline-block text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
+          style={{ background: '#0e0e0e' }}
+          target="_blank" rel="noreferrer"
+        >
+          Read our Whitepaper
+          <DownloadIcon className="h-5 w-5 ml-3 inline" />
+        </a>
       </div>
     </section>
   );
