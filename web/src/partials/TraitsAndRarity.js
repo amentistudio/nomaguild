@@ -15,41 +15,24 @@ function TraitsAndRarity() {
           </div>
         </div>
 
-        <div className="pt-20 relative" style={{ height: 500 }}>
+        <div className="pt-20 mx-10">
           <img
-            className="absolute bottom-0"
-            style={{ left: '10vw', maxWidth: '20vw' }}
+            className="mx-auto hidden md:block"
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-common.png')}
-            alt="Common rarity mummy"
+            src={require('../images/mumie-web-lg.png')}
+            alt="Mummy panel large"
           />
           <img
-            className="absolute bottom-0"
-            style={{ left: '20vw', maxWidth: '25vw' }}
+            className="mx-auto hidden sm:block md:hidden"
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-extraordinary.png')}
-            alt="Extraordinary rarity mummy"
+            src={require('../images/mumie-web-md.png')}
+            alt="Mummy panel middle"
           />
           <img
-            className="absolute bottom-0"
-            style={{ left: '67vw', maxWidth: '20vw' }}
+            className="mx-auto block sm:hidden"
             data-aos="fade-up"
-            src={require('../images/rarity/mummy-rare.png')}
-            alt="Rare rarity mummy"
-          />
-          <img
-            className="absolute bottom-0"
-            style={{ left: '55vw', maxWidth: '25vw' }}
-            data-aos="fade-up"
-            src={require('../images/rarity/mummy-exceptional.png')}
-            alt="Exceptional rarity mummy"
-          />
-          <img
-            className="absolute bottom-0"
-            style={{ left: '35vw', maxWidth: '30vw' }}
-            data-aos="fade-up"
-            src={require('../images/rarity/mummy-legendary.png')}
-            alt="Legendary rarity mummy"
+            src={require('../images/mumie-web-xs.png')}
+            alt="Mummy panel small"
           />
         </div>
       </section>
