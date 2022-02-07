@@ -2,15 +2,15 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
+import "./ERC721A.sol";
 
 // TODO: Make Burnable + use Counter
-contract NoMaClub is ERC721, IERC2981, ReentrancyGuard, Ownable  {
+contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable  {
     using Counters for Counters.Counter;
 
     // Constants
@@ -26,55 +26,50 @@ contract NoMaClub is ERC721, IERC2981, ReentrancyGuard, Ownable  {
     bytes32 internal merkleRoot;
     string public baseTokenURI;
 
-    // Maps
-    mapping(address => uint256) public saleClaimed;
-
     // Switches
     bool internal IS_WHITELIST_SALE_OPEN = false;
     bool internal IS_PUBLIC_SALE_OPEN = false;
 
-    Counters.Counter private mummyCounter;
     Counters.Counter private whitelistedMummyCounter;
-
 
     event WhitelistSaleEvent(bool pause);
     event PublicSaleEvent(bool pause);
-    event MummyMinted(uint256 indexed id, address _to);
 
     constructor(
         string memory _symbol,
         string memory _name,
         string memory baseURI,
         bytes32 _merkleRoot
-    ) ERC721(_symbol, _name) {
+    ) ERC721A(_symbol, _name, MINT_LIMIT_PER_WALLET, MAX_MUMMIES) {
         merkleRoot = _merkleRoot;
         setBaseURI(baseURI);
     }
 
     modifier notSoldOut() {
-        require(mummiesMinted() <= MAX_MUMMIES, "Soldout!");
+        require(totalSupply() <= MAX_MUMMIES, "Soldout!");
         _;
     }
 
     modifier whitelistSaleIsOpen() {
         require(IS_WHITELIST_SALE_OPEN, "Whitelist sales not open");
         require(whitelistedMummiesMinted() <= MAX_WHITELISTED_MINTS, "Whitelist soldout!");
-        require(mummiesMinted() <= MAX_MUMMIES, "Soldout!");
+        require(totalSupply() <= MAX_MUMMIES, "Soldout!");
         _;
     }
 
     modifier publicSaleIsOpen() {
         require(IS_PUBLIC_SALE_OPEN, "Public sales not open");
-        require(mummiesMinted() <= MAX_MUMMIES, "Soldout!");
+        require(totalSupply() <= MAX_MUMMIES, "Soldout!");
         _;
     }
 
+   modifier callerIsUser() {
+        require(tx.origin == msg.sender, "The caller is another contract");
+        _;
+   }
+
     function whitelistedMummiesMinted() public view returns (uint256) {
         return whitelistedMummyCounter.current();
-    }
-
-    function mummiesMinted() public view returns (uint256) {
-        return mummyCounter.current();
     }
 
     function setBaseURI(string memory baseURI) public onlyOwner {
@@ -85,18 +80,11 @@ contract NoMaClub is ERC721, IERC2981, ReentrancyGuard, Ownable  {
         return baseTokenURI;
     }
 
-    function allowedMintCount(address _to) public view returns (uint256) {
-        return MINT_LIMIT_PER_WALLET - saleClaimed[_to];
-    }
-
-    function updateAllowedMintCount(address _to, uint256 count) private {
-        saleClaimed[_to] += count;
-    }
-
     function whitelistMint(bytes32[] calldata _merkleProof, uint256 count)
         public
         payable
         nonReentrant
+        callerIsUser
         whitelistSaleIsOpen
     {
         address _to = msg.sender;
@@ -111,47 +99,29 @@ contract NoMaClub is ERC721, IERC2981, ReentrancyGuard, Ownable  {
             "Not whitelisted"
         );
 
-        // Check allowance
-        if (allowedMintCount(_to) >= count) {
-            updateAllowedMintCount(_to, count);
-        } else {
-            revert("Minting limit exceeded");
-        }
+        require(whitelistedMummiesMinted() + count <= MAX_WHITELISTED_MINTS, "Too many");
 
         // Mint
         for (uint256 i = 0; i < count; i++) {
             whitelistedMummyCounter.increment();
-            mummyCounter.increment();
-            _mintMummy(_to, mummiesMinted());
         }
+        _mintMummy(_to, count);
     }
 
-    function publicMint(uint256 count) public payable publicSaleIsOpen {
+    function publicMint(uint256 count) public payable callerIsUser publicSaleIsOpen {
         address _to = msg.sender;
 
         // Verify there's enough money sent
         require(msg.value >= PUBLIC_PRICE * count, "Insufficient payment per item");
 
-        // Check allowance
-        if (allowedMintCount(_to) >= count) {
-            updateAllowedMintCount(_to, count);
-        } else {
-            revert("Minting limit exceeded");
-        }
-
         // Mint
-        for (uint256 i = 0; i < count; i++) {
-            mummyCounter.increment();
-            _mintMummy(_to, mummiesMinted());
-        }
+        _mintMummy(_to, count);
     }
 
     // Only OWNER
 
-    function giveawayMint(address _to) public onlyOwner notSoldOut {
-        updateAllowedMintCount(_to, 1);
-        mummyCounter.increment();
-        _mintMummy(_to, mummiesMinted());
+    function giveawayMint(address _to, uint256 _quantity) public onlyOwner notSoldOut {
+        _mintMummy(_to, _quantity);
     }
 
     function setWhitelistSale(bool _b) public onlyOwner {
@@ -182,7 +152,7 @@ contract NoMaClub is ERC721, IERC2981, ReentrancyGuard, Ownable  {
         public
         view
         virtual
-        override(ERC721, IERC165)
+        override(ERC721A, IERC165)
         returns (bool)
     {
         return (
@@ -193,9 +163,7 @@ contract NoMaClub is ERC721, IERC2981, ReentrancyGuard, Ownable  {
 
     // PRIVATE
 
-    function _mintMummy(address _to, uint256 _mummyId) private {
-        _safeMint(_to, _mummyId);
-
-        emit MummyMinted(_mummyId, _to);
+    function _mintMummy(address _to, uint256 _quantity) private {
+        _safeMint(_to, _quantity);
     }
 }

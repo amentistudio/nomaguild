@@ -23,10 +23,6 @@ contract NoMaClubTest is NoMaClub {
         return IS_WHITELIST_SALE_OPEN;
     }
 
-    function totalSupply() public view returns (uint256) {
-        return mummiesMinted();
-    }
-
     function getBaseURI() public view returns (string memory) {
         return baseTokenURI;
     }

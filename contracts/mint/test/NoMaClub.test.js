@@ -1,18 +1,23 @@
+const chai = require('chai');
 const truffleAssert = require("truffle-assertions");
-const { MerkleTree } = require('merkletreejs')
-const keccak256 = require('keccak256')
+const { BN } = require('@openzeppelin/test-helpers');
+const { MerkleTree } = require('merkletreejs');
+const keccak256 = require('keccak256');
+const expect = require('chai').expect;
+chai.use(require('chai-bn')(BN));
 
 // Runs before all tests in this block.
 // Read about .new() VS .deployed() here:
 // https://twitter.com/zulhhandyplast/status/1026181801239171072
 const NoMaClub = artifacts.require("NoMaClubTest");
+const { shouldSupportInterfaces } = require('./utils/SupportsInterface.behavior');
 
 // Scenarios:
-// Sold out, burnable
+// Sold out, burnable, multiple mints
 
 contract("NoMaClub", async accounts => {
-  describe("setters", async () => {
-    let proof;
+
+  describe("supports interfaces", async () => {
     let root;
     let merkleTree;
 
@@ -23,7 +28,31 @@ contract("NoMaClub", async accounts => {
       root = merkleTree.getRoot();
     });
 
-    context("baseURI", async () => {
+    ['ERC2981', 'ERC165', 'ERC721', 'ERC721Enumerable', 'ERC721Metadata'].map(interface => {
+      it(interface, async () => {
+        shouldSupportInterfaces(
+          await NoMaClub.new(
+            "NOMA", "NoMa", "baseURL",
+            root
+          ),
+          [interface]
+        );
+      });
+    })
+  });
+
+  describe("royalties support (aka ERC2981)", async () => {
+    let root;
+    let merkleTree;
+
+    before(async () => {
+      whitelist = [accounts[0], accounts[1]];
+      leafs = whitelist.map(addr => keccak256(addr));
+      merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
+      root = merkleTree.getRoot();
+    });
+
+    context("royaltyInfo()", async () => {
       let instance;
       beforeEach(async () => {
         instance = await NoMaClub.new(
@@ -32,35 +61,27 @@ contract("NoMaClub", async accounts => {
         );
       })
 
-      it("should allow set base uri to owner", async () => {
-        expect(await instance.getBaseURI()).to.equal("baseURL")
-        await instance.setBaseURI("new URI")
-        expect(await instance.getBaseURI()).to.equal("new URI")
+      it("should return 10% royalty rate", async () => {
+        const price = await instance.WHITELIST_PRICE();
+        const royalty = new BN(price * .1);
+        const royaltyInfo = await instance.royaltyInfo(1, price);
+        expect(royaltyInfo[1]).to.be.bignumber.equal(royalty);
       });
     });
+  });
 
-    context("whitelist sale", async () => {
-      let instance;
-      beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
-      })
+  describe("transfers", async () => {
+    let root;
+    let merkleTree;
 
-      it("should allow turning on and off", async () => {
-        await instance.setWhitelistSale(true)
-        expect(await instance.openWhitelistSale()).to.equal(true)
-        await instance.setWhitelistSale(false)
-        expect(await instance.openWhitelistSale()).to.equal(false)
-      });
-
-      it("should start with white sale off", async () => {
-        expect(await instance.openWhitelistSale()).to.equal(false)
-      });
+    before(async () => {
+      whitelist = [accounts[0], accounts[1]];
+      leafs = whitelist.map(addr => keccak256(addr));
+      merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
+      root = merkleTree.getRoot();
     });
 
-    context("withdrawAll", async () => {
+    context("withdraw()", async () => {
       let instance;
       beforeEach(async () => {
         instance = await NoMaClub.new(
@@ -109,8 +130,20 @@ contract("NoMaClub", async accounts => {
         expect(owner_balance_wei).to.equal(owner_balance_bm_wei);
       });
     });
+  });
 
-    context("giveaway mint", async () => {
+  describe("setters", async () => {
+    let root;
+    let merkleTree;
+
+    before(async () => {
+      whitelist = [accounts[0], accounts[1]];
+      leafs = whitelist.map(addr => keccak256(addr));
+      merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
+      root = merkleTree.getRoot();
+    });
+
+    context("baseURI", async () => {
       let instance;
       beforeEach(async () => {
         instance = await NoMaClub.new(
@@ -119,28 +152,31 @@ contract("NoMaClub", async accounts => {
         );
       })
 
-      it("should allow calling giveaway to owner", async () => {
-        await instance.setWhitelistSale(false)
-        await instance.setPublicSale(false)
-        await instance.giveawayMint(accounts[2], { from: accounts[0] });
+      it("should allow set base uri to owner", async () => {
+        expect(await instance.getBaseURI()).to.equal("baseURL")
+        await instance.setBaseURI("new URI")
+        expect(await instance.getBaseURI()).to.equal("new URI")
+      });
+    });
 
-        expect(Number(await instance.totalSupply())).to.equal(1)
-        let balance_wei = await web3.eth.getBalance(instance.address);
-        expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+    context("whitelist sale", async () => {
+      let instance;
+      beforeEach(async () => {
+        instance = await NoMaClub.new(
+          "NOMA", "NoMa", "baseURL",
+          root
+        );
+      })
+
+      it("should allow turning on and off", async () => {
+        await instance.setWhitelistSale(true)
+        expect(await instance.openWhitelistSale()).to.equal(true)
+        await instance.setWhitelistSale(false)
+        expect(await instance.openWhitelistSale()).to.equal(false)
       });
 
-      it("should not allow calling giveaway to not owners", async () => {
-        await instance.setWhitelistSale(false)
-        await instance.setPublicSale(false)
-        truffleAssert.reverts(
-          instance.giveawayMint(accounts[2], { from: accounts[1] }),
-          null,
-          "only owner able to giveaway mint"
-        );
-
-        expect(Number(await instance.totalSupply())).to.equal(0)
-        let balance_wei = await web3.eth.getBalance(instance.address);
-        expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+      it("should start with white sale off", async () => {
+        expect(await instance.openWhitelistSale()).to.equal(false)
       });
     });
 
@@ -177,6 +213,40 @@ contract("NoMaClub", async accounts => {
       leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
+    });
+
+    context("giveawayMint()", async () => {
+      let instance;
+      beforeEach(async () => {
+        instance = await NoMaClub.new(
+          "NOMA", "NoMa", "baseURL",
+          root
+        );
+      })
+
+      it("should allow calling giveaway to owner", async () => {
+        await instance.setWhitelistSale(false)
+        await instance.setPublicSale(false)
+        await instance.giveawayMint(accounts[2], 1, { from: accounts[0] });
+
+        expect(Number(await instance.totalSupply())).to.equal(1)
+        let balance_wei = await web3.eth.getBalance(instance.address);
+        expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+      });
+
+      it("should not allow calling giveaway to not owners", async () => {
+        await instance.setWhitelistSale(false)
+        await instance.setPublicSale(false)
+        truffleAssert.reverts(
+          instance.giveawayMint(accounts[2], 1, { from: accounts[1] }),
+          null,
+          "only owner able to giveaway mint"
+        );
+
+        expect(Number(await instance.totalSupply())).to.equal(0)
+        let balance_wei = await web3.eth.getBalance(instance.address);
+        expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+      });
     });
 
     describe("whitelistMint()", async () => {
