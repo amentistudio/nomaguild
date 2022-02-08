@@ -70,8 +70,10 @@ describe("NoMaClub", () => {
 
       it("should not allow burn without approval", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint(1, {
-          from: accounts[1], value: web3.utils.toWei(".2", "ether")
+        const price = Number(await instance.PUBLIC_PRICE());
+        const quantity = 1;
+        await instance.publicMint(quantity, {
+          from: accounts[1], value: price * quantity,
         })
         await expectRevert(
           instance.burn(1, { from: accounts[2] }),
@@ -82,8 +84,10 @@ describe("NoMaClub", () => {
 
       it("should not allow burn when paused", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint(1, {
-          from: accounts[1], value: web3.utils.toWei(".2", "ether")
+        const price = Number(await instance.PUBLIC_PRICE());
+        const quantity = 1;
+        await instance.publicMint(quantity, {
+          from: accounts[1], value: price * quantity
         })
         await instance.pause();
         await expectRevert(
@@ -95,8 +99,10 @@ describe("NoMaClub", () => {
 
       it("should allow burn with approval", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint(1, {
-          from: accounts[1], value: web3.utils.toWei(".2", "ether")
+        const price = Number(await instance.PUBLIC_PRICE());
+        const quantity = 1;
+        await instance.publicMint(quantity, {
+          from: accounts[1], value: price * quantity
         })
         expect(await instance.ownerOf(1)).to.be.equal(accounts[1]);
         await instance.burn(1, { from: accounts[1] });
@@ -131,7 +137,8 @@ describe("NoMaClub", () => {
 
       it("should return 10% royalty rate", async () => {
         const price = await instance.WHITELIST_PRICE();
-        const royalty = new BN(price * .1);
+        const royalty_rate = await instance.ROYALTY_RATE();
+        const royalty = new BN(price * royalty_rate / 100);
         const royaltyInfo = await instance.royaltyInfo(1, price);
         expect(royaltyInfo[1]).to.be.bignumber.equal(royalty);
       });
@@ -157,8 +164,10 @@ describe("NoMaClub", () => {
 
       it("should allow widthdraw to owner", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint(1, {
-          from: accounts[1], value: web3.utils.toWei(".2", "ether")
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+        await instance.publicMint(quantity, {
+          from: accounts[1], value: price * quantity
         })
         let owner = await instance.owner();
         let owner_balance_bm_wei = await web3.eth.getBalance(owner);
@@ -166,8 +175,8 @@ describe("NoMaClub", () => {
 
         expect(Number(await instance.totalSupply())).to.equal(1)
         // Contract
-        let contract_balance_wei = await web3.eth.getBalance(instance.address);
-        expect(contract_balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+        let contract_balance_wei = Number(await web3.eth.getBalance(instance.address));
+        expect(contract_balance_wei).to.equal(0);
         // Owner
         let owner_balance_wei = await web3.eth.getBalance(owner);
         expect(Number(owner_balance_wei)).to.be.above(Number(owner_balance_bm_wei));
@@ -175,8 +184,10 @@ describe("NoMaClub", () => {
 
       it("should not allow calling widthdraw to not owners", async () => {
         await instance.setPublicSale(true)
-        await instance.publicMint(1, {
-          from: accounts[1], value: web3.utils.toWei(".2", "ether")
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+        await instance.publicMint(quantity, {
+          from: accounts[1], value: price * quantity
         })
         let owner = await instance.owner();
         let owner_balance_bm_wei = await web3.eth.getBalance(owner);
@@ -188,8 +199,8 @@ describe("NoMaClub", () => {
 
         expect(Number(await instance.totalSupply())).to.equal(1)
         // Contract
-        let contract_balance_wei = await web3.eth.getBalance(instance.address);
-        expect(contract_balance_wei).to.equal(web3.utils.toWei("0.2", "ether"));
+        let contract_balance_wei = Number(await web3.eth.getBalance(instance.address));
+        expect(contract_balance_wei).to.equal(price * quantity);
         // Owner
         let owner_balance_wei = await web3.eth.getBalance(owner);
         expect(owner_balance_wei).to.equal(owner_balance_bm_wei);
@@ -282,8 +293,8 @@ describe("NoMaClub", () => {
         await instance.giveawayMint(accounts[2], 1);
 
         expect(Number(await instance.totalSupply())).to.equal(1)
-        let balance_wei = await web3.eth.getBalance(instance.address);
-        expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+        let balance_wei = Number(await web3.eth.getBalance(instance.address));
+        expect(balance_wei).to.equal(0);
       });
 
       it("should not allow calling giveaway to not owners", async () => {
@@ -296,12 +307,84 @@ describe("NoMaClub", () => {
         );
 
         expect(Number(await instance.totalSupply())).to.equal(0)
-        let balance_wei = await web3.eth.getBalance(instance.address);
-        expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+        let balance_wei = Number(await web3.eth.getBalance(instance.address));
+        expect(balance_wei).to.equal(0);
       });
     });
 
     describe("whitelistMint()", async () => {
+
+      context("overlimit on whitelist max", async () => {
+        let instance;
+        beforeEach(async () => {
+          instance = await NoMaClub.new(
+            "NOMA", "NoMa", // Namimng
+            2, 2, 3, // Limits (supply, whitelist limit, perwallet)
+            "baseURL", // URL for Metadata
+            root
+          )
+        })
+
+        it("should not mint an mummy if whitelist max reached", async () => {
+          proof = merkleTree.getHexProof(leafs[0]);
+          await instance.setWhitelistSale(true)
+          const price = Number(await instance.WHITELIST_PRICE());
+          const quantity = 2;
+          await instance.whitelistMint(proof, quantity, {
+            from: accounts[0], value: price * quantity,
+          })
+
+          expect(Number(await instance.maxMummies())).to.equal(2)
+          expect(Number(await instance.maxWhitelist())).to.equal(2)
+          expect(Number(await instance.totalSupply())).to.equal(2)
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(price * quantity);
+
+          await expectRevert(
+            instance.whitelistMint(proof, 1, {
+              from: accounts[1], value: web3.utils.toWei(".2", "ether")
+            }),
+            "Exceeded whitelist supply!",
+            "cannot mint if total supply overlimit"
+          );
+        });
+      });
+
+      context("overlimit on total supply", async () => {
+        let instance;
+        beforeEach(async () => {
+          instance = await NoMaClub.new(
+            "NOMA", "NoMa", // Namimng
+            2, 3, 3, // Limits (supply, whitelist limit, perwallet)
+            "baseURL", // URL for Metadata
+            root
+          )
+        })
+
+        it("should not mint an mummy if total supply overlimite", async () => {
+          proof = merkleTree.getHexProof(leafs[0]);
+          await instance.setWhitelistSale(true)
+          const price = Number(await instance.WHITELIST_PRICE());
+          const quantity = 2;
+          await instance.whitelistMint(proof, quantity, {
+            from: accounts[0], value: price * quantity
+          })
+
+          expect(Number(await instance.maxMummies())).to.equal(2)
+          expect(Number(await instance.totalSupply())).to.equal(2)
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(Number(price * quantity));
+
+          await expectRevert(
+            instance.whitelistMint(proof, 1, {
+              from: accounts[0], value: web3.utils.toWei(".2", "ether")
+            }),
+            "ERC721A: quantity to mint exceeding colleciton size.",
+            "cannot mint if whitelist supply overlimit"
+          );
+        });
+      });
+
       context("whitelist sale open", async () => {
         let instance;
         beforeEach(async () => {
@@ -310,14 +393,16 @@ describe("NoMaClub", () => {
 
         it("should mint an mummy with correct price", async () => {
           proof = merkleTree.getHexProof(leafs[0]);
+          const price = await instance.WHITELIST_PRICE();
+          const quantity = 1;
           await instance.setWhitelistSale(true)
-          await instance.whitelistMint(proof, 1, {
-            from: accounts[0], value: web3.utils.toWei(".05", "ether")
+          await instance.whitelistMint(proof, quantity, {
+            from: accounts[0], value: price * quantity
           })
 
           expect(Number(await instance.totalSupply())).to.equal(1)
-          let balance_wei = await web3.eth.getBalance(instance.address);
-          expect(balance_wei).to.equal(web3.utils.toWei(".05", "ether"));
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(price * quantity);
         });
 
         it("should not mint an mummy with incorrect price", async () => {
@@ -332,47 +417,132 @@ describe("NoMaClub", () => {
           );
 
           expect(Number(await instance.totalSupply())).to.equal(0)
-          let balance_wei = await web3.eth.getBalance(instance.address);
-          expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(0);
         });
 
         it("should not mint an mummy with incorrect proof", async () => {
           proof = merkleTree.getHexProof(leafs[0]);
+          const price = await instance.WHITELIST_PRICE();
+          const quantity = 1;
           await instance.setWhitelistSale(true)
           await expectRevert(
-            instance.whitelistMint(proof, 1, {
+            instance.whitelistMint(proof, quantity, {
               // hint: account[2] isn't part of whitelist
-              from: accounts[2], value: web3.utils.toWei(".05", "ether")
+              from: accounts[2], value: price * quantity
             }),
             "Not whitelisted.",
             "incorrect proof"
           );
 
           expect(Number(await instance.totalSupply())).to.equal(0)
-          let balance_wei = await web3.eth.getBalance(instance.address);
-          expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(0);
         });
 
         it("should not mint an mummy when paused", async () => {
           proof = merkleTree.getHexProof(leafs[0]);
+          const price = await instance.WHITELIST_PRICE();
+          const quantity = 1;
           await instance.setWhitelistSale(true)
           await instance.pause();
           await expectRevert(
-            instance.whitelistMint(proof, 1, {
-              from: accounts[0], value: web3.utils.toWei(".05", "ether")
+            instance.whitelistMint(proof, quantity, {
+              from: accounts[0], value: price * quantity
             }),
             "Pausable: paused.",
             "not enough money for mint"
           );
 
           expect(Number(await instance.totalSupply())).to.equal(0)
-          let balance_wei = await web3.eth.getBalance(instance.address);
-          expect(balance_wei).to.equal(web3.utils.toWei("0", "ether"));
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(0);
         });
       });
     });
 
     describe("publicMint()", async () => {
+      context("wallet limit", async () => {
+        let instance;
+        beforeEach(async () => {
+          instance = await NoMaClub.new(
+            "NOMA", "NoMa", // Namimng
+            3, 1, 2, // Limits (supply, whitelist limit, perwallet)
+            "baseURL", // URL for Metadata
+            root
+          )
+        })
+
+        it("should not mint an mummy if wallet limit reached", async () => {
+          await instance.setPublicSale(true)
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 2;
+          await instance.publicMint(quantity, {
+            from: accounts[0], value: price * quantity
+          })
+
+          expect(Number(await instance.maxMummies())).to.equal(3)
+          expect(Number(await instance.totalSupply())).to.equal(2)
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(price * quantity);
+
+          await expectRevert(
+            instance.publicMint(quantity, {
+              from: accounts[0], value: price * quantity
+            }),
+            "ERC721A: quantity to mint exceeding colleciton size.",
+            "cannot mint if already limit per wallet reached"
+          );
+        });
+
+        it("should not mint an mummy if per wallet hight", async () => {
+          await instance.setPublicSale(true)
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 3; 
+          await expectRevert(
+            instance.publicMint(quantity, {
+              from: accounts[0], value: price * quantity
+            }),
+            "Exceeded limit per wallet!",
+            "cannot mint if quantity is too high"
+          );
+        });
+      });
+
+      context("soldout", async () => {
+        let instance;
+        beforeEach(async () => {
+          instance = await NoMaClub.new(
+            "NOMA", "NoMa", // Namimng
+            2, 1, 3, // Limits (supply, whitelist limit, perwallet)
+            "baseURL", // URL for Metadata
+            root
+          )
+        })
+
+        it("should not mint an mummy if soldout", async () => {
+          await instance.setPublicSale(true)
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 2; 
+          await instance.publicMint(2, {
+            from: accounts[0], value: price * quantity
+          })
+
+          expect(Number(await instance.maxMummies())).to.equal(2)
+          expect(Number(await instance.totalSupply())).to.equal(2)
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(price * quantity);
+
+          await expectRevert(
+            instance.publicMint(1, {
+              from: accounts[1], value: price * quantity
+            }),
+            "ERC721A: quantity to mint exceeding colleciton size.",
+            "cannot mint if soldout"
+          );
+        });
+      });
+
       context("public sale open", async () => {
         let instance;
         beforeEach(async () => {
@@ -381,32 +551,38 @@ describe("NoMaClub", () => {
 
         it("should mint an mummy with correct price", async () => {
           await instance.setPublicSale(true)
-          await instance.publicMint(1, {
-            from: accounts[0], value: web3.utils.toWei(".2", "ether")
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 1; 
+          await instance.publicMint(quantity, {
+            from: accounts[0], value: price * quantity
           })
 
           expect(Number(await instance.totalSupply())).to.equal(1)
-          let balance_wei = await web3.eth.getBalance(instance.address);
-          expect(balance_wei).to.equal(web3.utils.toWei(".2", "ether"));
+          let balance_wei = Number(await web3.eth.getBalance(instance.address));
+          expect(balance_wei).to.equal(price * quantity);
         });
 
         it("should not mint an mummy with bellow price", async () => {
           await instance.setPublicSale(true)
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 2; 
           await expectRevert(
-            instance.publicMint(1, {
-              from: accounts[1], value: web3.utils.toWei(".01", "ether"),
+            instance.publicMint(quantity, {
+              from: accounts[1], value: price
             }),
             "Insufficient payment per item.",
-            "price must be at least 0.2 ether"
+            "price must adequate for the quantity"
           );
         });
 
         it("should not mint an mummy with paused contract", async () => {
           await instance.setPublicSale(true)
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 1; 
           await instance.pause()
           await expectRevert(
-            instance.publicMint(1, {
-              from: accounts[1], value: web3.utils.toWei(".2", "ether"),
+            instance.publicMint(quantity, {
+              from: accounts[1], value: price * quantity,
             }),
             "Pausable: paused.",
             "cannot mint whilte paused"
@@ -422,9 +598,11 @@ describe("NoMaClub", () => {
 
         it("should not mint an mummy", async () => {
           await instance.setPublicSale(false)
+          const price = await instance.PUBLIC_PRICE();
+          const quantity = 1; 
           await expectRevert(
-            instance.publicMint(1, {
-              from: accounts[2], value: web3.utils.toWei(".2", "ether")
+            instance.publicMint(quantity, {
+              from: accounts[2], value: price * quantity
             }),
             "Public sales not open.",
             "public sale closed"

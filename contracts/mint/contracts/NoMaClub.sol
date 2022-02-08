@@ -20,7 +20,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     uint256 public mintLimitPerWallet = 0;
 
     // Constants
-    uint256 public constant ROYALTY_RATE = 1000; // 10%
+    uint256 public constant ROYALTY_RATE = 10; // 10%
     uint256 public constant WHITELIST_PRICE = 0.04096 ether;
     uint256 public constant PUBLIC_PRICE = 0.08192 ether;
 
@@ -93,7 +93,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
         return baseTokenURI;
     }
 
-    function whitelistMint(bytes32[] calldata _merkleProof, uint256 count)
+    function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)
         public
         payable
         nonReentrant
@@ -101,10 +101,11 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
         whitelistSaleIsOpen
         whenNotPaused
     {
-        address _to = msg.sender;
+        require(_quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+        require(whitelistedMummiesMinted() + _quantity <= maxWhitelist, "Exceeded whitelist supply!");
+        require(msg.value >= WHITELIST_PRICE * _quantity, "Insufficient payment per item");
 
-        // Verify there's enough money sent
-        require(msg.value >= WHITELIST_PRICE * count, "Insufficient payment per item");
+        address _to = msg.sender;
 
         // Verify whitelisted address with MerkleProof
         bytes32 leaf = keccak256(abi.encodePacked(_to));
@@ -113,23 +114,23 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
             "Not whitelisted"
         );
 
-        require(whitelistedMummiesMinted() + count <= maxWhitelist, "Too many");
-
         // Mint
-        for (uint256 i = 0; i < count; i++) {
+        for (uint256 i = 0; i < _quantity; i++) {
             whitelistedMummyCounter.increment();
         }
-        _mintMummy(_to, count);
+        _mintMummy(_to, _quantity);
     }
 
-    function publicMint(uint256 count) public payable callerIsUser publicSaleIsOpen whenNotPaused {
+    function publicMint(uint256 _quantity) public payable callerIsUser publicSaleIsOpen whenNotPaused {
+        require(_quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+
         address _to = msg.sender;
 
         // Verify there's enough money sent
-        require(msg.value >= PUBLIC_PRICE * count, "Insufficient payment per item");
+        require(msg.value >= PUBLIC_PRICE * _quantity, "Insufficient payment per item");
 
         // Mint
-        _mintMummy(_to, count);
+        _mintMummy(_to, _quantity);
     }
 
     // Only OWNER
@@ -173,7 +174,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     function royaltyInfo(uint256, uint256 salePrice) external view override
         returns (address receiver, uint256 royaltyAmount)
     {
-        return (address(this), (salePrice * ROYALTY_RATE) / 10000);
+        return (address(this), (salePrice * ROYALTY_RATE) / 100);
     }
 
     function supportsInterface(bytes4 interfaceId)
