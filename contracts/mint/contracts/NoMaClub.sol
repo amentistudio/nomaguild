@@ -7,10 +7,11 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
+import '@openzeppelin/contracts/security/Pausable.sol';
 import "./ERC721A.sol";
 
 // TODO: Make Burnable + use Counter
-contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable  {
+contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     using Counters for Counters.Counter;
 
     // Constants
@@ -86,6 +87,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable  {
         nonReentrant
         callerIsUser
         whitelistSaleIsOpen
+        whenNotPaused
     {
         address _to = msg.sender;
 
@@ -108,7 +110,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable  {
         _mintMummy(_to, count);
     }
 
-    function publicMint(uint256 count) public payable callerIsUser publicSaleIsOpen {
+    function publicMint(uint256 count) public payable callerIsUser publicSaleIsOpen whenNotPaused {
         address _to = msg.sender;
 
         // Verify there's enough money sent
@@ -138,6 +140,20 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable  {
         uint256 balance = address(this).balance;
         require(balance > 0);
         Address.sendValue(payable(owner()), balance);
+    }
+
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
+    }
+
+    function burn(uint256 tokenId) whenNotPaused public {
+        //solhint-disable-next-line max-line-length
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Burnable: caller is not owner nor approved");
+        _burn(tokenId);
     }
 
     // ROYALTIES

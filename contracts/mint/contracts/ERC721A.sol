@@ -274,6 +274,19 @@ contract ERC721A is
   }
 
   /**
+     * @dev Returns whether `spender` is allowed to manage `tokenId`.
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     */
+    function _isApprovedOrOwner(address spender, uint256 tokenId) internal view returns (bool) {
+        require(_exists(tokenId), "ERC721: operator query for nonexistent token");
+        address owner = ownerOf(tokenId);
+        return (spender == owner || getApproved(tokenId) == spender || isApprovedForAll(owner, spender));
+    }
+
+  /**
    * @dev See {IERC721-isApprovedForAll}.
    */
   function isApprovedForAll(address owner, address operator)
@@ -516,6 +529,34 @@ contract ERC721A is
       return true;
     }
   }
+
+
+  /**
+     * @dev Destroys `tokenId`.
+     * The approval is cleared when the token is burned.
+     *
+     * Requirements:
+     *
+     * - `tokenId` must exist.
+     *
+     * Emits a {Transfer} event.
+     */
+    function _burn(uint256 tokenId) internal {
+        address owner = ownerOf(tokenId);
+
+        _beforeTokenTransfers(owner, address(0), tokenId, 1);
+
+        // Clear approvals
+        _approve(address(0), tokenId, owner);
+
+        _addressData[owner].balance -= 1;
+        _addressData[owner].numberMinted -= 1;
+        delete _ownerships[tokenId];
+
+        emit Transfer(owner, address(0), tokenId);
+
+        _afterTokenTransfers(owner, address(0), tokenId, 1);
+    }
 
   /**
    * @dev Hook that is called before a set of serially-ordered token ids are about to be transferred. This includes minting.
