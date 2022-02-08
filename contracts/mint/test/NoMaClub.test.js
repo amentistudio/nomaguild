@@ -1,20 +1,28 @@
-const chai = require('chai');
-const { BN, expectRevert } = require('@openzeppelin/test-helpers');
 const { MerkleTree } = require('merkletreejs');
 const keccak256 = require('keccak256');
-const expect = require('chai').expect;
+
+const { BN, expectRevert } = require('@openzeppelin/test-helpers');
+const { accounts, contract, web3 } = require('@openzeppelin/test-environment');
+
+const chai = require('chai');
+const { expect } = require('chai');
+require('chai').should();
 chai.use(require('chai-bn')(BN));
 
 // Runs before all tests in this block.
 // Read about .new() VS .deployed() here:
 // https://twitter.com/zulhhandyplast/status/1026181801239171072
-const NoMaClub = artifacts.require("NoMaClubTest");
+const NoMaClub = contract.fromArtifact("NoMaClubTest");
 const { shouldSupportInterfaces } = require('./utils/SupportsInterface.behavior');
 
-// Scenarios:
-// Sold out, burnable, multiple mints
-
-contract("NoMaClub", async accounts => {
+describe("NoMaClub", () => {
+  const instanceFactory = (root) =>
+    NoMaClub.new(
+      "NOMA", "NoMa", // Namimng
+      8192, 3000, 3, // Limits
+      "baseURL", // URL for Metadata
+      root
+    )
 
   describe("supports interfaces", async () => {
     let root;
@@ -36,10 +44,7 @@ contract("NoMaClub", async accounts => {
     ].map(interface => {
       it(interface, async () => {
         shouldSupportInterfaces(
-          await NoMaClub.new(
-            "NOMA", "NoMa", "baseURL",
-            root
-          ),
+          await instanceFactory(root),
           [interface]
         );
       });
@@ -60,10 +65,7 @@ contract("NoMaClub", async accounts => {
     context("burn()", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should not allow burn without approval", async () => {
@@ -124,10 +126,7 @@ contract("NoMaClub", async accounts => {
     context("royaltyInfo()", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should return 10% royalty rate", async () => {
@@ -153,10 +152,7 @@ contract("NoMaClub", async accounts => {
     context("withdraw()", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should allow widthdraw to owner", async () => {
@@ -215,10 +211,7 @@ contract("NoMaClub", async accounts => {
     context("baseURI", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should allow set base uri to owner", async () => {
@@ -231,10 +224,7 @@ contract("NoMaClub", async accounts => {
     context("whitelist sale", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should allow turning on and off", async () => {
@@ -249,14 +239,10 @@ contract("NoMaClub", async accounts => {
       });
     });
 
-
     context("public sale", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should allow turning on and off", async () => {
@@ -287,16 +273,13 @@ contract("NoMaClub", async accounts => {
     context("giveawayMint()", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await NoMaClub.new(
-          "NOMA", "NoMa", "baseURL",
-          root
-        );
+        instance = await instanceFactory(root);
       })
 
       it("should allow calling giveaway to owner", async () => {
         await instance.setWhitelistSale(false)
         await instance.setPublicSale(false)
-        await instance.giveawayMint(accounts[2], 1, { from: accounts[0] });
+        await instance.giveawayMint(accounts[2], 1);
 
         expect(Number(await instance.totalSupply())).to.equal(1)
         let balance_wei = await web3.eth.getBalance(instance.address);
@@ -322,10 +305,7 @@ contract("NoMaClub", async accounts => {
       context("whitelist sale open", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
-            "NOMA", "NoMa", "baseURL",
-            root
-          );
+          instance = await instanceFactory(root);
         })
 
         it("should mint an mummy with correct price", async () => {
@@ -396,10 +376,7 @@ contract("NoMaClub", async accounts => {
       context("public sale open", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
-            "NOMA", "NoMa", "baseURL",
-            root
-          );
+          instance = await instanceFactory(root);
         })
 
         it("should mint an mummy with correct price", async () => {
@@ -413,7 +390,7 @@ contract("NoMaClub", async accounts => {
           expect(balance_wei).to.equal(web3.utils.toWei(".2", "ether"));
         });
 
-        it("should mint an mummy with bellow price", async () => {
+        it("should not mint an mummy with bellow price", async () => {
           await instance.setPublicSale(true)
           await expectRevert(
             instance.publicMint(1, {
@@ -423,15 +400,24 @@ contract("NoMaClub", async accounts => {
             "price must be at least 0.2 ether"
           );
         });
+
+        it("should not mint an mummy with paused contract", async () => {
+          await instance.setPublicSale(true)
+          await instance.pause()
+          await expectRevert(
+            instance.publicMint(1, {
+              from: accounts[1], value: web3.utils.toWei(".2", "ether"),
+            }),
+            "Pausable: paused.",
+            "cannot mint whilte paused"
+          );
+        });
       });
 
       context("public sale closed", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
-            "NOMA", "NoMa", "baseURL",
-            root
-          );
+          instance = await instanceFactory(root);
         })
 
         it("should not mint an mummy", async () => {

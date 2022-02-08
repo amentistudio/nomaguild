@@ -99,13 +99,12 @@ function shouldSupportInterfaces (instance, interfaces = []) {
       const interfaceId = INTERFACE_IDS[k];
       describe(k, function () {
         describe('ERC165\'s supportsInterface(bytes4)', function () {
-          // it('uses less than 30k gas [skip-on-coverage]', async function () {
-          //   expect(await this.contractUnderTest.supportsInterface.estimateGas(interfaceId)).to.be.lte(50000);
-          // });
+          it('uses less than 30k gas [skip-on-coverage]', async function () {
+            expect(await this.contractUnderTest.supportsInterface.estimateGas(interfaceId)).to.be.lte(50000);
+          });
 
           it('claims support [skip-on-coverage]', async function () {
             const result = await this.contractUnderTest.supportsInterface(interfaceId);
-            console.log(result);
             expect(result).to.equal(true);
           });
         });

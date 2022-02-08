@@ -11,9 +11,12 @@ contract NoMaClubTest is NoMaClub {
     constructor(
         string memory _symbol,
         string memory _name,
+        uint256 _maxMummies,
+        uint256 _maxWhitelist,
+        uint256 _mintLimitPerWallet,
         string memory baseURI,
         bytes32 _merkleRoot
-    ) NoMaClub(_symbol, _name, baseURI, _merkleRoot) {}
+    ) NoMaClub(_symbol, _name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, _merkleRoot) {}
 
     function openPublicSale() public view returns (bool) {
         return IS_PUBLIC_SALE_OPEN;

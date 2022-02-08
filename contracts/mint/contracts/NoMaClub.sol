@@ -14,12 +14,13 @@ import "./ERC721A.sol";
 contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     using Counters for Counters.Counter;
 
-    // Constants
-    uint256 public constant MAX_MUMMIES = 8192;
-    uint256 public constant MAX_WHITELISTED_MINTS = 3000;
-    uint256 public constant MINT_LIMIT_PER_WALLET = 3;
-    uint256 public constant ROYALTY_RATE = 1000; // 10%
+    // Contract immutables
+    uint256 public maxMummies = 0;
+    uint256 public maxWhitelist = 0;
+    uint256 public mintLimitPerWallet = 0;
 
+    // Constants
+    uint256 public constant ROYALTY_RATE = 1000; // 10%
     uint256 public constant WHITELIST_PRICE = 0.04096 ether;
     uint256 public constant PUBLIC_PRICE = 0.08192 ether;
 
@@ -39,28 +40,39 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     constructor(
         string memory _symbol,
         string memory _name,
+        uint256 _maxMummies,
+        uint256 _maxWhitelist,
+        uint256 _mintLimitPerWallet,
         string memory baseURI,
         bytes32 _merkleRoot
-    ) ERC721A(_symbol, _name, MINT_LIMIT_PER_WALLET, MAX_MUMMIES) {
+    ) ERC721A(_symbol, _name, _mintLimitPerWallet, _maxMummies) {
+        require(_maxMummies > 0, "Max Mummies cannot be 0!");
+        require(_maxWhitelist > 0, "Max whitelist cannot be 0!");
+        require(_mintLimitPerWallet > 0, "Max wallet limit cannot be 0!");
+        require(_merkleRoot != "", "Merkle tree cannot be empty!");
+
+        maxMummies = _maxMummies;
+        maxWhitelist = _maxWhitelist;
+        mintLimitPerWallet = _mintLimitPerWallet;
         merkleRoot = _merkleRoot;
         setBaseURI(baseURI);
     }
 
     modifier notSoldOut() {
-        require(totalSupply() <= MAX_MUMMIES, "Soldout!");
+        require(totalSupply() <= maxMummies, "Soldout!");
         _;
     }
 
     modifier whitelistSaleIsOpen() {
         require(IS_WHITELIST_SALE_OPEN, "Whitelist sales not open");
-        require(whitelistedMummiesMinted() <= MAX_WHITELISTED_MINTS, "Whitelist soldout!");
-        require(totalSupply() <= MAX_MUMMIES, "Soldout!");
+        require(whitelistedMummiesMinted() <= maxWhitelist, "Whitelist soldout!");
+        require(totalSupply() <= maxMummies, "Soldout!");
         _;
     }
 
     modifier publicSaleIsOpen() {
         require(IS_PUBLIC_SALE_OPEN, "Public sales not open");
-        require(totalSupply() <= MAX_MUMMIES, "Soldout!");
+        require(totalSupply() <= maxMummies, "Soldout!");
         _;
     }
 
@@ -101,7 +113,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
             "Not whitelisted"
         );
 
-        require(whitelistedMummiesMinted() + count <= MAX_WHITELISTED_MINTS, "Too many");
+        require(whitelistedMummiesMinted() + count <= maxWhitelist, "Too many");
 
         // Mint
         for (uint256 i = 0; i < count; i++) {

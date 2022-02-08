@@ -3,13 +3,17 @@
 // based upon https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.1/test/cryptography/MerkleProof.test.js
 
 require('@openzeppelin/test-helpers');
+const { accounts, contract } = require('@openzeppelin/test-environment');
+
+const { expect } = require('chai');
+require('chai').should();
 
 const { MerkleTree } = require('merkletreejs')
 const keccak256 = require('keccak256')
 
-const MerkleProofVerify = artifacts.require('MerkleProofVerify');
+const MerkleProofVerify = contract.fromArtifact('MerkleProofVerify');
 
-contract('MerkleProofVerify', function (accounts) {
+describe('MerkleProofVerify', () => {
     let elements;
     let merkleTree;
     let root;
