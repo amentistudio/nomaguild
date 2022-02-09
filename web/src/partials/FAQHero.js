@@ -8,7 +8,7 @@ function FAQHero() {
       className="mt-20"
       style={{
         height: 660,
-        background: `top center url(${require('../images/noma-press-final.jpg')}) no-repeat`,
+        background: `top center url(${require('../images/noma-press-final.png')}) no-repeat`,
       }}
     >
       <div className="max-w-5xl mx-auto px-4">
