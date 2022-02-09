@@ -11,7 +11,7 @@ function GetToKnowUs() {
             <h1 className="h1 lg:text-5xl md:mx-0 sm:mx-10 md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
               Game industry challenges we're addressing
             </h1>
-            <div className="text-xl text-white md:mx-0 md:mr-20 sm:mx-20">
+            <div className="text-xl text-white md:mx-0 md:mr-20 mx-10">
               In the current game industry players are no longer the priority.
               Shareholders' wallets have replaced them. And we hate it.
               <br />

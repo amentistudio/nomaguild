@@ -19,7 +19,7 @@ function Team() {
           <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Ladi / Developer
           </h3>
-          <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
+          <p className="text-gray-400 text-center mx-10 md:text-left md:mx-0">
             With over 20 years of programming experience, I am fascinated by Metaverse worlds and blockchain technology.
           </p>
           <p className="text-gray-600 mt-5 text-2xl text-center md:text-left block md:hidden">
@@ -39,7 +39,7 @@ function Team() {
           <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Jan / Design
           </h3>
-          <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
+          <p className="text-gray-400 text-center mx-10 md:text-left md:mx-0">
             After twelve years of working as a freelance designer, I have gathered enough experience to embark on my own projects.
           </p>
           <p className="text-gray-600 mt-5 text-2xl text-center md:text-left block md:hidden">
@@ -56,7 +56,7 @@ function Team() {
           <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Simon / Illustrator
           </h3>
-          <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
+          <p className="text-gray-400 text-center mx-10 md:text-left md:mx-0">
             An athlete in body and a geek in soul. A young gun on our team with great illustrations. My goal is to become a top notch concept artist.
           </p> 
           <p className="text-gray-600 mt-5 text-2xl text-center md:text-left block md:hidden">
@@ -73,7 +73,7 @@ function Team() {
           <h3 className="h3 text-xl text-center md:text-left mb-2 font-extrabold" data-aos="fade-down">
             Mummy Boy / Guide
           </h3>
-          <p className="text-gray-400 text-center mx-20 md:text-left md:mx-0">
+          <p className="text-gray-400 text-center mx-10 md:text-left md:mx-0">
             Every great project needs a mascot. Mummy boy will be your guide in the fascinating and constantly evolving world of the Metaverse.
           </p>
         </div>

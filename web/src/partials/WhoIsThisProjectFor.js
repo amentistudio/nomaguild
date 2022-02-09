@@ -10,7 +10,7 @@ function WhoIsThisProjectFor() {
             <h3 className="h2 text-2xl font-bold">
               Gamers
             </h3>
-            <div className="text-xl mt-4 text-gray-400 md:mx-0 sm:mx-20">
+            <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
               All NoMA members will get access to all products and games created by NoMA community for FREE. Forever.
             </div>
           </div>
@@ -18,7 +18,7 @@ function WhoIsThisProjectFor() {
             <h3 className="h2 text-2xl font-bold">
               Developers
             </h3>
-            <div className="text-xl mt-4 text-gray-400 md:mx-0 sm:mx-20">
+            <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
               We want our project to become an inspiration and blueprint for all game developers that want to raise funds directly from the community.
             </div>
           </div>
@@ -26,7 +26,7 @@ function WhoIsThisProjectFor() {
             <h3 className="h2 text-2xl font-bold">
               Artists
             </h3>
-            <div className="text-xl mt-4 text-gray-400 md:mx-0 sm:mx-20">
+            <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
               Are you trying to start a career in gaming or web 3 industry? Join us and find a sustainable way to do what you love.
             </div>
           </div>
@@ -34,7 +34,7 @@ function WhoIsThisProjectFor() {
             <h3 className="h2 text-2xl font-bold">
               Modders
             </h3>
-            <div className="text-xl mt-4 text-gray-400 md:mx-0 sm:mx-20">
+            <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
               The biggest source of inspiration for us is the modding scene. Many talented people work on big projects for a long time out of sheer passion.
             </div>
           </div>
@@ -42,7 +42,7 @@ function WhoIsThisProjectFor() {
             <h3 className="h2 text-2xl font-bold">
               Publishers
             </h3>
-            <div className="text-xl mt-4 text-gray-400 md:mx-0 sm:mx-20">
+            <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
               We believe that we will reach a lot of talented developers who will welcome professional help with the final stage of the game.
             </div>
           </div>
@@ -50,7 +50,7 @@ function WhoIsThisProjectFor() {
             <h3 className="h2 text-2xl font-bold">
               Metaverse enthusiasts
             </h3>
-            <div className="text-xl mt-4 text-gray-400 md:mx-0 sm:mx-20">
+            <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
               We own a plot of land in the Sandbox where we will host various gaming events and which will serve as a base for Metaverse experiences.
             </div>
           </div>

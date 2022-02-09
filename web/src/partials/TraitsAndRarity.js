@@ -9,7 +9,7 @@ function TraitsAndRarity() {
           <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 text-center font-extrabold" data-aos="fade-down">
             Traits and rarity
           </h1>
-          <div className="mx-auto max-w-3xl text-xl text-center text-white">
+          <div className="md:mx-auto max-w-3xl xs:mx-10 text-xl text-center text-white">
             From the millions of possible combinations of 191 traits, we have selected 8192 unique mummies.
             The traits are inspired by the games we still love today and the pop culture we grew up in.
           </div>

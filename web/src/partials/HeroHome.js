@@ -103,7 +103,7 @@ function HeroHome() {
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
                 Welcome to the NoMA club
               </h1>
-              <p className="text-xl md:mx-0 sm:mx-20 text-white" data-aos="fade-down" data-aos-delay="150">
+              <p className="text-xl md:mx-0 mx-10 text-white" data-aos="fade-down" data-aos-delay="150">
                 No Mummy Allowed is a club for all the people who love games beyond the grave.
                 <br />
                 <br />
