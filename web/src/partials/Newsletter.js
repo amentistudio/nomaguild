@@ -58,8 +58,7 @@ const CustomForm = ({ status, message, onValidated }) => {
         </div>
         <button
           type="submit"
-          className="mt-5 text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 text-bold"
-          style={{ background: '#0e0e0e' }}
+          className="mt-5 text-yellow-300 bg-black-300 border-2 border-yellow-300 py-3 px-5 text-bold hover:bg-yellow-300 hover:text-black"
         >
           Join the NoMA Newsletter
         </button>

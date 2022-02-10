@@ -115,36 +115,30 @@ function HeroHome() {
               {!user && (
                 <button
                   onClick={onSignIn}
-                  className="text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mt-8 text-bold"
-                  style={{ background: '#0e0e0e' }}
+                  className="text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mt-8 text-bold hover:bg-yellow-300"
                 >
                   Whitelist my wallet
                   <ArrowRightIcon className="h-5 w-5 ml-3 inline" />
                 </button>
               )}
               {user && (
-                <button
-                  onClick={onSignIn}
-                  className="text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mt-8 text-bold"
-                  style={{ background: '#0e0e0e' }}
+                <div
+                  className="text-yellow-300 bg-black-300 border-2 border-yellow-300 py-3 px-5 mt-8 text-bold"
                 >
                   Already, part of the whitelist! Congratz!
-                </button>
+                </div>
               )}
             </div>
 
-            {/* Mobile mockup */}
             <div
-              className="md:col-span-6 lg:col-span-6 place-self-end text-center md:text-right"
-              data-aos="fade-up"
-              data-aos-delay="450"
+              className="pt-20 md:col-span-6 lg:col-span-6 place-self-end text-center md:text-right"
             >
               <img src={require('../images/sarcofag.png')} alt="Sarcofag" />
             </div>
           </div>
         </div>
       </div>
-      <div className="w-screen absolute" style={{ borderBottom: '1px solid #677016' }}>
+      <div className="w-screen absolute z-10" style={{ borderBottom: '1px solid #677016' }}>
         <div
           className="w-screen absolute"
           style={{

@@ -197,8 +197,7 @@ function Roadmap() {
         </h2>
         <a
           href={whitePaperUrl}
-          className="button inline-block text-yellow-300 bg-yellow-300 border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
-          style={{ background: '#0e0e0e' }}
+          className="button inline-block text-yellow-300 bg-black-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mx-auto text-bold"
           target="_blank" rel="noreferrer"
         >
           Read our Whitepaper
