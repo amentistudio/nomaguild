@@ -14,8 +14,6 @@ const CustomForm = ({ status, message, onValidated }) => {
     });
   }
 
-  console.log("status: ", status);
-
   useEffect(() => {
     if(status === "success") setEmail('');
   }, [status])
