@@ -63,20 +63,21 @@ function Roadmap() {
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center mt-8 mb-2 text-left font-extrabold">
-            NoMA DAO &amp; Treasury
+            Community Projects for Sustainability 
           </h3>
           <p className="text-gray-400 text-center mx-10">
-            By placing your mummy in the sarcophagus (burning the token) you can claim the NoMA Founders Token,
-            which guarantees you a share in the NoMA Treasury and also voting right in the community.
+            With an established community, we can continue to work on ROI Projects and start
+            building new ones with you. The Core will shift focus to creating tokenomics and
+            preparing for complete decentralization.
           </p>
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center mt-8 mb-2 text-left font-extrabold">
-            Community Projects
+            NoMA DAO &amp; Treasury
           </h3>
           <p className="text-gray-400 text-center mx-10">
-            With established community we can start building ROI Projects &amp; start making games together.
-            The Core Team will shift its focus to creating tokenomics and preparing for complete decentralization.
+            We will offer you a chance to become the founder of NoMA DAO. Owning a Founder's DAO
+            token means having governance over the DAO, its contents, and the Community Treasury.
           </p>
         </div>
         <div className="mt-20">
@@ -124,16 +125,17 @@ function Roadmap() {
                 <span className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-yellow-300">NEXT</span>
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                With NFT mint we’ll increase our capital. 20% of the capital will be reserved and sent to community wallet as a foundation for the DAO.
+                With NFT mint we'll increase our capital. 20% of the capital will be reserved and sent to community wallet as a foundation for the DAO.
               </p>
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-                NoMA DAO &amp; Treasury
+                Community Projects for Sustainability 
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                By placing your mummy in the sarcophagus (burning the token) you can claim the NoMA Founders Token,
-                which guarantees you a share in the NoMA Treasury and also voting right in the community.
+                With an established community, we can continue to work on ROI Projects and start building
+                new ones with you. The Core will shift focus to creating tokenomics and preparing for
+                complete decentralization.
               </p>
             </div>
             <div className="mt-20">
@@ -170,11 +172,11 @@ function Roadmap() {
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-                Community Projects
+                NoMA DAO &amp; Treasury
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                With established community we can start building ROI Projects &amp; start making games together.
-                The Core Team will shift its focus to creating tokenomics and preparing for complete decentralization.
+                We will offer you a chance to become the founder of NoMA DAO. Owning a Founder's DAO
+                token means having governance over the DAO, its contents, and the Community Treasury.
               </p>
             </div>
             <div className="mt-20">
