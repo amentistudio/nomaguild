@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from '../partials/Header';
-import HeroHome from '../partials/HeroHome';
+import HeroDiscordHome from '../partials/HeroDiscordHome';
 import GetToKnowUs from '../partials/GetToKnowUs';
 import Newsletter from '../partials/Newsletter';
 import WhoIsThisProjectFor from '../partials/WhoIsThisProjectFor';
@@ -18,7 +18,7 @@ function Home() {
       <Header />
 
       <main className="flex-grow">
-        <HeroHome />
+        <HeroDiscordHome />
         <GetToKnowUs />
         <Newsletter />
         <WhoIsThisProjectFor />
