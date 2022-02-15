@@ -110,8 +110,8 @@ function FAQs() {
             </ul>
           </FAQ>
           <FAQ question="How do I register for the whitelist mint?">
-            Go to our website <a href="https://nomummyallowed.com" target="_blank" rel="noreferrer">nomummyallowed.com</a> and click the button “Whitelist my wallet →”.
-            This will trigger Metamask's popup asking you to sign (for free) our nonce and send us your verified wallet address that will become eligible for whitelist mint on 03/21/2022.
+            Go to our website <a href="https://nomummyallowed.com" target="_blank" rel="noreferrer">nomummyallowed.com</a> and click the “Join our Discord →” button. 
+            We'll be announcing a ways to become eligible for Whitelist mint on 03 / 21 / 2022.
           </FAQ>
         </dl>
       </div>
