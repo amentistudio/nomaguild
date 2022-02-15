@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -9,7 +9,7 @@ ReactGA.initialize('G-J6M4SL768E');
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename='/'>
       <App />
     </Router>
   </React.StrictMode>,
