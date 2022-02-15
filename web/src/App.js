@@ -6,6 +6,7 @@ import { focusHandling } from 'cruip-js-toolkit';
 import ReactGA from 'react-ga4';
 
 import Home from './pages/Home';
+import Whitelist from './pages/Whitelist';
 
 window.addEventListener('load', AOS.refresh);
 
@@ -36,6 +37,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route exact path="/whitelist-me" element={<Whitelist />} />
       </Routes>
     </>
   );

@@ -19,7 +19,7 @@ function HeroHome() {
                 We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the games they want to play or experiences they want to have.
                 <br />
                 <br />
-                To get early access:
+                To get early access and whitelist link:
               </p>
               <a
                 target="_blank" rel="noreferrer" 

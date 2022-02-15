@@ -111,7 +111,7 @@ function FAQs() {
           </FAQ>
           <FAQ question="How do I register for the whitelist mint?">
             Go to our website <a href="https://nomummyallowed.com" target="_blank" rel="noreferrer">nomummyallowed.com</a> and click the “Join our Discord →” button. 
-            We'll be announcing a ways to become eligible for Whitelist mint on 03 / 21 / 2022.
+            We'll be sharing the whitelist link on our Discord.
           </FAQ>
         </dl>
       </div>

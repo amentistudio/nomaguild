@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Amplify, { Auth } from 'aws-amplify';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { ArrowRightIcon } from '@heroicons/react/outline';
+import { ArrowRightIcon, CheckCircleIcon, PlayIcon } from '@heroicons/react/outline';
 
 function HeroHome() {
   const [user, setUser] = useState(null);
@@ -94,61 +94,54 @@ function HeroHome() {
 
   return (
     <section className="relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="pt-32 md:pt-40">
-          {/* Hero content */}
-          <div className="md:grid md:grid-cols-12 md:gap-0 lg:gap-0 items-center relative">
-            {/* Content */}
-            <div className="md:col-span-6 lg:col-span-6 mb-8 text-center md:text-left sm:pb-12">
+      <div className="max-w-3xl mx-auto mt-10">
+        <div className="pt-40">
+          <div className="text-center relative">
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
-                Welcome to the NoMA club
+                Whitelist your wallet
               </h1>
-              <p className="text-xl md:mx-0 mx-10 text-white" data-aos="fade-down" data-aos-delay="150">
-                No Mummy Allowed is a club for all the people who love games beyond the grave.
+              <p className="text-2xl md:mx-0 mx-12 text-white" data-aos="fade-down" data-aos-delay="150">
+                Whitelisting will require you to have <a 
+                  target="_blank" rel="noreferrer" 
+                  href="https://www.youtube.com/watch?v=Af_lQ1zUnoM"
+                  className="text-yellow-300"
+                ><PlayIcon className="h-8 w-8 mr-1 inline" />Metamask</a> installed connnected to "Ethereum Mainnet".
+                <br />
+              </p>
+              <p className="text-2xl md:mx-0 mt-14 mb-6 text-white" data-aos="fade-down" data-aos-delay="150">
+                <strong className="text-yellow-300">Benefits of whitelisting:</strong>
+                <ul>
+                  <li><CheckCircleIcon className="text-green-300 h-6 w-6 mr-2 inline" />Half the price of public mint 0.04196 ETH.</li>
+                  <li><CheckCircleIcon className="text-green-300 h-6 w-6 mr-2 inline" />Avoid gas wars.</li>
+                  <li><CheckCircleIcon className="text-green-300 h-6 w-6 mr-2 inline" />Be on the OG list for future airdrops.</li>
+                </ul>
                 <br />
                 <br />
-                We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the games they want to play or experiences they want to have.
-                <br />
-                <br />
-                Get on the whitelist to claim your spot!
+              </p>
+              <p className="text-2xl mb-5">
+                Click the link bellow and follow the steps in Metamask: <br />
               </p>
               {!user && (
-                <button
-                  onClick={onSignIn}
-                  className="text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mt-8 text-bold hover:bg-yellow-300"
-                >
-                  Whitelist my wallet
-                  <ArrowRightIcon className="h-5 w-5 ml-3 inline" />
-                </button>
+                <>
+                  <button
+                    onClick={onSignIn}
+                    className="text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 text-bold hover:bg-yellow-300"
+                  >
+                    Whitelist my wallet
+                    <ArrowRightIcon className="h-5 w-5 ml-3 inline" />
+                  </button>
+                  <strong className="text-sm text-gray-600 block mt-3">Don't forget to unlock your Metamask before click the link above!</strong>
+                </>
               )}
               {user && (
                 <div
-                  className="text-yellow-300 bg-black-300 border-2 border-yellow-300 py-3 px-5 mt-8 text-bold"
+                  className="text-yellow-300 bg-black-300 border-2 border-yellow-300 py-3 px-5 text-bold"
                 >
-                  Already, part of the whitelist! Congratz!
+                  Successfully added to our whitelist!
                 </div>
               )}
-            </div>
-
-            <div
-              className="pt-20 md:col-span-6 lg:col-span-6 place-self-end text-center md:text-right"
-            >
-              <img src={require('../images/sarcofag.png')} alt="Sarcofag" />
-            </div>
           </div>
         </div>
-      </div>
-      <div className="w-screen absolute z-10" style={{ borderBottom: '1px solid #677016' }}>
-        <div
-          className="w-screen absolute"
-          style={{
-            background: 'transparent linear-gradient(180deg, #0E0E0E 0%, #3DEF2C 100%) 0% 0% no-repeat padding-box',
-            opacity: 0.1,
-            width: '100%',
-            height: '104px',
-            bottom: '0px',
-          }}
-        ></div>
       </div>
     </section>
   );
