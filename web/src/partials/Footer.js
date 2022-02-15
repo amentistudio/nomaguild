@@ -1,5 +1,5 @@
 import React from 'react';
-import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon } from '@heroicons/react/outline';
+import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon, ChatAlt2Icon } from '@heroicons/react/outline';
 
 const whitePaperUrl = 'https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMA-whitepaper-v1.1.pdf';
 
@@ -11,6 +11,14 @@ function Footer() {
       </div>
       <div className="max-w-6xl py-12 md:py-16 -mt-px mx-auto">
         <ul className="flex justify-end flex-grow items-center">
+          <li>
+            <a 
+              target="_blank" rel="noreferrer" className="text-white font-bold ml-6"
+              href="https://discord.gg/MzBjpdgxfu">
+              <ChatAlt2Icon className="h-5 w-5 mr-2 inline" />
+              Discord
+            </a>
+          </li>
           <li>
             <a href={whitePaperUrl} target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
               <AcademicCapIcon className="h-5 w-5 mr-2 inline" />

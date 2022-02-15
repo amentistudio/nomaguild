@@ -107,7 +107,7 @@ function HeroHome() {
                 No Mummy Allowed is a club for all the people who love games beyond the grave.
                 <br />
                 <br />
-                We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the game they want to play.
+                We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the games they want to play or experiences they want to have.
                 <br />
                 <br />
                 Get on the whitelist to claim your spot!

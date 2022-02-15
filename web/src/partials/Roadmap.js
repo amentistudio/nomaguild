@@ -54,7 +54,7 @@ function Roadmap() {
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-            Community Teams
+            Community Teams and Brand building
           </h3>
           <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
             We're building a passionate community around gaming and making games. We have zero tolerance for toxic behaviour.
@@ -163,7 +163,7 @@ function Roadmap() {
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-                Community Teams
+                Community Teams and Brand building
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
                 We're building a passionate community around gaming and making games. We have zero tolerance for toxic behaviour.
