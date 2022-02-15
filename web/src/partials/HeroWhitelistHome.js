@@ -95,7 +95,7 @@ function HeroHome() {
   return (
     <section className="relative">
       <div className="max-w-3xl mx-auto mt-10">
-        <div className="pt-40">
+        <div className="py-40">
           <div className="text-center relative">
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
                 Whitelist your wallet
