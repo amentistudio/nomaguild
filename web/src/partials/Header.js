@@ -63,7 +63,7 @@ function Header() {
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/nomaclub" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
+                <a href="https://twitter.com/nomaguild" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
                   <AtSymbolIcon className="h-5 w-5 mr-1 inline" />
                   Twitter
                 </a>

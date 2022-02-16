@@ -36,7 +36,7 @@ function FAQs() {
       <div className="max-w-4xl mx-auto pb-20">
         <h2 className="text-left font-extrabold text-3xl">Project</h2>
         <dl className="mt-6 max-w-4xl space-y-6 divide-y divide-gray-800">
-          <FAQ question="Why is it called the No Mummy Allowed Gaming Club?">
+          <FAQ question="Why is it called the No Mummy Allowed Gaming Guild?">
             The end of the millennium saw the rise of the internet and the birth of many gaming legends.
             Back then, as teenagers, we were fascinated by this technological advance and could play games late into the night.
             However, our parents, especially our mothers, had a hard time with it.
@@ -52,7 +52,7 @@ function FAQs() {
             <br />
             P.S. We love you!  
           </FAQ>
-          <FAQ question="How is No Mummy Allowed Gaming Club different?">
+          <FAQ question="How is No Mummy Allowed Gaming Guild different?">
             <ul className="list-disc ml-5">
               <li>We are not starting from 0, but we already have a capital we work with ($200k) that is helping us run Amenti studio (see our Whitepaper for more details)</li>
               <li>We're here to stay long-term. We have exposed our names and professions to back this statement.</li>

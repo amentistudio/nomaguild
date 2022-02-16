@@ -10,10 +10,10 @@ function HeroHome() {
             {/* Content */}
             <div className="md:col-span-6 lg:col-span-6 mb-8 text-center md:text-left sm:pb-12">
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
-                Welcome to the NoMA club
+                Welcome to the NoMA guild
               </h1>
               <p className="text-xl md:mx-0 mx-10 text-white" data-aos="fade-down" data-aos-delay="150">
-                No Mummy Allowed is a club for all the people who love games beyond the grave.
+                No Mummy Allowed is a guild for all the people who love games beyond the grave.
                 <br />
                 <br />
                 We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the games they want to play or experiences they want to have.

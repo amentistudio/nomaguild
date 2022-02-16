@@ -40,7 +40,7 @@ function Roadmap() {
           </h3>
           <p className="text-gray-400 text-center md:text-left mx-10">
             The core team of 8 people is now fully funded thanks to the investment in DeFi.
-            All members can use NoMA Club as a blueprint to start their communities.
+            All members can use NoMA guild as a blueprint to start their communities.
           </p>
         </div>
         <div className="mt-20">
@@ -158,7 +158,7 @@ function Roadmap() {
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
                 The core team of 8 people is now fully funded thanks to the investment in DeFi.
-                All members can use NoMA Club as a blueprint to start their communities.
+                All members can use NoMA guild as a blueprint to start their communities.
               </p>
             </div>
             <div className="mt-20">
