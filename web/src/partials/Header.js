@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon, ChatAlt2Icon } from '@heroicons/react/outline';
 
-const whitePaperUrl = 'https://nomaclub-public.s3.eu-central-1.amazonaws.com/NoMA-whitepaper-v1.1.pdf';
+const whitePaperUrl = 'https://s3.eu-central-1.amazonaws.com/com.nomaguild.public/NoMA-Guild-whitepaper-v1.1.pdf';
 
 function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
