@@ -24,6 +24,6 @@ cd .. && make web-deploy
 
 ## Benchmarking
 ```sh
-npx autocannon -c 100 -d 5 -p 10 https://nomummyallowed.com
+npx autocannon -c 100 -d 5 -p 10 https://nomaguild.com
 ```
 

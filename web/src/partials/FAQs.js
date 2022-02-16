@@ -110,7 +110,7 @@ function FAQs() {
             </ul>
           </FAQ>
           <FAQ question="How do I register for the whitelist mint?">
-            Go to our website <a href="https://nomummyallowed.com" target="_blank" rel="noreferrer">nomummyallowed.com</a> and click the “Join our Discord →” button. 
+            Go to our website <a href="https://nomaguild.com" target="_blank" rel="noreferrer">nomaguild.com</a> and click the “Join our Discord →” button. 
             We'll be sharing the whitelist link on our Discord.
           </FAQ>
         </dl>
