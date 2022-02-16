@@ -39,12 +39,13 @@ function HeroHome() {
           </div>
         </div>
       </div>
-      <div className="w-screen absolute z-10" style={{ borderBottom: '1px solid #677016' }}>
+      <div className="w-screen absolute" style={{ borderBottom: '1px solid #677016', zIndex: -1 }}>
         <div
           className="w-screen absolute"
           style={{
             background: 'transparent linear-gradient(180deg, #0E0E0E 0%, #3DEF2C 100%) 0% 0% no-repeat padding-box',
             opacity: 0.1,
+            zIndex: -1,
             width: '100%',
             height: '104px',
             bottom: '0px',

@@ -216,7 +216,7 @@ function MintHome() {
                 Mint
               </h1>
               <p className="text-xl text-white" data-aos="fade-down" data-aos-delay="150">
-                Welcome to the gaming guild for all the people who love games beyond the grave.
+                Welcome to the guild for all the people who love games beyond the grave.
                 <br />
                 <br />
                 All (10k) mummies will rise on{' '}

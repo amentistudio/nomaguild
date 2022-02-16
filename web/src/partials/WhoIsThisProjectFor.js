@@ -27,7 +27,7 @@ function WhoIsThisProjectFor() {
               Artists
             </h3>
             <div className="text-xl mt-4 text-gray-400 md:mx-0 mx-10">
-              Are you trying to start a career in gaming or web 3 industry? Join us and find a sustainable way to do what you love.
+              Are you trying to start a career in gaming or web3 industry? Join us and find a sustainable way to do what you love.
             </div>
           </div>
           <div className="col-span-4 mb-8 md:mb-0 text-center md:text-left sm:pb-12">
