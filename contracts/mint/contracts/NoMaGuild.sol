@@ -45,11 +45,6 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
         string memory baseURI,
         bytes32 _merkleRoot
     ) ERC721A(_symbol, _name, _mintLimitPerWallet, _maxMummies) {
-        require(_maxMummies > 0, "Max Mummies cannot be 0!");
-        require(_maxWhitelist > 0, "Max whitelist cannot be 0!");
-        require(_mintLimitPerWallet > 0, "Max wallet limit cannot be 0!");
-        require(_merkleRoot != "", "Merkle tree cannot be empty!");
-
         maxMummies = _maxMummies;
         maxWhitelist = _maxWhitelist;
         mintLimitPerWallet = _mintLimitPerWallet;

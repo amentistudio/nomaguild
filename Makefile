@@ -26,15 +26,20 @@ deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-
 deploy-mint-contract: cmd-exists-yarn cmd-exists-truffle
 	cd contracts/mint && . deploy.sh && cd ../..
 	cp contracts/mint/build/contracts/NoMaGuild.json web/src/contracts/NoMaGuild.json
-	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address)"
+	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address.${NETWORK})"
+
+.PHONY: flatten-mint-contract
+flatten-mint-contract: cmd-exists-yarn cmd-exists-truffle
+	cd contracts/mint && yarn truffle-flattener ./contracts/NoMaGuild.sol > ./../../NoMaGuildFlattened.sol && cd ../..
+	pbcopy < ./NoMaGuildFlattened.sol
 
 .PHONY: truffle-console-dev
  truffle-console-dev: cmd-exists-truffle
 	cd contracts/mint && truffle console && cd ../..
 
-.PHONY: truffle-console-ropsten
- truffle-console-ropsten: cmd-exists-truffle
-	cd contracts/mint && truffle console --network ropsten && cd ../..
+.PHONY: truffle-console-rinkeby
+ truffle-console-rinkeby: cmd-exists-truffle
+	cd contracts/mint && truffle console --network rinkeby && cd ../..
 
 .PHONY: truffle-console-mainnet
  truffle-console-mainnet: cmd-exists-truffle
