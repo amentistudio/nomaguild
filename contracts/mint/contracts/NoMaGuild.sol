@@ -10,8 +10,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import '@openzeppelin/contracts/security/Pausable.sol';
 import "./ERC721A.sol";
 
-// TODO: Make Burnable + use Counter
-contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
+contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     using Counters for Counters.Counter;
 
     // Contract immutables
@@ -20,7 +19,7 @@ contract NoMaClub is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     uint256 public mintLimitPerWallet = 0;
 
     // Constants
-    uint256 public constant ROYALTY_RATE = 10; // 10%
+    uint256 public constant ROYALTY_RATE = 2; // 2%
     uint256 public constant WHITELIST_PRICE = 0.04096 ether;
     uint256 public constant PUBLIC_PRICE = 0.08192 ether;
 

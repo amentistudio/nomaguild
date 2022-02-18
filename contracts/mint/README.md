@@ -30,7 +30,7 @@ migrate --reset
 
 truffle console
 let cinstance;
-NoMaClub.deployed().then((instance) => { cinstance = instance; });
+NoMaGuild.deployed().then((instance) => { cinstance = instance; });
 
 let proof = ['0x47ced7e2503ebf284d4ac57cad2afbd44e07138655ca00b8460c4bc487a1cc71']
 let address = '0xb99d1e85a8a220dbbde535f17aea3a89909cfd4e'

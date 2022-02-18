@@ -7,7 +7,7 @@
     "coverage": "truffle run coverage",
     "compile": "truffle compile",
     "console": "truffle console",
-    "slither": "slither contracts/NoMaClub.sol --solc-remaps @openzeppelin=node_modules/@openzeppelin"
+    "slither": "slither contracts/NoMaGuild.sol --solc-remaps @openzeppelin=node_modules/@openzeppelin"
   },
   "dependencies": {},
   "devDependencies": {

@@ -11,9 +11,9 @@ require 'json'
 require 'aws-sdk-s3'
 
 class Main
-  COLLECTION_NAME = "No Mummy Allowed Club"
-  COLLECTION_DESCRIPTION = "Exclusive club of 10k supporters of Amenti Studio"
-  COLLECTION_FAMILY = "Amenti Studio"
+  COLLECTION_NAME = "No Mummy Allowed Guild"
+  COLLECTION_DESCRIPTION = "NoMA Guild"
+  COLLECTION_FAMILY = "NoMA Guild"
   SELLER_WALLET = "3KLxgYLJV6aN6ySv7r9Ci8Nd3tU2ELMaCwnfwqSBi8S4"
   SELLER_FEE = 2.5 #%
   PB_FORMAT = "%t: |%B| %e"

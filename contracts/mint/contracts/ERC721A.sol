@@ -226,7 +226,7 @@ contract ERC721A is
     string memory baseURI = _baseURI();
     return
       bytes(baseURI).length > 0
-        ? string(abi.encodePacked(baseURI, tokenId.toString()))
+        ? string(abi.encodePacked(baseURI, tokenId.toString(), '.json'))
         : "";
   }
 

@@ -12,12 +12,12 @@ chai.use(require('chai-bn')(BN));
 // Runs before all tests in this block.
 // Read about .new() VS .deployed() here:
 // https://twitter.com/zulhhandyplast/status/1026181801239171072
-const NoMaClub = contract.fromArtifact("NoMaClubTest");
+const NoMaGuild = contract.fromArtifact("NoMaGuildTest");
 const { shouldSupportInterfaces } = require('./utils/SupportsInterface.behavior');
 
-describe("NoMaClub", () => {
+describe("NoMaGuild", () => {
   const instanceFactory = (root) =>
-    NoMaClub.new(
+    NoMaGuild.new(
       "NOMA", "NoMa", // Namimng
       8192, 3000, 3, // Limits
       "baseURL", // URL for Metadata
@@ -317,7 +317,7 @@ describe("NoMaClub", () => {
       context("overlimit on whitelist max", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
+          instance = await NoMaGuild.new(
             "NOMA", "NoMa", // Namimng
             2, 2, 3, // Limits (supply, whitelist limit, perwallet)
             "baseURL", // URL for Metadata
@@ -353,7 +353,7 @@ describe("NoMaClub", () => {
       context("overlimit on total supply", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
+          instance = await NoMaGuild.new(
             "NOMA", "NoMa", // Namimng
             2, 3, 3, // Limits (supply, whitelist limit, perwallet)
             "baseURL", // URL for Metadata
@@ -465,7 +465,7 @@ describe("NoMaClub", () => {
       context("wallet limit", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
+          instance = await NoMaGuild.new(
             "NOMA", "NoMa", // Namimng
             3, 1, 2, // Limits (supply, whitelist limit, perwallet)
             "baseURL", // URL for Metadata
@@ -512,7 +512,7 @@ describe("NoMaClub", () => {
       context("soldout", async () => {
         let instance;
         beforeEach(async () => {
-          instance = await NoMaClub.new(
+          instance = await NoMaGuild.new(
             "NOMA", "NoMa", // Namimng
             2, 1, 3, // Limits (supply, whitelist limit, perwallet)
             "baseURL", // URL for Metadata
