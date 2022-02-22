@@ -1,32 +1,56 @@
 {
+  "name": "noma_contracts",
+  "version": "1.0",
+  "description": "NoMA smart contract for Solidity",
+  "files": [
+    "/contracts/**/*.sol",
+    "/build/contracts/*.json",
+    "!/contracts/mocks/**/*"
+  ],
   "scripts": {
-    "test": "truffle compile && mocha --exit --recursive",
-    "dev": "lite-server",
-    "prettier": "prettier --write 'contracts/**/*.sol'",
-    "solhint": "solhint 'contracts/**/*.sol'",
-    "coverage": "truffle run coverage",
-    "compile": "truffle compile",
-    "console": "truffle console",
-    "slither": "slither contracts/NoMaGuild.sol --solc-remaps @openzeppelin=node_modules/@openzeppelin"
+    "node": "hardhat node",
+    "test": "hardhat test",
+    "run": "hardhat run",
+    "test:gas": "REPORT_GAS=true hardhat test",
+    "lint": "yarn lint:js && yarn lint:sol",
+    "lint:js": "eslint --ignore-path .gitignore . --fix",
+    "lint:sol": "prettier --write \"contracts/**/*.sol\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.4.2"
+  },
   "devDependencies": {
-    "@openzeppelin/contracts": "^4.4.1",
+    "@nomiclabs/hardhat-ethers": "^2.0.4",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/test-environment": "^0.1.9",
     "@openzeppelin/test-helpers": "^0.5.15",
-    "@truffle/hdwallet-provider": "^2.0.1",
     "bip39": "^3.0.4",
     "chai": "^4.3.6",
     "chai-bn": "^0.3.1",
     "erc721a": "^2.2.0",
     "keccak256": "^1.0.6",
-    "lite-server": "^2.3.0",
     "merkletreejs": "^0.2.27",
+    "eslint": "^8.7.0",
+    "eslint-plugin-mocha": "^10.0.3",
+    "eslint-plugin-node": "^11.1.0",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.3",
+    "hardhat": "^2.8.2",
+    "hardhat-gas-reporter": "^1.0.7",
     "mocha": "^9.2.0",
     "prettier": "^2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.6",
-    "solhint-plugin-prettier": "^0.0.5",
-    "truffle-flattener": "^1.6.0"
-  }
+    "solhint-plugin-prettier": "^0.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:amentistudio/nomaguild.git"
+  },
+  "author": "NoMA team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amentistudio/nomaguild/issues"
+  },
+  "homepage": "https://github.com/amentistudio/nomaguild"
 }

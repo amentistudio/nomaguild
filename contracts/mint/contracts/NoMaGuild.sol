@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/interfaces/IERC2981.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
+import '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import '@openzeppelin/contracts/interfaces/IERC2981.sol';
+import '@openzeppelin/contracts/utils/Counters.sol';
+import '@openzeppelin/contracts/utils/Address.sol';
 import '@openzeppelin/contracts/security/Pausable.sol';
-import "erc721a/contracts/ERC721A.sol";
-import "erc721a/contracts/extensions/ERC721ABurnable.sol";
+import 'erc721a/contracts/ERC721A.sol';
+import 'erc721a/contracts/extensions/ERC721ABurnable.sol';
 
-contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownable, Pausable  {
+contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownable, Pausable {
     using Counters for Counters.Counter;
 
     // Contract immutables
@@ -54,27 +54,27 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     }
 
     modifier notSoldOut() {
-        require(totalSupply() <= maxMummies, "Soldout!");
+        require(totalSupply() <= maxMummies, 'Soldout!');
         _;
     }
 
     modifier whitelistSaleIsOpen() {
-        require(IS_WHITELIST_SALE_OPEN, "Whitelist sales not open");
-        require(whitelistedMummiesMinted() <= maxWhitelist, "Whitelist soldout!");
-        require(totalSupply() < maxMummies, "Soldout!");
+        require(IS_WHITELIST_SALE_OPEN, 'Whitelist sales not open');
+        require(whitelistedMummiesMinted() <= maxWhitelist, 'Whitelist soldout!');
+        require(totalSupply() < maxMummies, 'Soldout!');
         _;
     }
 
     modifier publicSaleIsOpen() {
-        require(IS_PUBLIC_SALE_OPEN, "Public sales not open");
-        require(totalSupply() < maxMummies, "Soldout!");
+        require(IS_PUBLIC_SALE_OPEN, 'Public sales not open');
+        require(totalSupply() < maxMummies, 'Soldout!');
         _;
     }
 
-   modifier callerIsUser() {
-        require(tx.origin == msg.sender, "The caller is another contract");
+    modifier callerIsUser() {
+        require(tx.origin == msg.sender, 'The caller is another contract');
         _;
-   }
+    }
 
     function whitelistedMummiesMinted() public view returns (uint256) {
         return whitelistedMummyCounter.current();
@@ -96,20 +96,17 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         whitelistSaleIsOpen
         whenNotPaused
     {
-        require(_quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
-        require(whitelistedMummiesMinted() + _quantity <= maxWhitelist, "Exceeded whitelist supply!");
-        require(msg.value >= WHITELIST_PRICE * _quantity, "Insufficient payment per item");
+        require(_quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
+        require(whitelistedMummiesMinted() + _quantity <= maxWhitelist, 'Exceeded whitelist supply!');
+        require(msg.value >= WHITELIST_PRICE * _quantity, 'Insufficient payment per item');
 
         address _to = msg.sender;
 
-        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
 
         // Verify whitelisted address with MerkleProof
         bytes32 leaf = keccak256(abi.encodePacked(_to));
-        require(
-            MerkleProof.verify(_merkleProof, merkleRoot, leaf),
-            "Not whitelisted"
-        );
+        require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), 'Not whitelisted');
 
         // Mint
         for (uint256 i = 0; i < _quantity; i++) {
@@ -119,14 +116,14 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     }
 
     function publicMint(uint256 _quantity) public payable callerIsUser publicSaleIsOpen whenNotPaused {
-        require(_quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+        require(_quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
 
         address _to = msg.sender;
 
-        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
 
         // Verify there's enough money sent
-        require(msg.value >= PUBLIC_PRICE * _quantity, "Insufficient payment per item");
+        require(msg.value >= PUBLIC_PRICE * _quantity, 'Insufficient payment per item');
 
         // Mint
         _mintMummy(_to, _quantity);
@@ -164,23 +161,17 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     // ROYALTIES
 
-    function royaltyInfo(uint256, uint256 salePrice) external view override
+    function royaltyInfo(uint256, uint256 salePrice)
+        external
+        view
+        override
         returns (address receiver, uint256 royaltyAmount)
     {
         return (address(this), (salePrice * ROYALTY_RATE) / 100);
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(ERC721A, IERC165)
-        returns (bool)
-    {
-        return (
-            interfaceId == type(IERC2981).interfaceId ||
-            super.supportsInterface(interfaceId)
-        );
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721A, IERC165) returns (bool) {
+        return (interfaceId == type(IERC2981).interfaceId || super.supportsInterface(interfaceId));
     }
 
     // PRIVATE

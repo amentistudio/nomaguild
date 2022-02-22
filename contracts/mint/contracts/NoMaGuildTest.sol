@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./NoMaGuild.sol";
+import './NoMaGuild.sol';
 
 // NOTE:
 // This allows us to test internal visibility stuff, by exposing public getter functions.

@@ -29,8 +29,8 @@ describe("NoMaGuild", () => {
     let merkleTree;
 
     before(async () => {
-      whitelist = [accounts[0], accounts[1]];
-      leafs = whitelist.map(addr => keccak256(addr));
+      const whitelist = [accounts[0], accounts[1]];
+      const leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
     });
@@ -56,8 +56,8 @@ describe("NoMaGuild", () => {
     let merkleTree;
 
     before(async () => {
-      whitelist = [accounts[0], accounts[1]];
-      leafs = whitelist.map(addr => keccak256(addr));
+      const whitelist = [accounts[0], accounts[1]];
+      const leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
     });
@@ -107,8 +107,8 @@ describe("NoMaGuild", () => {
     let merkleTree;
 
     before(async () => {
-      whitelist = [accounts[0], accounts[1]];
-      leafs = whitelist.map(addr => keccak256(addr));
+      const whitelist = [accounts[0], accounts[1]];
+      const leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
     });
@@ -134,8 +134,8 @@ describe("NoMaGuild", () => {
     let merkleTree;
 
     before(async () => {
-      whitelist = [accounts[0], accounts[1]];
-      leafs = whitelist.map(addr => keccak256(addr));
+      const whitelist = [accounts[0], accounts[1]];
+      const leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
     });
@@ -197,8 +197,8 @@ describe("NoMaGuild", () => {
     let merkleTree;
 
     before(async () => {
-      whitelist = [accounts[0], accounts[1]];
-      leafs = whitelist.map(addr => keccak256(addr));
+      const whitelist = [accounts[0], accounts[1]];
+      const leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
     });
@@ -257,9 +257,10 @@ describe("NoMaGuild", () => {
     let proof;
     let root;
     let merkleTree;
+    let leafs;
 
     before(async () => {
-      whitelist = [accounts[0], accounts[1]];
+      const whitelist = [accounts[0], accounts[1]];
       leafs = whitelist.map(addr => keccak256(addr));
       merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
       root = merkleTree.getRoot();
