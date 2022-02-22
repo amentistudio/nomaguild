@@ -1,4 +1,7 @@
 {
+  "name": "nomaguild",
+  "version": "1.0",
+  "description": "NoMA guild monorepo",
   "scripts": {
   },
   "dependencies": {},
@@ -6,5 +9,15 @@
     "dotenv": "^14.3.2",
     "keccak256": "^1.0.6",
     "merkletreejs": "^0.2.27"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:amentistudio/nomaguild.git"
+  },
+  "author": "NoMA team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amentistudio/nomaguild/issues"
+  },
+  "homepage": "https://github.com/amentistudio/nomaguild"
 }
