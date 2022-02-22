@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import '@openzeppelin/contracts/security/Pausable.sol';
-import "./ERC721A.sol";
+import "erc721a/contracts/ERC721A.sol";
 
 contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     using Counters for Counters.Counter;
@@ -44,7 +44,7 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
         uint256 _mintLimitPerWallet,
         string memory baseURI,
         bytes32 _merkleRoot
-    ) ERC721A(_symbol, _name, _mintLimitPerWallet, _maxMummies) {
+    ) ERC721A(_symbol, _name) {
         maxMummies = _maxMummies;
         maxWhitelist = _maxWhitelist;
         mintLimitPerWallet = _mintLimitPerWallet;
@@ -60,13 +60,13 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     modifier whitelistSaleIsOpen() {
         require(IS_WHITELIST_SALE_OPEN, "Whitelist sales not open");
         require(whitelistedMummiesMinted() <= maxWhitelist, "Whitelist soldout!");
-        require(totalSupply() <= maxMummies, "Soldout!");
+        require(totalSupply() < maxMummies, "Soldout!");
         _;
     }
 
     modifier publicSaleIsOpen() {
         require(IS_PUBLIC_SALE_OPEN, "Public sales not open");
-        require(totalSupply() <= maxMummies, "Soldout!");
+        require(totalSupply() < maxMummies, "Soldout!");
         _;
     }
 
@@ -101,6 +101,8 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
 
         address _to = msg.sender;
 
+        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+
         // Verify whitelisted address with MerkleProof
         bytes32 leaf = keccak256(abi.encodePacked(_to));
         require(
@@ -120,11 +122,17 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
 
         address _to = msg.sender;
 
+        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, "Exceeded limit per wallet!");
+
         // Verify there's enough money sent
         require(msg.value >= PUBLIC_PRICE * _quantity, "Insufficient payment per item");
 
         // Mint
         _mintMummy(_to, _quantity);
+    }
+
+    function burn(uint256 tokenId) whenNotPaused public {
+        _burn(tokenId);
     }
 
     // Only OWNER
@@ -155,12 +163,6 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
 
     function unpause() external onlyOwner {
         _unpause();
-    }
-
-    function burn(uint256 tokenId) whenNotPaused public {
-        //solhint-disable-next-line max-line-length
-        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Burnable: caller is not owner nor approved");
-        _burn(tokenId);
     }
 
     // ROYALTIES

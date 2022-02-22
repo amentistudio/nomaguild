@@ -75,9 +75,8 @@ describe("NoMaGuild", () => {
         await instance.publicMint(quantity, {
           from: accounts[1], value: price * quantity,
         })
-        await expectRevert(
+        await expectRevert.unspecified(
           instance.burn(1, { from: accounts[2] }),
-          "ERC721Burnable: caller is not owner nor approved.",
           "without approval we cannot burn tokens"
         );
       });
@@ -104,16 +103,16 @@ describe("NoMaGuild", () => {
         await instance.publicMint(quantity, {
           from: accounts[1], value: price * quantity
         })
-        expect(await instance.ownerOf(1)).to.be.equal(accounts[1]);
-        await instance.burn(1, { from: accounts[1] });
+        expect(await instance.ownerOf(0)).to.be.equal(accounts[1]);
+        await instance.burn(0, { from: accounts[1] });
 
         expect(await instance.balanceOf(accounts[1])).to.be.bignumber.equal(new BN(0));
         await expectRevert.unspecified(
-          instance.ownerOf(1),
+          instance.ownerOf(0),
           "no more owner of the token"
         );
         // Supply should not go down (to prevent mint again)
-        expect(Number(await instance.totalSupply())).to.equal(1);
+        expect(Number(await instance.totalSupply())).to.equal(0);
       });
     });
   });
@@ -319,7 +318,7 @@ describe("NoMaGuild", () => {
         beforeEach(async () => {
           instance = await NoMaGuild.new(
             "NOMA", "NoMa", // Namimng
-            2, 2, 3, // Limits (supply, whitelist limit, perwallet)
+            3, 2, 3, // Limits (supply, whitelist limit, perwallet)
             "baseURL", // URL for Metadata
             root
           )
@@ -334,7 +333,7 @@ describe("NoMaGuild", () => {
             from: accounts[0], value: price * quantity,
           })
 
-          expect(Number(await instance.maxMummies())).to.equal(2)
+          expect(Number(await instance.maxMummies())).to.equal(3)
           expect(Number(await instance.maxWhitelist())).to.equal(2)
           expect(Number(await instance.totalSupply())).to.equal(2)
           let balance_wei = Number(await web3.eth.getBalance(instance.address));
@@ -361,7 +360,7 @@ describe("NoMaGuild", () => {
           )
         })
 
-        it("should not mint an mummy if total supply overlimite", async () => {
+        it("should not mint an mummy if total supply overlimit", async () => {
           proof = merkleTree.getHexProof(leafs[0]);
           await instance.setWhitelistSale(true)
           const price = Number(await instance.WHITELIST_PRICE());
@@ -379,7 +378,7 @@ describe("NoMaGuild", () => {
             instance.whitelistMint(proof, 1, {
               from: accounts[0], value: web3.utils.toWei(".2", "ether")
             }),
-            "ERC721A: quantity to mint exceeding colleciton size.",
+            "Soldout!",
             "cannot mint if whitelist supply overlimit"
           );
         });
@@ -490,7 +489,7 @@ describe("NoMaGuild", () => {
             instance.publicMint(quantity, {
               from: accounts[0], value: price * quantity
             }),
-            "ERC721A: quantity to mint exceeding colleciton size.",
+            "Exceeded limit per wallet!",
             "cannot mint if already limit per wallet reached"
           );
         });
@@ -537,7 +536,7 @@ describe("NoMaGuild", () => {
             instance.publicMint(1, {
               from: accounts[1], value: price * quantity
             }),
-            "ERC721A: quantity to mint exceeding colleciton size.",
+            "Soldout!",
             "cannot mint if soldout"
           );
         });
