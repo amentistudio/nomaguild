@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/contracts/MerkleProofVerify.sol": {
-      "lastModificationDate": 1642148459012,
-      "contentHash": "618f515b42a7b53336f8f7dd13ba27f1",
+      "lastModificationDate": 1645535436658,
+      "contentHash": "7e9cf6797e7a257e7e381251c6509623",
       "sourceName": "contracts/MerkleProofVerify.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -74,8 +74,8 @@
       ]
     },
     "/Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/contracts/NoMaGuild.sol": {
-      "lastModificationDate": 1645534892315,
-      "contentHash": "671d9c5bc0e9f61812e0f358afbb3cc3",
+      "lastModificationDate": 1645535436786,
+      "contentHash": "5397a96fc3b514f88fde6ca41e7a0fcb",
       "sourceName": "contracts/NoMaGuild.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -740,8 +740,8 @@
       ]
     },
     "/Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/contracts/NoMaGuildTest.sol": {
-      "lastModificationDate": 1645178918996,
-      "contentHash": "d9922004c62c8c2e7bb22538d0ce0d52",
+      "lastModificationDate": 1645538983283,
+      "contentHash": "760cc7c6b7e54e839b7f0a2dd5911f3b",
       "sourceName": "contracts/NoMaGuildTest.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -777,8 +777,8 @@
       ]
     },
     "/Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/contracts/Migrations.sol": {
-      "lastModificationDate": 1643362496545,
-      "contentHash": "63beaafb4f2e87c93db7a65892b63baa",
+      "lastModificationDate": 1645538983283,
+      "contentHash": "aae0604e0ed8c08494a58375ab356601",
       "sourceName": "contracts/Migrations.sol",
       "solcConfig": {
         "version": "0.8.9",
