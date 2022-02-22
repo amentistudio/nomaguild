@@ -81,21 +81,6 @@ describe("NoMaGuild", () => {
         );
       });
 
-      it("should not allow burn when paused", async () => {
-        await instance.setPublicSale(true)
-        const price = Number(await instance.PUBLIC_PRICE());
-        const quantity = 1;
-        await instance.publicMint(quantity, {
-          from: accounts[1], value: price * quantity
-        })
-        await instance.pause();
-        await expectRevert(
-          instance.burn(1, { from: accounts[1] }),
-          "Pausable: paused.",
-          "do not allow burn when paused"
-        );
-      });
-
       it("should allow burn with approval", async () => {
         await instance.setPublicSale(true)
         const price = Number(await instance.PUBLIC_PRICE());

@@ -9,8 +9,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import '@openzeppelin/contracts/security/Pausable.sol';
 import "erc721a/contracts/ERC721A.sol";
+import "erc721a/contracts/extensions/ERC721ABurnable.sol";
 
-contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
+contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownable, Pausable  {
     using Counters for Counters.Counter;
 
     // Contract immutables
@@ -129,10 +130,6 @@ contract NoMaGuild is ERC721A, IERC2981, ReentrancyGuard, Ownable, Pausable  {
 
         // Mint
         _mintMummy(_to, _quantity);
-    }
-
-    function burn(uint256 tokenId) whenNotPaused public {
-        _burn(tokenId);
     }
 
     // Only OWNER
