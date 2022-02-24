@@ -4,6 +4,7 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
+require("solidity-coverage");
 
 const {
   INFURA_PROJECT_ID, COINMARKETCAP_API_KEY, PRIVATE_KEY, ETHERSCAN_API_KEY
@@ -18,7 +19,7 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 800,
+        runs: 1000,
       },
     },
   },

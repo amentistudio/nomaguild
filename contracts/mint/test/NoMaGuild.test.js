@@ -396,6 +396,7 @@ describe("NoMaGuild", () => {
         expect(await instance.totalSupply()).to.equal(0)
         let balance_wei = await waffle.provider.getBalance(instance.address);
         expect(balance_wei).to.equal(0);
+        await instance.unpause();
       });
     });
   });

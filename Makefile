@@ -34,7 +34,11 @@ verify-mint-contract-rinkeby: cmd-exists-yarn
 
 .PHONY: test-contracts
 test-contracts: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat compile && yarn hardhat test --network hardhat && cd ../..
+	cd contracts/mint && yarn hardhat test && cd ../..
+
+.PHONY: test-contracts-coverage
+test-contracts-coverage: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat coverage && cd ../..
 
 .PHONY: console-dev
 console-dev: cmd-exists-yarn
