@@ -99,10 +99,6 @@ function shouldSupportInterfaces (instance, interfaces = []) {
       const interfaceId = INTERFACE_IDS[k];
       describe(k, function () {
         describe('ERC165\'s supportsInterface(bytes4)', function () {
-          it('uses less than 30k gas [skip-on-coverage]', async function () {
-            expect(await this.contractUnderTest.supportsInterface.estimateGas(interfaceId)).to.be.lte(50000);
-          });
-
           it('claims support [skip-on-coverage]', async function () {
             const result = await this.contractUnderTest.supportsInterface(interfaceId);
             expect(result).to.equal(true);
@@ -110,10 +106,9 @@ function shouldSupportInterfaces (instance, interfaces = []) {
         });
 
         for (const fnName of INTERFACES[k]) {
-          const fnSig = FN_SIGNATURES[fnName];
           describe(fnName, function () {
             it('has to be implemented', function () {
-              expect(this.contractUnderTest.abi.filter(fn => fn.signature === fnSig).length).to.equal(1);
+              expect(Object.keys(this.contractUnderTest.functions).filter(fn => fn === fnName).length).to.equal(1);
             });
           });
         }

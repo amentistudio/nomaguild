@@ -15,8 +15,9 @@ contract NoMaGuildTest is NoMaGuild {
         uint256 _maxWhitelist,
         uint256 _mintLimitPerWallet,
         string memory baseURI,
+        string memory hiddenURI,
         bytes32 _merkleRoot
-    ) NoMaGuild(_symbol, _name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, _merkleRoot) {}
+    ) NoMaGuild(_symbol, _name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, hiddenURI, _merkleRoot) {}
 
     function openPublicSale() public view returns (bool) {
         return IS_PUBLIC_SALE_OPEN;
@@ -28,5 +29,9 @@ contract NoMaGuildTest is NoMaGuild {
 
     function getBaseURI() public view returns (string memory) {
         return baseTokenURI;
+    }
+
+    function getHiddenURI() public view returns (string memory) {
+        return hiddenTokenURI;
     }
 }

@@ -12,6 +12,7 @@ import 'erc721a/contracts/ERC721A.sol';
 import 'erc721a/contracts/extensions/ERC721ABurnable.sol';
 
 contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownable, Pausable {
+    using Strings for uint256;
     using Counters for Counters.Counter;
 
     // Contract immutables
@@ -27,6 +28,7 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     // Constructur set constants
     bytes32 internal merkleRoot;
     string public baseTokenURI;
+    string public hiddenTokenURI;
 
     // Switches
     bool internal IS_WHITELIST_SALE_OPEN = false;
@@ -44,12 +46,14 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         uint256 _maxWhitelist,
         uint256 _mintLimitPerWallet,
         string memory baseURI,
+        string memory _hiddenTokenURI,
         bytes32 _merkleRoot
     ) ERC721A(_symbol, _name) {
         maxMummies = _maxMummies;
         maxWhitelist = _maxWhitelist;
         mintLimitPerWallet = _mintLimitPerWallet;
         merkleRoot = _merkleRoot;
+        hiddenTokenURI = _hiddenTokenURI;
         setBaseURI(baseURI);
     }
 
@@ -86,6 +90,18 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     function _baseURI() internal view virtual override returns (string memory) {
         return baseTokenURI;
+    }
+
+    function _hiddenURI() internal view virtual returns (string memory) {
+        return hiddenTokenURI;
+    }
+
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        string memory baseURI = _baseURI();
+        string memory hiddenURI = _hiddenURI();
+        return bytes(baseURI).length != 0
+            ? string(abi.encodePacked(baseURI, tokenId.toString(), '.json'))
+            : string(abi.encodePacked(hiddenURI));
     }
 
     function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)

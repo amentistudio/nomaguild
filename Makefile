@@ -23,27 +23,30 @@ deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-
 	scripts/dotenv -f ${ENV_FILE} set MERKLE_TREE_ROOT="$(shell node ./scripts/merkletree.js ./backend/whitelist-verification/data/list.txt)"
 
 .PHONY: deploy-mint-contract
-deploy-mint-contract: cmd-exists-yarn cmd-exists-truffle
+deploy-mint-contract: cmd-exists-yarn
 	cd contracts/mint && . deploy.sh && cd ../..
 	cp contracts/mint/build/contracts/NoMaGuild.json web/src/contracts/NoMaGuild.json
-	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address.${NETWORK})"
+	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address)"
 
-.PHONY: flatten-mint-contract
-flatten-mint-contract: cmd-exists-yarn cmd-exists-truffle
-	cd contracts/mint && yarn truffle-flattener ./contracts/NoMaGuild.sol > ./../../NoMaGuildFlattened.sol && cd ../..
-	pbcopy < ./NoMaGuildFlattened.sol
+.PHONY: verify-mint-contract-rinkeby
+verify-mint-contract-rinkeby: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat verify --constructor-args arguments.js ${CONTRACT_ADDRESS} --network rinkeby && cd ../..
 
-.PHONY: truffle-console-dev
- truffle-console-dev: cmd-exists-truffle
-	cd contracts/mint && truffle console && cd ../..
+.PHONY: test-contracts
+test-contracts: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat compile && yarn hardhat test --network hardhat && cd ../..
 
-.PHONY: truffle-console-rinkeby
- truffle-console-rinkeby: cmd-exists-truffle
-	cd contracts/mint && truffle console --network rinkeby && cd ../..
+.PHONY: console-dev
+console-dev: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat console && cd ../..
 
-.PHONY: truffle-console-mainnet
- truffle-console-mainnet: cmd-exists-truffle
-	cd contracts/mint && truffle console --network mainnet && cd ../..
+.PHONY: console-rinkeby
+console-rinkeby: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat console --network rinkeby && cd ../..
+
+.PHONY: console-mainnet
+console-mainnet: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat console --network mainnet && cd ../..
 
 .PHONY: web-start
  web-start: cmd-exists-yarn

@@ -1,14 +1,7 @@
 const { MerkleTree } = require('merkletreejs');
 const keccak256 = require('keccak256');
-
 const { waffle } = require("hardhat");
-
-const { BN, expectRevert } = require('@openzeppelin/test-helpers');
-
-const chai = require('chai');
 const { expect } = require('chai');
-require('chai').should();
-chai.use(require('chai-bn')(BN));
 
 describe("NoMaGuild", () => {
   const contractFactory = async (root, supply = 8192, whitelist = 3000, perwallet = 3) => {
@@ -17,6 +10,7 @@ describe("NoMaGuild", () => {
       "NOMA", "NoMa", // Namimng
       supply, whitelist, perwallet, // Limits (supply, whitelist, perwallet)
       "baseURL", // URL for Metadata
+      "hiddenURI",
       root
     );
     await contract.deployed();
@@ -37,6 +31,24 @@ describe("NoMaGuild", () => {
 
     before(async () => {
       [root] = await merkleRootFactory();
+    });
+
+    context("tokenURI", async () => {
+      let instance;
+      beforeEach(async () => {
+        instance = await contractFactory(root);
+      });
+      
+      it("should return baseURI if not baseURI empty", async () => {
+        await instance.setBaseURI("nonempty/");
+        expect(await instance.tokenURI(1)).to.equal("nonempty/1.json");
+      });
+
+      it("should return hiddenURI if baseURI is empty", async () => {
+        await instance.setBaseURI("");
+        const hiddenURI = await instance.getHiddenURI();
+        expect(await instance.tokenURI(1)).to.equal(hiddenURI);
+      });
     });
 
     context("baseURI", async () => {
@@ -142,11 +154,7 @@ describe("NoMaGuild", () => {
         })
 
         let owner_balance_bm_wei = await waffle.provider.getBalance(owner.address);;
-        await expectRevert(
-          instance.connect(addr2).widthdraw(),
-          "Ownable: caller is not the owner",
-          "only owner able to withdraw all"
-        );
+        await expect(instance.connect(addr2).widthdraw()).to.be.revertedWith("Ownable: caller is not the owner")
 
         expect(Number(await instance.totalSupply())).to.equal(1)
         // Contract
@@ -191,10 +199,10 @@ describe("NoMaGuild", () => {
       it("should not allow calling giveaway to not owners", async () => {
         await instance.setWhitelistSale(false)
         await instance.setPublicSale(false)
-        await expectRevert(
-          instance.connect(addr1).giveawayMint(addr2.address, 1),
+        await expect(
+          instance.connect(addr1).giveawayMint(addr2.address, 1)
+        ).to.be.revertedWith(
           "Ownable: caller is not the owner",
-          "only owner able to giveaway mint"
         );
 
         expect(Number(await instance.totalSupply())).to.equal(0)
@@ -243,12 +251,12 @@ describe("NoMaGuild", () => {
         expect(balance_wei).to.equal(price.mul(quantity));
 
         // Whitelist max. # exceeded
-        await expectRevert(
+        await expect(
           instance.connect(addr1).whitelistMint(proof, 1, {
             value: price
-          }),
-          "Exceeded whitelist supply!",
-          "cannot mint if total supply overlimit"
+          })
+        ).to.be.revertedWith(
+          "Exceeded whitelist supply!"
         );
       });
     });
@@ -282,12 +290,12 @@ describe("NoMaGuild", () => {
         let balance_wei = await waffle.provider.getBalance(instance.address);
         expect(balance_wei).to.equal(price.mul(quantity));
 
-        await expectRevert(
+        await expect(
           instance.connect(addr1).whitelistMint(proof, 1, {
             value: price.mul(quantity)
-          }),
-          "Soldout!",
-          "cannot mint if whitelist supply overlimit"
+          })
+        ).to.be.revertedWith(
+          "Soldout!"
         );
       });
     });
@@ -329,12 +337,12 @@ describe("NoMaGuild", () => {
         await instance.setWhitelistSale(true)
 
         // Try to whitelist with unsufficient money
-        await expectRevert(
+        await expect(
           instance.connect(addr1).whitelistMint(proof, 1, {
             value: price.div(2)
-          }),
-          "Insufficient payment per item",
-          "not enough money for mint"
+          })
+        ).to.be.revertedWith(
+          "Insufficient payment per item"
         );
 
         expect(await instance.totalSupply()).to.equal(0);
@@ -352,13 +360,13 @@ describe("NoMaGuild", () => {
         await instance.setWhitelistSale(true)
 
         // Try to mint without being on the whitelist
-        await expectRevert(
+        await expect(
           instance.connect(addr2).whitelistMint(proof, quantity, {
             // hint: account[2] isn't part of whitelist
             value: price.mul(quantity)
-          }),
-          "Not whitelisted",
-          "incorrect proof"
+          })
+        ).to.be.revertedWith(
+          "Not whitelisted"
         );
 
         expect(await instance.totalSupply()).to.equal(0);
@@ -377,12 +385,12 @@ describe("NoMaGuild", () => {
         await instance.pause();
 
         // Mint should not work when paused
-        await expectRevert(
+        await expect(
           instance.connect(addr1).whitelistMint(proof, quantity, {
             value: price.mul(quantity)
-          }),
-          "Pausable: paused",
-          "contract paused so no whitelist mint allowed"
+          })
+        ).to.be.revertedWith(
+          "Pausable: paused"
         );
 
         expect(await instance.totalSupply()).to.equal(0)
@@ -428,12 +436,12 @@ describe("NoMaGuild", () => {
         let balance_wei = await waffle.provider.getBalance(instance.address);
         expect(balance_wei).to.equal(price.mul(quantity));
 
-        await expectRevert(
+        await expect(
           instance.connect(addr1).publicMint(quantity, {
             value: price.mul(quantity)
-          }),
-          "Exceeded limit per wallet!",
-          "cannot mint if already limit per wallet reached"
+          })
+        ).to.be.revertedWith(
+          "Exceeded limit per wallet!"
         );
       });
 
@@ -445,12 +453,12 @@ describe("NoMaGuild", () => {
         const quantity = 4; 
 
         // Try to mint over limit per wallet
-        await expectRevert(
+        await expect(
           instance.connect(addr1).publicMint(quantity, {
             value: price.mul(quantity)
-          }),
+          })
+        ).to.be.revertedWith(
           "Exceeded limit per wallet!",
-          "cannot mint if quantity is too high"
         );
       });
     });
@@ -483,12 +491,12 @@ describe("NoMaGuild", () => {
         expect(balance_wei).to.equal(price.mul(quantity));
 
         // Soldout
-        await expectRevert(
+        await expect(
           instance.connect(addr1).publicMint(1, {
             value: price.mul(quantity)
-          }),
-          "Soldout!",
-          "cannot mint if soldout"
+          })
+        ).to.be.revertedWith(
+          "Soldout!"
         );
       });
     });
@@ -526,12 +534,12 @@ describe("NoMaGuild", () => {
         const price = await instance.PUBLIC_PRICE();
         const quantity = 2; 
 
-        await expectRevert(
+        await expect(
           instance.connect(addr1).publicMint(quantity, {
             value: price
-          }),
-          "Insufficient payment per item",
-          "price must adequate for the quantity"
+          })
+        ).to.be.revertedWith(
+          "Insufficient payment per item"
         );
       });
 
@@ -546,12 +554,12 @@ describe("NoMaGuild", () => {
         await instance.pause()
 
         // Try mint with paused contract
-        await expectRevert(
+        await expect(
           instance.connect(addr1).publicMint(quantity, {
             value: price.mul(quantity),
-          }),
-          "Pausable: paused",
-          "cannot mint whilte paused"
+          })
+        ).to.be.revertedWith(
+          "Pausable: paused"
         );
       });
     });
@@ -573,13 +581,70 @@ describe("NoMaGuild", () => {
         const quantity = 1; 
 
         // Try to mint when sales are closed
-        await expectRevert(
+        await expect(
           instance.connect(addr1).publicMint(quantity, {
             value: price.mul(quantity)
-          }),
-          "Public sales not open",
-          "public sale closed"
+          })
+        ).to.be.revertedWith(
+          "Public sales not open"
         );
+      });
+    });
+  });
+
+  describe("burnable", async () => {
+    let root;
+
+    before(async () => {
+      [root] = await merkleRootFactory();
+    });
+
+    context("burn()", async () => {
+      beforeEach(async () => {
+        [owner, addr1, addr2] = await ethers.getSigners();
+        instance = await contractFactory(root);
+      })
+
+      it("should not allow burn without approval", async () => {
+        await instance.setPublicSale(true)
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+
+        // Mint
+        await instance.connect(addr1).publicMint(quantity, {
+          value: price.mul(quantity),
+        })
+
+        // Try to burn from other account
+        await expect(
+          instance.connect(addr2).burn(1)
+        ).to.be.reverted;
+      });
+
+      it("should allow burn with approval", async () => {
+        await instance.setPublicSale(true)
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+
+        // Mint
+        await instance.connect(addr1).publicMint(quantity, {
+          value: price.mul(quantity)
+        })
+
+        // Check ownership of token 0
+        expect(await instance.ownerOf(0)).to.be.equal(addr1.address);
+        // Burn token 0
+        await instance.connect(addr1).burn(0);
+
+        // Check if balance changed
+        expect(await instance.balanceOf(addr1.address)).to.be.equal(0);
+        // There's no owner of token 0
+        await expect(
+          instance.ownerOf(0)
+        ).to.be.reverted;
+
+        // Supply should not go down (to prevent mint again)
+        expect(await instance.totalSupply()).to.equal(0);
       });
     });
   });

@@ -1,6 +1,13 @@
+require("dotenv").config();
+
 require("@nomiclabs/hardhat-waffle");
-require('@nomiclabs/hardhat-ethers');
+require("@nomiclabs/hardhat-ethers");
+require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
+
+const {
+  INFURA_PROJECT_ID, COINMARKETCAP_API_KEY, PRIVATE_KEY, ETHERSCAN_API_KEY
+} = process.env;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -15,11 +22,25 @@ module.exports = {
       },
     },
   },
+  defaultNetwork: "hardhat",
   gasReporter: {
     enabled: true,
     currency: "USD",
     gasPrice: 100,
     showTimeSpent: true,
-    coinmarketcap: "32e83307-40bb-4451-83de-cf3e661ee25c"
+    coinmarketcap: COINMARKETCAP_API_KEY
   },
+  networks: {
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
+      accounts: [`0x${PRIVATE_KEY}`]
+    },
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
+      accounts: [`0x${PRIVATE_KEY}`]
+    }
+  },
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY
+  }
 };

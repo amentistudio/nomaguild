@@ -2,9 +2,10 @@
 
 yarn --silent
 echo "Compiling contracts..."
-truffle compile
+yarn hardhat compile
 echo "Deploying to network: ${NETWORK}"
-truffle migrate --network "${NETWORK}" --reset > .deploy
-cat .deploy | grep '> contract address: *' | tail -n 1 | grep -o '0x[^\ ]*' > .address.${NETWORK}
+yarn hardhat run scripts/deploy.js --network "${NETWORK}" > .deploy.${NETWORK}
+rm .address
+cat .deploy.${NETWORK} | grep 'contract address: *' | tail -n 1 | grep -o '0x[^\ ]*' > .address
 
-echo "Address:" $(cat .address.${NETWORK})
+echo "Contract address:" $(cat .address)
