@@ -106,9 +106,10 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         string memory baseURI = _baseURI();
         string memory hiddenURI = _hiddenURI();
-        return bytes(baseURI).length != 0
-            ? string(abi.encodePacked(baseURI, tokenId.toString(), '.json'))
-            : string(abi.encodePacked(hiddenURI));
+        return
+            bytes(baseURI).length != 0
+                ? string(abi.encodePacked(baseURI, tokenId.toString(), '.json'))
+                : string(abi.encodePacked(hiddenURI));
     }
 
     function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)

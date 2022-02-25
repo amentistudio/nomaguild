@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { ethers } = require("hardhat");
 
-const { BASE_URI, MERKLE_TREE_ROOT } = process.env;
+const { BASE_URI, MERKLE_TREE_ROOT, HIDDEN_URI } = process.env;
 
 async function deploy() {
   const NoMaGuild = await ethers.getContractFactory("NoMaGuild");

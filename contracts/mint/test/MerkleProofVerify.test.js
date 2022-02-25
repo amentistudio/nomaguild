@@ -18,7 +18,7 @@ describe('MerkleProofVerify', () => {
       const MerkleProofVerifyFactory = await ethers.getContractFactory('MerkleProofVerify');
       this.merkleProofVerify = await MerkleProofVerifyFactory.deploy();
 
-      [_, addr1, addr2] = await ethers.getSigners();
+      [, addr1, addr2] = await ethers.getSigners();
       const addresses = [addr1.address, addr2.address];
       const leafs = addresses.map(addr => keccak256(addr));
 

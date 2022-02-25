@@ -18,7 +18,7 @@ describe("NoMaGuild", () => {
   }
 
   const merkleRootFactory = async () => {
-      const [_, addr1, addr2] = await ethers.getSigners();
+      const [, addr1, addr2] = await ethers.getSigners();
       const whitelist = [addr1.address, addr2.address];
       const leafs = whitelist.map(addr => keccak256(addr));
       const merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
@@ -153,7 +153,7 @@ describe("NoMaGuild", () => {
           value: price.mul(quantity)
         })
 
-        let owner_balance_bm_wei = await waffle.provider.getBalance(owner.address);;
+        let owner_balance_bm_wei = await waffle.provider.getBalance(owner.address);
         await expect(instance.connect(addr2).widthdraw()).to.be.revertedWith("Ownable: caller is not the owner")
 
         expect(await instance.totalSupply()).to.equal(1)
@@ -183,12 +183,11 @@ describe("NoMaGuild", () => {
 
     context("giveawayMint()", async () => {
       let instance;
-      let owner;
       let addr1;
       let addr2;
 
       beforeEach(async () => {
-        [owner, addr1, addr2] = await ethers.getSigners();
+        [, addr1, addr2] = await ethers.getSigners();
         instance = await contractFactory(root, 1);
       })
 
@@ -247,12 +246,12 @@ describe("NoMaGuild", () => {
       let addr1;
 
       beforeEach(async () => {
-        [_, addr1] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 3, 2, 3);
       })
 
       it("should not mint an mummy if whitelist max reached", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         // Open whitelist
         await instance.setWhitelistSale(true)
@@ -287,12 +286,12 @@ describe("NoMaGuild", () => {
       let addr1;
 
       beforeEach(async () => {
-        [_, addr1] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 2, 3, 3);
       })
 
       it("should not mint an mummy if total supply overlimit", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         // Open whitelist
         await instance.setWhitelistSale(true)
@@ -324,15 +323,14 @@ describe("NoMaGuild", () => {
     context("whitelist sale not open", async () => {
       let instance;
       let addr1;
-      let addr2;
 
       beforeEach(async () => {
-        [_, addr1, addr2] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 3, 3, 2);
       })
 
       it("should not mint an mummy", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
         const quantity = 1;
@@ -359,12 +357,12 @@ describe("NoMaGuild", () => {
       let addr2;
 
       beforeEach(async () => {
-        [_, addr1, addr2] = await ethers.getSigners();
+        [, addr1, addr2] = await ethers.getSigners();
         instance = await contractFactory(root, 3, 3, 2);
       })
 
       it("should mint an mummy with correct price", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
         const quantity = 1;
@@ -382,7 +380,7 @@ describe("NoMaGuild", () => {
       });
 
       it("should not mint an mummy with per wallet limit exceeded", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
         const quantity = 3;
@@ -406,7 +404,7 @@ describe("NoMaGuild", () => {
       });
 
       it("should not mint an mummy if quantity and totalSupply for whitelist exceeded", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
         const quantity = 2;
@@ -435,7 +433,7 @@ describe("NoMaGuild", () => {
       });
 
       it("should not mint an mummy with incorrect price", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
 
@@ -457,7 +455,7 @@ describe("NoMaGuild", () => {
       });
 
       it("should not mint an mummy with incorrect proof", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
         const quantity = 1;
@@ -481,7 +479,7 @@ describe("NoMaGuild", () => {
       });
 
       it("should not mint an mummy when paused", async () => {
-        proof = merkleTree.getHexProof(leafs[0]);
+        const proof = merkleTree.getHexProof(leafs[0]);
 
         const price = await instance.WHITELIST_PRICE();
         const quantity = 1;
@@ -511,7 +509,7 @@ describe("NoMaGuild", () => {
     let root;
 
     before(async () => {
-      [root, merkleTree, leafs] = await merkleRootFactory();
+      [root] = await merkleRootFactory();
     });
 
     context("wallet limit", async () => {
@@ -519,7 +517,7 @@ describe("NoMaGuild", () => {
       let addr1;
 
       beforeEach(async () => {
-        [_, addr1] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 3, 2, 3);
       })
 
@@ -573,7 +571,7 @@ describe("NoMaGuild", () => {
       let addr1;
 
       beforeEach(async () => {
-        [_, addr1] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 2, 1, 3);
       })
 
@@ -611,7 +609,7 @@ describe("NoMaGuild", () => {
       let addr1;
 
       beforeEach(async () => {
-        [_, addr1] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 2, 1, 3);
       })
 
@@ -674,7 +672,7 @@ describe("NoMaGuild", () => {
       let addr1;
 
       beforeEach(async () => {
-        [_, addr1] = await ethers.getSigners();
+        [, addr1] = await ethers.getSigners();
         instance = await contractFactory(root, 2, 1, 3);
       })
 
@@ -705,8 +703,12 @@ describe("NoMaGuild", () => {
     });
 
     context("burn()", async () => {
+      let addr1;
+      let addr2;
+      let instance;
+
       beforeEach(async () => {
-        [owner, addr1, addr2] = await ethers.getSigners();
+        [, addr1, addr2] = await ethers.getSigners();
         instance = await contractFactory(root);
       })
 

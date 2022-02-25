@@ -19,7 +19,7 @@ describe("NoMaGuildInterfaces", () => {
   }
 
   const merkleRootFactory = async () => {
-    const [_, addr1, addr2] = await ethers.getSigners();
+    const [, addr1, addr2] = await ethers.getSigners();
     const whitelist = [addr1.address, addr2.address];
     const leafs = whitelist.map(addr => keccak256(addr));
     const merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
