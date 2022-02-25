@@ -38,7 +38,7 @@ test-contracts: cmd-exists-yarn
 
 .PHONY: test-contracts-coverage
 test-contracts-coverage: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat coverage && cd ../..
+	cd contracts/mint && yarn hardhat coverage && open coverage/index.html && cd ../..
 
 .PHONY: console-dev
 console-dev: cmd-exists-yarn

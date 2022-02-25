@@ -156,7 +156,7 @@ describe("NoMaGuild", () => {
         let owner_balance_bm_wei = await waffle.provider.getBalance(owner.address);;
         await expect(instance.connect(addr2).widthdraw()).to.be.revertedWith("Ownable: caller is not the owner")
 
-        expect(Number(await instance.totalSupply())).to.equal(1)
+        expect(await instance.totalSupply()).to.equal(1)
         // Contract
         let contract_balance_wei = await waffle.provider.getBalance(instance.address);
         expect(contract_balance_wei).to.equal(price.mul(quantity));
@@ -164,6 +164,12 @@ describe("NoMaGuild", () => {
         // Owner
         let owner_balance_wei = await waffle.provider.getBalance(owner.address);
         expect(owner_balance_wei).to.equal(owner_balance_bm_wei);
+      });
+
+      it("should revert if balance is 0", async () => {
+        await expect(
+          instance.widthdraw()
+        ).to.be.revertedWith('NonZeroWitdraw')
       });
     });
   });
@@ -183,8 +189,23 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [owner, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root);
+        instance = await contractFactory(root, 1);
       })
+
+      it("should not allow giveaway if soldout", async () => {
+        await instance.setWhitelistSale(false)
+        await instance.setPublicSale(false)
+
+        instance.giveawayMint(addr1.address, 1)
+
+        await expect(
+          instance.giveawayMint(addr2.address, 1)
+        ).to.be.revertedWith('Soldout');
+
+        expect(await instance.totalSupply()).to.equal(1)
+        let balance_wei = await waffle.provider.getBalance(instance.address);
+        expect(balance_wei).to.equal(0);
+      });
 
       it("should allow calling giveaway to owner", async () => {
         await instance.setWhitelistSale(false)
@@ -256,7 +277,7 @@ describe("NoMaGuild", () => {
             value: price
           })
         ).to.be.revertedWith(
-          "Exceeded whitelist supply!"
+          'WhitelistSoldout'
         );
       });
     });
@@ -295,8 +316,40 @@ describe("NoMaGuild", () => {
             value: price.mul(quantity)
           })
         ).to.be.revertedWith(
-          "Soldout!"
+          'Soldout'
         );
+      });
+    });
+
+    context("whitelist sale not open", async () => {
+      let instance;
+      let addr1;
+      let addr2;
+
+      beforeEach(async () => {
+        [_, addr1, addr2] = await ethers.getSigners();
+        instance = await contractFactory(root, 3, 3, 2);
+      })
+
+      it("should not mint an mummy", async () => {
+        proof = merkleTree.getHexProof(leafs[0]);
+
+        const price = await instance.WHITELIST_PRICE();
+        const quantity = 1;
+
+        // Open whitelist
+        await instance.setWhitelistSale(false)
+        // Mint
+        
+        await expect(
+          instance.connect(addr1).whitelistMint(proof, quantity, {
+            value: price.mul(quantity)
+          })
+        ).to.be.revertedWith('WhitelistSaleNotOpen');
+
+        expect(await instance.totalSupply()).to.equal(0)
+        let balance_wei = await waffle.provider.getBalance(instance.address);
+        expect(balance_wei).to.equal(0);
       });
     });
 
@@ -307,7 +360,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [_, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root, 2, 3, 3);
+        instance = await contractFactory(root, 3, 3, 2);
       })
 
       it("should mint an mummy with correct price", async () => {
@@ -328,6 +381,59 @@ describe("NoMaGuild", () => {
         expect(balance_wei).to.equal(price.mul(quantity));
       });
 
+      it("should not mint an mummy with per wallet limit exceeded", async () => {
+        proof = merkleTree.getHexProof(leafs[0]);
+
+        const price = await instance.WHITELIST_PRICE();
+        const quantity = 3;
+
+        // Open whitelist
+        await instance.setWhitelistSale(true)
+
+        // Mint
+        await expect(
+          instance.connect(addr1).whitelistMint(proof, quantity, {
+            value: price.mul(quantity)
+          })
+        ).to.be.revertedWith(
+          "ExceededLimitPerWallet"
+        );
+
+        // Verify nothing was minted
+        expect(await instance.totalSupply()).to.equal(0)
+        let balance_wei = await waffle.provider.getBalance(instance.address);
+        expect(balance_wei).to.equal(0);
+      });
+
+      it("should not mint an mummy if quantity and totalSupply for whitelist exceeded", async () => {
+        proof = merkleTree.getHexProof(leafs[0]);
+
+        const price = await instance.WHITELIST_PRICE();
+        const quantity = 2;
+
+        // Open whitelist
+        await instance.setWhitelistSale(true)
+
+        // Mint bellow whitelist supply
+        instance.connect(addr1).whitelistMint(proof, quantity, {
+          value: price.mul(quantity)
+        })
+
+        // Mint
+        await expect(
+          instance.connect(addr2).whitelistMint(proof, quantity, {
+            value: price.mul(quantity)
+          })
+        ).to.be.revertedWith(
+          "ExceededWhitelistSupply"
+        );
+
+        // Verify nothing was minted
+        expect(await instance.totalSupply()).to.equal(2)
+        let balance_wei = await waffle.provider.getBalance(instance.address);
+        expect(balance_wei).to.equal(price.mul(quantity));
+      });
+
       it("should not mint an mummy with incorrect price", async () => {
         proof = merkleTree.getHexProof(leafs[0]);
 
@@ -342,7 +448,7 @@ describe("NoMaGuild", () => {
             value: price.div(2)
           })
         ).to.be.revertedWith(
-          "Insufficient payment per item"
+          "InsufficientPaymentPerItem"
         );
 
         expect(await instance.totalSupply()).to.equal(0);
@@ -366,7 +472,7 @@ describe("NoMaGuild", () => {
             value: price.mul(quantity)
           })
         ).to.be.revertedWith(
-          "Not whitelisted"
+          "NotWhitelisted"
         );
 
         expect(await instance.totalSupply()).to.equal(0);
@@ -403,8 +509,6 @@ describe("NoMaGuild", () => {
 
   describe("publicMint()", async () => {
     let root;
-    let merkleTree;
-    let leafs;
 
     before(async () => {
       [root, merkleTree, leafs] = await merkleRootFactory();
@@ -442,7 +546,7 @@ describe("NoMaGuild", () => {
             value: price.mul(quantity)
           })
         ).to.be.revertedWith(
-          "Exceeded limit per wallet!"
+          "ExceededLimitPerWallet"
         );
       });
 
@@ -459,7 +563,7 @@ describe("NoMaGuild", () => {
             value: price.mul(quantity)
           })
         ).to.be.revertedWith(
-          "Exceeded limit per wallet!",
+          "ExceededLimitPerWallet",
         );
       });
     });
@@ -497,7 +601,7 @@ describe("NoMaGuild", () => {
             value: price.mul(quantity)
           })
         ).to.be.revertedWith(
-          "Soldout!"
+          "Soldout"
         );
       });
     });
@@ -540,7 +644,7 @@ describe("NoMaGuild", () => {
             value: price
           })
         ).to.be.revertedWith(
-          "Insufficient payment per item"
+          "InsufficientPaymentPerItem"
         );
       });
 
@@ -587,7 +691,7 @@ describe("NoMaGuild", () => {
             value: price.mul(quantity)
           })
         ).to.be.revertedWith(
-          "Public sales not open"
+          "PublicSaleClosed"
         );
       });
     });

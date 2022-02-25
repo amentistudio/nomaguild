@@ -36,8 +36,20 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     Counters.Counter private whitelistedMummyCounter;
 
+    // Events
     event WhitelistSaleEvent(bool pause);
     event PublicSaleEvent(bool pause);
+
+    // Errors
+    error Soldout();
+    error WhitelistSaleNotOpen();
+    error WhitelistSoldout();
+    error PublicSaleClosed();
+    error ExceededLimitPerWallet();
+    error ExceededWhitelistSupply();
+    error InsufficientPaymentPerItem();
+    error NotWhitelisted();
+    error NonZeroWitdraw();
 
     constructor(
         string memory _symbol,
@@ -58,25 +70,20 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     }
 
     modifier notSoldOut() {
-        require(totalSupply() <= maxMummies, 'Soldout!');
+        if (totalSupply() >= maxMummies) revert Soldout();
         _;
     }
 
     modifier whitelistSaleIsOpen() {
-        require(IS_WHITELIST_SALE_OPEN, 'Whitelist sales not open');
-        require(whitelistedMummiesMinted() <= maxWhitelist, 'Whitelist soldout!');
-        require(totalSupply() < maxMummies, 'Soldout!');
+        if (totalSupply() >= maxMummies) revert Soldout();
+        if (!IS_WHITELIST_SALE_OPEN) revert WhitelistSaleNotOpen();
+        if (whitelistedMummiesMinted() >= maxWhitelist) revert WhitelistSoldout();
         _;
     }
 
     modifier publicSaleIsOpen() {
-        require(IS_PUBLIC_SALE_OPEN, 'Public sales not open');
-        require(totalSupply() < maxMummies, 'Soldout!');
-        _;
-    }
-
-    modifier callerIsUser() {
-        require(tx.origin == msg.sender, 'The caller is another contract');
+        if (!IS_PUBLIC_SALE_OPEN) revert PublicSaleClosed();
+        if (totalSupply() >= maxMummies) revert Soldout();
         _;
     }
 
@@ -108,21 +115,19 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         public
         payable
         nonReentrant
-        callerIsUser
         whitelistSaleIsOpen
         whenNotPaused
     {
-        require(_quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
-        require(whitelistedMummiesMinted() + _quantity <= maxWhitelist, 'Exceeded whitelist supply!');
-        require(msg.value >= WHITELIST_PRICE * _quantity, 'Insufficient payment per item');
-
         address _to = msg.sender;
 
-        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
+        if (balanceOf(_to) + _quantity > mintLimitPerWallet) revert ExceededLimitPerWallet();
+        // TODO: Write test for this condition
+        if (whitelistedMummiesMinted() + _quantity > maxWhitelist) revert ExceededWhitelistSupply();
+        if (msg.value < WHITELIST_PRICE * _quantity) revert InsufficientPaymentPerItem();
 
         // Verify whitelisted address with MerkleProof
         bytes32 leaf = keccak256(abi.encodePacked(_to));
-        require(MerkleProof.verify(_merkleProof, merkleRoot, leaf), 'Not whitelisted');
+        if (!MerkleProof.verify(_merkleProof, merkleRoot, leaf)) revert NotWhitelisted();
 
         // Mint
         for (uint256 i = 0; i < _quantity; i++) {
@@ -131,15 +136,11 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         _mintMummy(_to, _quantity);
     }
 
-    function publicMint(uint256 _quantity) public payable callerIsUser publicSaleIsOpen whenNotPaused {
-        require(_quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
-
+    function publicMint(uint256 _quantity) public payable nonReentrant publicSaleIsOpen whenNotPaused {
         address _to = msg.sender;
 
-        require(balanceOf(_to) + _quantity <= mintLimitPerWallet, 'Exceeded limit per wallet!');
-
-        // Verify there's enough money sent
-        require(msg.value >= PUBLIC_PRICE * _quantity, 'Insufficient payment per item');
+        if (balanceOf(_to) + _quantity > mintLimitPerWallet) revert ExceededLimitPerWallet();
+        if (msg.value < PUBLIC_PRICE * _quantity) revert InsufficientPaymentPerItem();
 
         // Mint
         _mintMummy(_to, _quantity);
@@ -163,7 +164,7 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     function widthdraw() public onlyOwner {
         uint256 balance = address(this).balance;
-        require(balance > 0);
+        if (balance == 0) revert NonZeroWitdraw();
         Address.sendValue(payable(owner()), balance);
     }
 
