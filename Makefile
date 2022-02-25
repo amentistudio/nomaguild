@@ -40,6 +40,15 @@ test-contracts: cmd-exists-yarn
 test-contracts-coverage: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat coverage && open coverage/index.html && cd ../..
 
+.PHONY: test-contracts-slither
+test-contracts-slither: cmd-exists-slither
+	cd contracts/mint && slither . --solc-remaps "@openzeppelin/=node_modules/@openzeppelin/ erc721a/=node_modules/erc721a/" --exclude-dependencies --exclude-informational --compile-force-framework hardhat && cd ../..
+
+.PHONY: test-contracts-vertigo
+test-contracts-vertigo: cmd-exists-vertigo
+	cd contracts/mint && vertigo run --hardhat-parallel 8 && cd ../..
+
+
 .PHONY: console-dev
 console-dev: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat console && cd ../..

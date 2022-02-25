@@ -9,29 +9,29 @@ import './NoMaGuild.sol';
 // This should never be used in production!!!
 contract NoMaGuildTest is NoMaGuild {
     constructor(
-        string memory _symbol,
-        string memory _name,
+        string memory ___symbol,
+        string memory ___name,
         uint256 _maxMummies,
         uint256 _maxWhitelist,
         uint256 _mintLimitPerWallet,
         string memory baseURI,
         string memory hiddenURI,
         bytes32 _merkleRoot
-    ) NoMaGuild(_symbol, _name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, hiddenURI, _merkleRoot) {}
+    ) NoMaGuild(___symbol, ___name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, hiddenURI, _merkleRoot) {}
 
-    function openPublicSale() public view returns (bool) {
+    function openPublicSale() external view returns (bool) {
         return IS_PUBLIC_SALE_OPEN;
     }
 
-    function openWhitelistSale() public view returns (bool) {
+    function openWhitelistSale() external view returns (bool) {
         return IS_WHITELIST_SALE_OPEN;
     }
 
-    function getBaseURI() public view returns (string memory) {
+    function getBaseURI() external view returns (string memory) {
         return baseTokenURI;
     }
 
-    function getHiddenURI() public view returns (string memory) {
+    function getHiddenURI() external view returns (string memory) {
         return hiddenTokenURI;
     }
 }

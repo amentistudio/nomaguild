@@ -7,7 +7,7 @@ pragma solidity ^0.8.0;
 import '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol';
 
 contract MerkleProofVerify {
-    function verify(bytes32[] memory proof, bytes32 root) public view returns (bool) {
+    function verify(bytes32[] memory proof, bytes32 root) external view returns (bool) {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
 
         return MerkleProof.verify(proof, root, leaf);

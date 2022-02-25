@@ -52,15 +52,15 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     error NonZeroWitdraw();
 
     constructor(
-        string memory _symbol,
-        string memory _name,
+        string memory __symbol,
+        string memory __name,
         uint256 _maxMummies,
         uint256 _maxWhitelist,
         uint256 _mintLimitPerWallet,
         string memory baseURI,
         string memory _hiddenTokenURI,
         bytes32 _merkleRoot
-    ) ERC721A(_symbol, _name) {
+    ) ERC721A(__symbol, __name) {
         maxMummies = _maxMummies;
         maxWhitelist = _maxWhitelist;
         mintLimitPerWallet = _mintLimitPerWallet;
@@ -112,7 +112,7 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     }
 
     function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)
-        public
+        external
         payable
         nonReentrant
         whitelistSaleIsOpen
@@ -136,7 +136,7 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         _mintMummy(_to, _quantity);
     }
 
-    function publicMint(uint256 _quantity) public payable nonReentrant publicSaleIsOpen whenNotPaused {
+    function publicMint(uint256 _quantity) external payable nonReentrant publicSaleIsOpen whenNotPaused {
         address _to = msg.sender;
 
         if (balanceOf(_to) + _quantity > mintLimitPerWallet) revert ExceededLimitPerWallet();
@@ -148,23 +148,23 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     // Only OWNER
 
-    function giveawayMint(address _to, uint256 _quantity) public onlyOwner notSoldOut {
+    function giveawayMint(address _to, uint256 _quantity) external onlyOwner notSoldOut {
         _mintMummy(_to, _quantity);
     }
 
-    function setWhitelistSale(bool _b) public onlyOwner {
+    function setWhitelistSale(bool _b) external onlyOwner {
         IS_WHITELIST_SALE_OPEN = _b;
         emit WhitelistSaleEvent(_b);
     }
 
-    function setPublicSale(bool _b) public onlyOwner {
+    function setPublicSale(bool _b) external onlyOwner {
         IS_PUBLIC_SALE_OPEN = _b;
         emit PublicSaleEvent(_b);
     }
 
-    function widthdraw() public onlyOwner {
+    function widthdraw() external onlyOwner {
         uint256 balance = address(this).balance;
-        if (balance == 0) revert NonZeroWitdraw();
+        if (balance <= 0) revert NonZeroWitdraw();
         Address.sendValue(payable(owner()), balance);
     }
 

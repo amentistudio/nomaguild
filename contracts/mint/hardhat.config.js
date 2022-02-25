@@ -7,7 +7,11 @@ require("hardhat-gas-reporter");
 require("solidity-coverage");
 
 const {
-  INFURA_PROJECT_ID, COINMARKETCAP_API_KEY, PRIVATE_KEY, ETHERSCAN_API_KEY
+  INFURA_PROJECT_ID,
+  COINMARKETCAP_API_KEY,
+  PRIVATE_KEY,
+  ETHERSCAN_API_KEY,
+  REPORT_GAS
 } = process.env;
 
 /**
@@ -25,7 +29,7 @@ module.exports = {
   },
   defaultNetwork: "hardhat",
   gasReporter: {
-    enabled: true,
+    enabled: REPORT_GAS,
     currency: "USD",
     gasPrice: 100,
     showTimeSpent: true,
