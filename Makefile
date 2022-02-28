@@ -48,7 +48,6 @@ test-contracts-slither: cmd-exists-slither
 test-contracts-vertigo: cmd-exists-vertigo
 	cd contracts/mint && vertigo run --hardhat-parallel 8 && cd ../..
 
-
 .PHONY: console-dev
 console-dev: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat console && cd ../..
