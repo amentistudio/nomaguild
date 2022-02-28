@@ -41,13 +41,18 @@ describe("NoMaGuild", () => {
       
       it("should return baseURI if not baseURI empty", async () => {
         await instance.setBaseURI("nonempty/");
+        await instance.setHiddenURI("");
         expect(await instance.tokenURI(1)).to.equal("nonempty/1.json");
+      });
+
+      it("should return baseURI if not baseURI empty", async () => {
+        await instance.setBaseURI("nonempty/");
+        expect(await instance.tokenURI(1)).to.equal("hiddenURI");
       });
 
       it("should return hiddenURI if baseURI is empty", async () => {
         await instance.setBaseURI("");
-        const hiddenURI = await instance.getHiddenURI();
-        expect(await instance.tokenURI(1)).to.equal(hiddenURI);
+        expect(await instance.tokenURI(1)).to.equal("hiddenURI");
       });
     });
 

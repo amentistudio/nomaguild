@@ -30,8 +30,4 @@ contract NoMaGuildTest is NoMaGuild {
     function getBaseURI() external view returns (string memory) {
         return baseTokenURI;
     }
-
-    function getHiddenURI() external view returns (string memory) {
-        return hiddenTokenURI;
-    }
 }
