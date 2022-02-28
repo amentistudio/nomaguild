@@ -112,6 +112,10 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
                 : string(abi.encodePacked(hiddenURI));
     }
 
+    function _startTokenId() internal view virtual override returns (uint256) {
+        return 1; // Start the collection at 1 not 0
+    }
+
     function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)
         external
         payable

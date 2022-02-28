@@ -38,7 +38,6 @@ describe("NoMaGuildInterfaces", () => {
       'ERC2981',
       'ERC165',
       'ERC721',
-      'ERC721Enumerable',
       'ERC721Metadata'
     ].map(interface => {
       it(interface, async () => {

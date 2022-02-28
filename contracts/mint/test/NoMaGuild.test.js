@@ -738,16 +738,16 @@ describe("NoMaGuild", () => {
           value: price.mul(quantity)
         })
 
-        // Check ownership of token 0
-        expect(await instance.ownerOf(0)).to.be.equal(addr1.address);
-        // Burn token 0
-        await instance.connect(addr1).burn(0);
+        // Check ownership of token 1
+        expect(await instance.ownerOf(1)).to.be.equal(addr1.address);
+        // Burn token 1
+        await instance.connect(addr1).burn(1);
 
         // Check if balance changed
         expect(await instance.balanceOf(addr1.address)).to.be.equal(0);
         // There's no owner of token 0
         await expect(
-          instance.ownerOf(0)
+          instance.ownerOf(1)
         ).to.be.reverted;
 
         // Supply should not go down (to prevent mint again)
