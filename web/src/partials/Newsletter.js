@@ -76,7 +76,8 @@ function Newsletter() {
         </h1>
         <p className="max-w-2xl mx-auto my-8 text-center">
           Subscribe to our newsletter to get updates directly to your inbox.
-          Once a month, you will receive an overview of progress. We promise we won't spam you.
+          <br />
+          We promise we won't spam you.
         </p>
       </div>
 

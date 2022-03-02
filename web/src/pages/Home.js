@@ -20,11 +20,11 @@ function Home() {
       <main className="flex-grow">
         <HeroDiscordHome />
         <GetToKnowUs />
-        <Newsletter />
         <WhoIsThisProjectFor />
         <TraitsAndRarity />
         <Roadmap />
         <Team />
+        <Newsletter />
         <FAQHero />
         <FAQs />
       </main>

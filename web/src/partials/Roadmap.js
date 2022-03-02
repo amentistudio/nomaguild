@@ -12,11 +12,9 @@ function Roadmap() {
           Roadmap to decentralization
         </h1>
         <div className="mx-10 text-xl text-white text-center">
-          We're big fans of business minimalism and idea of community owned project.
-          We are inspired by long-running projects such as Skyrim or Minecraft which are still living today thanks to great communities of players and modders.
+          We're big fans of business minimalism and the idea of a community-owned project.
           <br />
-          <br />
-          The volume of sales doesn't affect the roadmap. Selling NFTs can only speed everything up.
+          Selling NFTs can only speed everything up.
         </div>
       </div>
 
@@ -30,7 +28,6 @@ function Roadmap() {
           </h3>
           <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
             We have spent the last year preparing this project and studying all the possibilities of a blockchain.
-            We have found alternative ways of using a blockchain to fund small and medium-sized game developers.
           </p>
         </div>
         <div className="mt-20">
@@ -40,7 +37,6 @@ function Roadmap() {
           </h3>
           <p className="text-gray-400 text-center md:text-left mx-10">
             The core team of 8 people is now fully funded thanks to the investment in DeFi.
-            All members can use NoMA guild as a blueprint to start their communities.
           </p>
         </div>
         <div className="mt-20">
@@ -49,26 +45,23 @@ function Roadmap() {
             <span className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-yellow-300">NEXT</span>
           </h3>
           <p className="text-gray-400 text-center mx-10">
-            With NFT mint we'll increase our capital. 20% of the capital will be reserved and sent to community wallet as a foundation for the DAO.
+            With NFT mint we'll increase our capital. 20% of the capital will be reserved and sent to community wallet to fund community projects.
           </p>
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-            Community Teams and Brand building
+            Community
           </h3>
           <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-            We're building a passionate community around gaming and making games. We have zero tolerance for toxic behaviour.
-            We are going to expand the core team with the new members recruited from the community.
+            We're building a passionate community around making games and creating experiences in web3.
           </p>
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center mt-8 mb-2 text-left font-extrabold">
-            Community Projects for Sustainability 
+            Merch
           </h3>
           <p className="text-gray-400 text-center mx-10">
-            With an established community, we can continue to work on ROI Projects and start
-            building new ones with you. The Core will shift focus to creating tokenomics and
-            preparing for complete decentralization.
+            Exclusive merch for members.
           </p>
         </div>
         <div className="mt-20">
@@ -76,29 +69,24 @@ function Roadmap() {
             NoMA DAO &amp; Treasury
           </h3>
           <p className="text-gray-400 text-center mx-10">
-            We will offer you a chance to become the founder of NoMA DAO. Owning a Founder's DAO
-            token means having governance over the DAO, its contents, and the Community Treasury.
+            We will offer you nanobots to evolve your mummy. Will you accept this great honor to become the NoMA DAO Founder?
           </p>
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center mt-8 mb-2 text-left font-extrabold">
-            Tokenomics
+            Community Projects
           </h3>
           <p className="text-gray-400 text-center mx-10">
-            The Core Team is working to create an economy that rewards active members.
-            We will also make it possible to fund community projects from the community treasury.
-            All projects must be agreed upon and voted on by NoMA Founders members.
+            You can vote on what projects we will fund and involve in the process of seeding the funds.
           </p>
         </div>
         <div className="mt-20">
           <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
             Decentralization
           </h3>
-          <ul className="md:list-disc text-gray-400 text-center mx-10 md:ml-5 md:mr-0">
-            <li>Core Team hands reins to the community.</li>
-            <li>Tokens are activated and distributed to active community members.</li>
-            <li>Community control via voting.</li>
-          </ul>
+          <p className="text-gray-400 text-center mx-10">
+            You can vote on what projects we will fund and involve in the process of seeding the funds.
+          </p>
         </div>
       </div>
 
@@ -116,7 +104,6 @@ function Roadmap() {
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
                 We have spent the last year preparing this project and studying all the possibilities of a blockchain.
-                We have found alternative ways of using a blockchain to fund small and medium-sized game developers.
               </p>
             </div>
             <div className="mt-20">
@@ -125,27 +112,23 @@ function Roadmap() {
                 <span className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-yellow-300">NEXT</span>
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                With NFT mint we'll increase our capital. 20% of the capital will be reserved and sent to community wallet as a foundation for the DAO.
+                We have spent the last year preparing this project and studying all the possibilities of a blockchain.
               </p>
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-                Community Projects for Sustainability 
+                Merch
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                With an established community, we can continue to work on ROI Projects and start building
-                new ones with you. The Core will shift focus to creating tokenomics and preparing for
-                complete decentralization.
+                Exclusive merch for members.
               </p>
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-                Tokenomics
+                Community Projects
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                The Core Team is working to create an economy that rewards active members.
-                We will also make it possible to fund community projects from the community treasury.
-                All projects must be agreed upon and voted on by NoMA Founders members.
+                You can vote on what projects we will fund and involve in the process of seeding the funds.
               </p>
             </div>
           </div>
@@ -158,16 +141,14 @@ function Roadmap() {
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
                 The core team of 8 people is now fully funded thanks to the investment in DeFi.
-                All members can use NoMA guild as a blueprint to start their communities.
               </p>
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
-                Community Teams and Brand building
+                Community
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                We're building a passionate community around gaming and making games. We have zero tolerance for toxic behaviour.
-                We are going to expand the core team with the new members recruited from the community.
+                We're building a passionate community around making games and creating experiences in web3.
               </p>
             </div>
             <div className="mt-20">
@@ -175,19 +156,16 @@ function Roadmap() {
                 NoMA DAO &amp; Treasury
               </h3>
               <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
-                We will offer you a chance to become the founder of NoMA DAO. Owning a Founder's DAO
-                token means having governance over the DAO, its contents, and the Community Treasury.
+                We will offer you nanobots to evolve your mummy. Will you accept this great honor to become the NoMA DAO Founder?
               </p>
             </div>
             <div className="mt-20">
               <h3 className="h3 text-2xl text-center md:text-left mt-8 mb-2 text-left font-extrabold">
                 Decentralization
               </h3>
-              <ul className="md:list-disc text-gray-400 text-center md:text-left mx-10 md:ml-5 md:mr-0">
-                <li>Core Team hands reins to the community.</li>
-                <li>Tokens are activated and distributed to active community members.</li>
-                <li>Community control via voting.</li>
-              </ul>
+              <p className="text-gray-400 text-center md:text-left mx-10 md:mx-0">
+                Core Team hands reins to the community. We will activate tokenomics and distribute tokens to active members. At this point, the community can control itself via voting.
+              </p>
             </div>
           </div>
         </div>

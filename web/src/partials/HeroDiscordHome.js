@@ -5,26 +5,19 @@ function HeroHome() {
     <section className="relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 md:pt-40">
-          {/* Hero content */}
-          <div className="md:grid md:grid-cols-12 md:gap-0 lg:gap-0 items-center relative">
-            {/* Content */}
-            <div className="md:col-span-6 lg:col-span-6 mb-8 text-center md:text-left sm:pb-12">
-              <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
-                Welcome to the NoMA guild
+            <div className="text-center sm:pb-12">
+              <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 text-center font-extrabold" data-aos="fade-down">
+                No Mummy Allowed Guild
               </h1>
-              <p className="text-xl md:mx-0 mx-10 text-white" data-aos="fade-down" data-aos-delay="150">
-                No Mummy Allowed is a guild for all the people who love games beyond the grave.
+              <p className="text-xl md:mx-0 mx-10 text-2xl text-white text-center" data-aos="fade-down" data-aos-delay="150">
+                NoMA Guild is a community-driven incubator for all indie creators. 
                 <br />
-                <br />
-                We are on the mission to create a community-owned studio that allows players to become investors and decision-makers in the games they want to play or experiences they want to have.
-                <br />
-                <br />
-                To get early access and whitelist link:
+                We use the power of Web3 to help new projects get started 🌱
               </p>
               <a
                 target="_blank" rel="noreferrer" 
                 href="https://discord.gg/MzBjpdgxfu"
-                className="inline-block text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mt-8 text-bold hover:bg-yellow-300"
+                className="inline-block text-center text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mt-8 text-bold hover:bg-yellow-300"
               >
                 Join our Discord
                 <ArrowRightIcon className="h-5 w-5 ml-3 inline" />
@@ -32,11 +25,27 @@ function HeroHome() {
             </div>
 
             <div
-              className="pt-20 md:col-span-6 lg:col-span-6 place-self-end text-center md:text-right"
+              className="pt-10 place-self-end text-center md:text-right"
             >
-              <img src={require('../images/sarcofag.png')} alt="Sarcofag" />
+              <img
+                className="mx-auto hidden md:block"
+                data-aos="fade-up"
+                src={require('../images/mumie-web-lg.png')}
+                alt="Mummy panel large"
+              />
+              <img
+                className="mx-auto hidden sm:block md:hidden"
+                data-aos="fade-up"
+                src={require('../images/mumie-web-md.png')}
+                alt="Mummy panel middle"
+              />
+              <img
+                className="mx-auto block sm:hidden"
+                data-aos="fade-up"
+                src={require('../images/mumie-web-xs.png')}
+                alt="Mummy panel small"
+              />
             </div>
-          </div>
         </div>
       </div>
       <div className="w-screen absolute" style={{ borderBottom: '1px solid #677016', zIndex: -1 }}>
