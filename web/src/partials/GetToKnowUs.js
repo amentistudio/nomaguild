@@ -13,17 +13,18 @@ function GetToKnowUs() {
             </h1>
             <div className="text-xl text-white md:mx-0 md:mr-20 mx-10">
               <p>
-                Our goal is to create a fund that will emit steady passive income to seed new 👌 legit indie projects.
+                Our goal is to create a fund that will emit steady passive income to seed new legit indie projects.
               </p>
               <br />
-              <p>
-                We want to make this accessible to most people so we're setting the price to Ξ0.0419 for the initial whitelist.
-              </p>
-              <br />
-              <p>
-                Membership gives you the right to 📩 propose or submit new projects, 🔑 access to the community, 🏌 VIP treatment with all products from the incubator,
-                future 💲token for utility and involvement in the process of 🚦 governing the funds. We'll also provide a possibility to move your membership to DAO.
-              </p>
+              <ul>
+                <li className="leading-9">🔑<span className="pl-4">Access to the community</span></li>
+                <li className="leading-9">📩<span className="pl-4">Members can propose or submit new projects</span></li> 
+                <li className="leading-9">🏌<span className="pl-4">VIP treatment with all products from the incubator</span></li>
+                <li className="leading-9">💲<span className="pl-4">Utility token for active members (TBA)</span></li>
+                <li className="leading-9">🚦<span className="pl-4">Involvement in the process of governing the funds</span></li>
+                <li className="leading-9">🧙<span className="pl-4">Possibility to upgrade your membership to DAO</span></li>
+                <li className="leading-9">🪙<span className="pl-4">The Whitelist price Ξ0.04096</span></li>
+              </ul>
             </div>
           </div>
           <div className="col-span-5 mb-8 md:mb-0 text-right">
