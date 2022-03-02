@@ -14,6 +14,11 @@ describe("NoMaGuild", () => {
       root
     );
     await contract.deployed();
+
+    // Update block.timestamp to now()
+    await ethers.provider.send('evm_setNextBlockTimestamp', [Number(new Date())]); 
+    await ethers.provider.send('evm_mine');
+
     return contract;
   }
 
@@ -104,6 +109,20 @@ describe("NoMaGuild", () => {
         expect(await instance.openPublicSale()).to.equal(false)
       });
     });
+
+    context("refund start time", async () => {
+      let instance;
+      beforeEach(async () => {
+        instance = await contractFactory(root);
+      })
+
+      it("should set correctly the refund start time", async () => {
+        const timestamp = Number(new Date().getTime());
+
+        await instance.setRefundStartTime(timestamp);
+        expect(await instance.getRefundStartTime()).to.equal(timestamp);
+      });
+    });
   });
 
   describe("transfers", async () => {
@@ -135,6 +154,13 @@ describe("NoMaGuild", () => {
           value: price.mul(quantity)
         });
 
+        // Date 101 days back
+        const days101Ago = new Date();
+        days101Ago.setDate(days101Ago.getDate() - 101);
+
+        // Set refund start date 101 days ago so we can collect the funds
+        await instance.setRefundStartTime(Number(days101Ago.getTime()));
+
         // Withdraw
         await instance.widthdraw();
 
@@ -147,6 +173,38 @@ describe("NoMaGuild", () => {
         // // Owner
          let owner_balance_wei = await waffle.provider.getBalance(owner.address);
          expect(Number(owner_balance_wei)).to.be.above(Number(owner_balance_bm_wei));
+      });
+
+      it("should not allow widthdraw to owner if refund guarantee is still active", async () => {
+        await instance.setPublicSale(true)
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+
+        // Mint
+        await instance.connect(addr1).publicMint(quantity, {
+          value: price.mul(quantity)
+        });
+
+        // Date 99 days back
+        const days99Ago = new Date();
+        days99Ago.setDate(days99Ago.getDate() - 99);
+        const deadline = Math.floor(days99Ago.getTime());
+
+        console.log("Past time: ", new Date(Math.round(days99Ago.getTime())).toLocaleString('en-GB'));
+
+        // Set refund start date 99 days ago yet we still cannot collect the funds
+        await instance.setRefundStartTime(deadline);
+        const refundStartTime = await instance.getRefundStartTime();
+        const endRefundTime = await instance.endDateForRefund();
+
+        console.log("Start refund time: ", new Date(Number(refundStartTime)).toLocaleString('en-GB'));
+        console.log("End refund time: ", new Date(Number(endRefundTime)).toLocaleString('en-GB'));
+
+        const currentBlockTime = await instance.currentBlockTimestamp();
+        console.log("Current time: ", new Date(Number(currentBlockTime)).toLocaleString('en-GB'));
+
+        // Revert withdraw
+        await expect(instance.widthdraw()).to.be.revertedWith("RefundGuaranteeStillActive");
       });
 
       it("should not allow calling widthdraw to not owners", async () => {

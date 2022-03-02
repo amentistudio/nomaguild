@@ -30,4 +30,12 @@ contract NoMaGuildTest is NoMaGuild {
     function getBaseURI() external view returns (string memory) {
         return baseTokenURI;
     }
+
+    function setRefundStartTime(uint256 timestamp) external {
+        refundStartTime = timestamp;
+    }
+
+    function getRefundStartTime() external view returns (uint256) {
+        return refundStartTime;
+    }
 }

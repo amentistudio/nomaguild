@@ -34,6 +34,11 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     bool internal IS_WHITELIST_SALE_OPEN = false;
     bool internal IS_PUBLIC_SALE_OPEN = false;
 
+    // Set refunding start datetime to creation time
+    uint256 public refundStartTime = block.timestamp;
+
+    // Whitelist claims
+    mapping(uint256 => bool) internal _whitelistClaims;
     Counters.Counter private whitelistedMummyCounter;
 
     // Events
@@ -50,6 +55,9 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     error InsufficientPaymentPerItem();
     error NotWhitelisted();
     error NonZeroWitdraw();
+    error RefundGuaranteeExpired();
+    error RefundGuaranteeStillActive();
+    error MustOwnToken();
 
     constructor(
         string memory __symbol,
@@ -120,6 +128,35 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         return 1; // Start the collection at 1 not 0
     }
 
+    function endDateForRefund() public view returns (uint256) {
+        return (refundStartTime + 100 days * 1000);
+    }
+
+    function currentBlockTimestamp() public view returns (uint256) {
+        return block.timestamp;
+    }
+
+    function refundGuaranteeActive() public view returns (bool) {
+        return (block.timestamp < (refundStartTime + 100 days * 1000));
+    }
+
+    function refund(uint256 _tokenId) external nonReentrant {
+        if (!refundGuaranteeActive()) revert RefundGuaranteeExpired();
+        if (ownerOf(_tokenId) != msg.sender) revert MustOwnToken();
+
+        // Transfer token to owner
+        safeTransferFrom(msg.sender, owner(), _tokenId);
+
+        // Determine whitelist or public price
+        uint256 price = WHITELIST_PRICE;
+        if (!_whitelistClaims[_tokenId]) {
+            price = PUBLIC_PRICE;
+        }
+
+        // Refund the token owner 100% of the mint price.
+        payable(msg.sender).transfer(price);
+    }
+
     function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)
         external
         payable
@@ -130,7 +167,6 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         address _to = msg.sender;
 
         if (balanceOf(_to) + _quantity > mintLimitPerWallet) revert ExceededLimitPerWallet();
-        // TODO: Write test for this condition
         if (whitelistedMummiesMinted() + _quantity > maxWhitelist) revert ExceededWhitelistSupply();
         if (msg.value < WHITELIST_PRICE * _quantity) revert InsufficientPaymentPerItem();
 
@@ -138,10 +174,13 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         bytes32 leaf = keccak256(abi.encodePacked(_to));
         if (!MerkleProof.verify(_merkleProof, merkleRoot, leaf)) revert NotWhitelisted();
 
-        // Mint
-        for (uint256 i = 0; i < _quantity; i++) {
+        // Whitelist mint should note the whitelisted token and increment whitelisted counter
+        for (uint256 i = _currentIndex; i < _currentIndex + _quantity; i++) {
+            _whitelistClaims[i] = true;
             whitelistedMummyCounter.increment();
         }
+
+        // Mint
         _mintMummy(_to, _quantity);
     }
 
@@ -173,7 +212,10 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     function widthdraw() external onlyOwner {
         uint256 balance = address(this).balance;
+
         if (balance <= 0) revert NonZeroWitdraw();
+        if (refundGuaranteeActive()) revert RefundGuaranteeStillActive();
+
         Address.sendValue(payable(owner()), balance);
     }
 
