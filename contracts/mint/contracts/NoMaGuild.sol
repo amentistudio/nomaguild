@@ -10,6 +10,7 @@ import '@openzeppelin/contracts/utils/Address.sol';
 import '@openzeppelin/contracts/security/Pausable.sol';
 import 'erc721a/contracts/ERC721A.sol';
 import 'erc721a/contracts/extensions/ERC721ABurnable.sol';
+import "hardhat/console.sol";
 
 contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownable, Pausable {
     using Strings for uint256;
@@ -128,16 +129,9 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         return 1; // Start the collection at 1 not 0
     }
 
-    function endDateForRefund() public view returns (uint256) {
-        return (refundStartTime + 100 days * 1000);
-    }
-
-    function currentBlockTimestamp() public view returns (uint256) {
-        return block.timestamp;
-    }
-
     function refundGuaranteeActive() public view returns (bool) {
-        return (block.timestamp < (refundStartTime + 100 days * 1000));
+        // + 60 days in milliseconds
+        return (block.timestamp < (refundStartTime + 60 * 24 * 60 * 60 * 1000));
     }
 
     function refund(uint256 _tokenId) external nonReentrant {

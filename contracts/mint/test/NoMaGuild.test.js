@@ -1,7 +1,11 @@
 const { MerkleTree } = require('merkletreejs');
 const keccak256 = require('keccak256');
 const { waffle } = require("hardhat");
-const { expect } = require('chai');
+const { solidity } = require ("ethereum-waffle");
+const { expect, use } = require('chai');
+const { utils } = require('ethers');
+
+use(solidity);
 
 describe("NoMaGuild", () => {
   const contractFactory = async (root, supply = 8192, whitelist = 3000, perwallet = 3) => {
@@ -129,7 +133,103 @@ describe("NoMaGuild", () => {
     let root;
 
     before(async () => {
-      [root] = await merkleRootFactory();
+      [root, merkleTree, leafs] = await merkleRootFactory();
+    });
+
+    context("refund()", async () => {
+      let instance;
+      let owner;
+      let addr1;
+      let addr2;
+
+      beforeEach(async () => {
+        [owner, addr1, addr2] = await ethers.getSigners();
+        instance = await contractFactory(root);
+      })
+
+      it("should allow refund for whitelisted mint and return whitelisted price", async () => {
+        const proof = merkleTree.getHexProof(leafs[0]);
+
+        await instance.setWhitelistSale(true)
+        const price = await instance.WHITELIST_PRICE();
+        const quantity = 1;
+        const addr1_balance_bm_wei = await waffle.provider.getBalance(addr1.address);
+
+        // Public Mint
+        await instance.connect(addr1).whitelistMint(proof, quantity, {
+          value: price.mul(quantity)
+        });
+
+        // Refund
+        await instance.connect(addr1).refund(1);
+
+        // Contract
+        let contract_balance_wei = await instance.balanceOf(instance.address);
+        expect(contract_balance_wei).to.equal(0);
+
+        // Addr1 should have money back - some fees
+        let addr1_balance_wei = await waffle.provider.getBalance(addr1.address);
+        expect(addr1_balance_wei).to.be.above(addr1_balance_bm_wei.sub(utils.parseEther('0.001')));
+      });
+
+      it("should allow refund for public mint and return public price", async () => {
+        await instance.setPublicSale(true)
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+        const addr1_balance_bm_wei = await waffle.provider.getBalance(addr1.address);
+
+        // Public Mint
+        await instance.connect(addr1).publicMint(quantity, {
+          value: price.mul(quantity)
+        });
+
+        // Refund
+        await instance.connect(addr1).refund(1);
+
+        // Contract
+        let contract_balance_wei = await instance.balanceOf(instance.address);
+        expect(contract_balance_wei).to.equal(0);
+
+        // Addr1 should have money back - some fees
+        let addr1_balance_wei = await waffle.provider.getBalance(addr1.address);
+        expect(addr1_balance_wei).to.be.above(addr1_balance_bm_wei.sub(utils.parseEther('0.001')));
+      });
+
+      it("should not allow refund for non-owner", async () => {
+        await instance.setPublicSale(true)
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+
+        // Public Mint
+        await instance.connect(addr1).publicMint(quantity, {
+          value: price.mul(quantity)
+        });
+
+        // Refund
+        await expect(instance.connect(addr2).refund(1)).to.be.revertedWith("MustOwnToken");
+      });
+
+      it("should not allow refund if refund period expired", async () => {
+        await instance.setPublicSale(true)
+        const price = await instance.PUBLIC_PRICE();
+        const quantity = 1;
+
+        // Public Mint
+        await instance.connect(addr1).publicMint(quantity, {
+          value: price.mul(quantity)
+        });
+
+        // Date 61 days back
+        const days61Ago = new Date();
+        days61Ago.setDate(days61Ago.getDate() - 61);
+        const deadline = Math.floor(days61Ago.valueOf());
+
+        // Set refund start date 61 days ago so we can collect the funds
+        await instance.setRefundStartTime(deadline);
+
+        // Refund
+        await expect(instance.connect(addr1).refund(1)).to.be.revertedWith("RefundGuaranteeExpired");
+      });
     });
 
     context("withdraw()", async () => {
@@ -154,12 +254,13 @@ describe("NoMaGuild", () => {
           value: price.mul(quantity)
         });
 
-        // Date 101 days back
-        const days101Ago = new Date();
-        days101Ago.setDate(days101Ago.getDate() - 101);
+        // Date 61 days back
+        const days61Ago = new Date();
+        days61Ago.setDate(days61Ago.getDate() - 61);
+        const deadline = Math.floor(days61Ago.valueOf());
 
-        // Set refund start date 101 days ago so we can collect the funds
-        await instance.setRefundStartTime(Number(days101Ago.getTime()));
+        // Set refund start date 61 days ago so we can collect the funds
+        await instance.setRefundStartTime(deadline);
 
         // Withdraw
         await instance.widthdraw();
@@ -172,7 +273,7 @@ describe("NoMaGuild", () => {
 
         // // Owner
          let owner_balance_wei = await waffle.provider.getBalance(owner.address);
-         expect(Number(owner_balance_wei)).to.be.above(Number(owner_balance_bm_wei));
+         expect(owner_balance_wei).to.be.above(owner_balance_bm_wei.add(price.sub(utils.parseEther('0.01'))));
       });
 
       it("should not allow widthdraw to owner if refund guarantee is still active", async () => {
@@ -185,23 +286,13 @@ describe("NoMaGuild", () => {
           value: price.mul(quantity)
         });
 
-        // Date 99 days back
-        const days99Ago = new Date();
-        days99Ago.setDate(days99Ago.getDate() - 99);
-        const deadline = Math.floor(days99Ago.getTime());
-
-        console.log("Past time: ", new Date(Math.round(days99Ago.getTime())).toLocaleString('en-GB'));
+        // Date 59 days back
+        const days59Ago = new Date();
+        days59Ago.setDate(days59Ago.getDate() - 59);
+        const deadline = Math.floor(days59Ago.valueOf());
 
         // Set refund start date 99 days ago yet we still cannot collect the funds
         await instance.setRefundStartTime(deadline);
-        const refundStartTime = await instance.getRefundStartTime();
-        const endRefundTime = await instance.endDateForRefund();
-
-        console.log("Start refund time: ", new Date(Number(refundStartTime)).toLocaleString('en-GB'));
-        console.log("End refund time: ", new Date(Number(endRefundTime)).toLocaleString('en-GB'));
-
-        const currentBlockTime = await instance.currentBlockTimestamp();
-        console.log("Current time: ", new Date(Number(currentBlockTime)).toLocaleString('en-GB'));
 
         // Revert withdraw
         await expect(instance.widthdraw()).to.be.revertedWith("RefundGuaranteeStillActive");
