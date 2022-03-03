@@ -1,6 +1,6 @@
 import React from 'react';
 
-const whitePaperUrl = 'https://s3.eu-central-1.amazonaws.com/com.nomaguild.public/NoMA-Guild-whitepaper-v1.1.pdf';
+const whitePaperUrl = 'https://s3.eu-central-1.amazonaws.com/com.nomaguild.public/NoMA-whitepaper-version-1.2.pdf';
 
 function FAQHero() {
   return (
