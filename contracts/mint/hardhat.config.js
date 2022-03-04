@@ -33,7 +33,8 @@ module.exports = {
     currency: "USD",
     gasPrice: 100,
     showTimeSpent: true,
-    coinmarketcap: COINMARKETCAP_API_KEY
+    coinmarketcap: COINMARKETCAP_API_KEY,
+    // outputFile: "./gasReportTable.txt"
   },
   networks: {
     rinkeby: {

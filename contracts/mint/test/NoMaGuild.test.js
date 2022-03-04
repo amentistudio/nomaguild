@@ -86,13 +86,13 @@ describe("NoMaGuild", () => {
 
       it("should allow turning on and off", async () => {
         await instance.setWhitelistSale(true)
-        expect(await instance.openWhitelistSale()).to.equal(true)
+        expect(await instance.isWhitelistSaleOpen()).to.equal(true)
         await instance.setWhitelistSale(false)
-        expect(await instance.openWhitelistSale()).to.equal(false)
+        expect(await instance.isWhitelistSaleOpen()).to.equal(false)
       });
 
       it("should start with white sale off", async () => {
-        expect(await instance.openWhitelistSale()).to.equal(false)
+        expect(await instance.isWhitelistSaleOpen()).to.equal(false)
       });
     });
 
@@ -104,13 +104,13 @@ describe("NoMaGuild", () => {
 
       it("should allow turning on and off", async () => {
         await instance.setPublicSale(true)
-        expect(await instance.openPublicSale()).to.equal(true)
+        expect(await instance.isPublicSaleOpen()).to.equal(true)
         await instance.setPublicSale(false)
-        expect(await instance.openPublicSale()).to.equal(false)
+        expect(await instance.isPublicSaleOpen()).to.equal(false)
       });
 
       it("should start with white sale off", async () => {
-        expect(await instance.openPublicSale()).to.equal(false)
+        expect(await instance.isPublicSaleOpen()).to.equal(false)
       });
     });
 
@@ -346,9 +346,6 @@ describe("NoMaGuild", () => {
       })
 
       it("should not allow giveaway if soldout", async () => {
-        await instance.setWhitelistSale(false)
-        await instance.setPublicSale(false)
-
         instance.giveawayMint(addr1.address, 1)
 
         await expect(
@@ -361,8 +358,6 @@ describe("NoMaGuild", () => {
       });
 
       it("should allow calling giveaway to owner", async () => {
-        await instance.setWhitelistSale(false)
-        await instance.setPublicSale(false)
         await instance.giveawayMint(addr2.address, 1);
 
         expect(Number(await instance.totalSupply())).to.equal(1)
@@ -371,8 +366,6 @@ describe("NoMaGuild", () => {
       });
 
       it("should not allow calling giveaway to not owners", async () => {
-        await instance.setWhitelistSale(false)
-        await instance.setPublicSale(false)
         await expect(
           instance.connect(addr1).giveawayMint(addr2.address, 1)
         ).to.be.revertedWith(
@@ -489,10 +482,7 @@ describe("NoMaGuild", () => {
         const price = await instance.WHITELIST_PRICE();
         const quantity = 1;
 
-        // Open whitelist
-        await instance.setWhitelistSale(false)
         // Mint
-        
         await expect(
           instance.connect(addr1).whitelistMint(proof, quantity, {
             value: price.mul(quantity)
@@ -831,9 +821,6 @@ describe("NoMaGuild", () => {
       })
 
       it("should not mint an mummy", async () => {
-        // Close public sale
-        await instance.setPublicSale(false)
-
         const price = await instance.PUBLIC_PRICE();
         const quantity = 1; 
 

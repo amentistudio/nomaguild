@@ -19,14 +19,6 @@ contract NoMaGuildTest is NoMaGuild {
         bytes32 _merkleRoot
     ) NoMaGuild(___symbol, ___name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, hiddenURI, _merkleRoot) {}
 
-    function openPublicSale() external view returns (bool) {
-        return IS_PUBLIC_SALE_OPEN;
-    }
-
-    function openWhitelistSale() external view returns (bool) {
-        return IS_WHITELIST_SALE_OPEN;
-    }
-
     function getBaseURI() external view returns (string memory) {
         return baseTokenURI;
     }
