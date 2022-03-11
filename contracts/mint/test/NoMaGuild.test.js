@@ -19,10 +19,6 @@ describe("NoMaGuild", () => {
     );
     await contract.deployed();
 
-    // Update block.timestamp to now()
-    await ethers.provider.send('evm_setNextBlockTimestamp', [Number(new Date())]); 
-    await ethers.provider.send('evm_mine');
-
     return contract;
   }
 
@@ -121,7 +117,7 @@ describe("NoMaGuild", () => {
       })
 
       it("should set correctly the refund start time", async () => {
-        const timestamp = Number(new Date().getTime());
+        const timestamp = Math.floor(Number(new Date().getTime()) / 1000);
 
         await instance.setRefundStartTime(timestamp);
         expect(await instance.getRefundStartTime()).to.equal(timestamp);
@@ -222,7 +218,7 @@ describe("NoMaGuild", () => {
         // Date 61 days back
         const days61Ago = new Date();
         days61Ago.setDate(days61Ago.getDate() - 61);
-        const deadline = Math.floor(days61Ago.valueOf());
+        const deadline = Math.floor(days61Ago.valueOf() / 1000);
 
         // Set refund start date 61 days ago so we can collect the funds
         await instance.setRefundStartTime(deadline);
@@ -257,7 +253,7 @@ describe("NoMaGuild", () => {
         // Date 61 days back
         const days61Ago = new Date();
         days61Ago.setDate(days61Ago.getDate() - 61);
-        const deadline = Math.floor(days61Ago.valueOf());
+        const deadline = Math.floor(days61Ago.valueOf() / 1000);
 
         // Set refund start date 61 days ago so we can collect the funds
         await instance.setRefundStartTime(deadline);
@@ -289,7 +285,7 @@ describe("NoMaGuild", () => {
         // Date 59 days back
         const days59Ago = new Date();
         days59Ago.setDate(days59Ago.getDate() - 59);
-        const deadline = Math.floor(days59Ago.valueOf());
+        const deadline = Math.floor(Number(days59Ago.getTime()) / 1000);
 
         // Set refund start date 99 days ago yet we still cannot collect the funds
         await instance.setRefundStartTime(deadline);

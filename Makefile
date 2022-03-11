@@ -32,6 +32,10 @@ deploy-mint-contract: cmd-exists-yarn
 open-public-mint-contract: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat run scripts/openPublicMint.js --network "${NETWORK}" && cd ../..
 
+.PHONY: refund-until
+refund-until: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat run scripts/refundUntil.js --network "${NETWORK}" && cd ../..
+
 .PHONY: verify-mint-contract-rinkeby
 verify-mint-contract-rinkeby: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat verify --constructor-args arguments.js ${CONTRACT_ADDRESS} --network rinkeby && cd ../..
@@ -39,6 +43,10 @@ verify-mint-contract-rinkeby: cmd-exists-yarn
 .PHONY: test-contracts
 test-contracts: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat test && cd ../..
+
+.PHONY: test-contracts-ganache
+test-contracts-ganache: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat --network ganache test && cd ../..
 
 .PHONY: test-contracts-coverage
 test-contracts-coverage: cmd-exists-yarn

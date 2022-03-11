@@ -39,7 +39,11 @@ module.exports = {
   networks: {
     ganache: {
       url: "http://127.0.0.1:7545",
-      accounts: ['0x446275f01b7ae96ddf3548893790761edbcf18cc7f68bd03d7784be6f5eee126']
+      accounts: [
+        '0x446275f01b7ae96ddf3548893790761edbcf18cc7f68bd03d7784be6f5eee126',
+        '0x6266636a568b63486dc82203aeee30081e665e48c1cd54ca03331556b6a95c15',
+        '0xf7fa1980e3f8a2e4a1dcc10fb33191b4c2ba790ea9ae230104ba60b146708cb0'
+      ]
     },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,

@@ -218,7 +218,7 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     function refundGuaranteeActive() public view returns (bool) {
         // + 60 days in milliseconds
-        return (block.timestamp < (refundStartTime + 60 * 24 * 60 * 60 * 1000));
+        return (block.timestamp < (refundStartTime + 60 days));
     }
 
     function refund(uint256 _tokenId) external nonReentrant {
