@@ -13,8 +13,8 @@ async function deploy() {
     HIDDEN_URI, // URL for hidden metadata
     ethers.utils.arrayify("0x" + MERKLE_TREE_ROOT)
   );
-  console.log("Waiting for 6 confirmations...");
-  const receipt = await contract.deployTransaction.wait(6);
+  console.log("Waiting for 2 confirmations...");
+  const receipt = await contract.deployTransaction.wait(1);
   console.log(`The hash of the transaction is ${receipt.transactionHash}`);
   console.log("contract address: ", contract.address);
 }

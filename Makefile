@@ -25,8 +25,12 @@ deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-
 .PHONY: deploy-mint-contract
 deploy-mint-contract: cmd-exists-yarn
 	cd contracts/mint && . deploy.sh && cd ../..
-	cp contracts/mint/build/contracts/NoMaGuild.json web/src/contracts/NoMaGuild.json
+	cp contracts/mint/artifacts/contracts/NoMaGuild.sol/NoMaGuild.json web/src/contracts/NoMaGuild.json
 	scripts/dotenv -f ${ENV_FILE} set CONTRACT_ADDRESS="$(shell cat ./contracts/mint/.address)"
+
+.PHONY: open-public-mint-contract
+open-public-mint-contract: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat run scripts/openPublicMint.js --network "${NETWORK}" && cd ../..
 
 .PHONY: verify-mint-contract-rinkeby
 verify-mint-contract-rinkeby: cmd-exists-yarn

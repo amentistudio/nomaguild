@@ -37,6 +37,10 @@ module.exports = {
     // outputFile: "./gasReportTable.txt"
   },
   networks: {
+    ganache: {
+      url: "http://127.0.0.1:7545",
+      accounts: ['0x446275f01b7ae96ddf3548893790761edbcf18cc7f68bd03d7784be6f5eee126']
+    },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
       accounts: [`0x${PRIVATE_KEY}`]
