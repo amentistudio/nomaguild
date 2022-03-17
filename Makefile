@@ -1,12 +1,12 @@
 ## CONFIG
 
 SHELL = /bin/sh
-ENV_FILE = .env
+ENV_FILE = .env.development
 
 ## UTILS
 
-ifneq (,$(wildcard ./.env))
-	include .env
+ifneq (,$(wildcard ./${ENV_FILE}))
+	include ${ENV_FILE}
 	export
 endif
 
@@ -16,42 +16,14 @@ cmd-exists-%:
 
 ## DEV
 
-# Bridge between Mantis Server and Ganache
-# Config: /opt/homebrew/etc/frp/frps.ini
-# Service: brew services restart frps
-# CLI: /opt/homebrew/opt/frps/bin/frps -c ./frps.ini
-.PHONY: frpc
-frpc: cmd-exists-frpc
-	frpc -c ./frps.ini
-
-# Ganache running as CLI for better configurability
-# 0x66e6BD240BecDb973AC3c3856587db7488905189
-# 0x949899576BE8C94178a0B519A1B807913AA39766
-# 0xD7Dcdd1485CdC431aD530A227165e0E01638Cd6b
-.PHONY: ganache
-ganache: cmd-exists-yarn
-	yarn run ganache-cli \
-	--account="0x2821f32dc2dd3f5d49a5bddf82dfc996f311ed87d2c547e25943a16a17a05b59,10000000000000000000" \
-	--account="0x849e23ad0245797e44726d7ef0b50ab9c073f2512ba061ef3d09f4877c4e43ff,10000000000000000000" \
-	--account="0xf629a675480b3c639a93dead3fb1ab43c7f62cff76b2da2e6990b3a5ff65fd35,10000000000000000000" \
-	--port 7545
-
 .PHONY: hardhat-node
 hardhat-node: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat node && cd ../..
-
-.PHONY: hardhat-accounts
-hardhat-accounts: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat node --show-accounts && cd ../..
 
 # Tests
 .PHONY: test-contracts
 test-contracts: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat test && cd ../..
-
-.PHONY: test-contracts-ganache
-test-contracts-ganache: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat --network ganache test && cd ../..
 
 # Test coverage
 .PHONY: test-contracts-coverage

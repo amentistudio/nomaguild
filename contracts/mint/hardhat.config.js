@@ -11,13 +11,14 @@ const {
   COINMARKETCAP_API_KEY,
   PRIVATE_KEY,
   ETHERSCAN_API_KEY,
-  REPORT_GAS
+  REPORT_GAS,
+  NETWORK
 } = process.env;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
-module.exports = {
+let config = {
   solidity: {
     version: "0.8.9",
     settings: {
@@ -27,7 +28,6 @@ module.exports = {
       },
     },
   },
-  defaultNetwork: "hardhat",
   gasReporter: {
     enabled: REPORT_GAS,
     currency: "USD",
@@ -36,25 +36,26 @@ module.exports = {
     coinmarketcap: COINMARKETCAP_API_KEY,
     // outputFile: "./gasReportTable.txt"
   },
+  defaultNetwork: "hardhat",
   networks: {
-    ganache: {
-      url: "http://127.0.0.1:7545",
-      accounts: [
-        '0x2821f32dc2dd3f5d49a5bddf82dfc996f311ed87d2c547e25943a16a17a05b59',
-        '0x849e23ad0245797e44726d7ef0b50ab9c073f2512ba061ef3d09f4877c4e43ff',
-        '0xf629a675480b3c639a93dead3fb1ab43c7f62cff76b2da2e6990b3a5ff65fd35'
-      ]
+    localhost: {
+      url: "http://127.0.0.1:8545"
     },
-    rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`,
-      accounts: [`0x${PRIVATE_KEY}`]
+    hardhat: {
+      // see defaults
+      // Defult addresses: https://hardhat.org/hardhat-network/reference/#initial-state
     },
-    mainnet: {
-      url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
-      accounts: [`0x${PRIVATE_KEY}`]
-    }
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY
   }
 };
+
+if (NETWORK === "rinkeby" || NETWORK === "mainnet") {
+  config["networks"][NETWORK] = {
+    url: `https://${NETWORK}.infura.io/v3/${INFURA_PROJECT_ID}`,
+    accounts: [`0x${PRIVATE_KEY}`]
+  }
+}
+
+module.exports = config;

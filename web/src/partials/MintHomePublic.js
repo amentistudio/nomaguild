@@ -1,41 +1,44 @@
 import { useCallback, useEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { ethers } from 'ethers';
+import { InjectedConnector } from "@web3-react/injected-connector";
 import { ArrowRightIcon } from '@heroicons/react/outline';
-import { useMoralis } from "react-moralis";
-import { Moralis } from "moralis";
-
 import NoMAContract from '../contracts/NoMaGuild.json';
-const { REACT_APP_CONTRACT_ADDRESS } = process.env;
-const ethers = Moralis.web3Library;
 
-async function wconnect(authenticate) {
-  await authenticate({signingMessage: "Connect your wallet" })
-    .catch(function (error) {
-      console.log(error);
-    });
+const { REACT_APP_CONTRACT_ADDRESS } = process.env;
+const injected = new InjectedConnector();
+
+async function connect(activate) {
+  try {
+    await activate(injected)
+  } catch (ex) {
+    console.log(ex)
+  }
 }
 
 function MintHomePublic() {
-  const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
+  const { active, activate, account, error, library } = useWeb3React();
   const [quantity, setQuantity] = useState(1);
   const [customError, setCustomError] = useState(null);
 
-  useEffect(() =>  {
-    if (!isAuthenticated)
-      wconnect(authenticate);
-  }, [authenticate])
+  useEffect(() => {
+    async function wconnect() {
+      await connect();
+    }
+    wconnect();
+  }, [])
 
   const onConnectClick = useCallback(() => {
-    if (!isAuthenticated)
-      wconnect(authenticate);
-  }, [authenticate]);
+    connect(activate);
+  }, [activate]);
 
   async function mint() {
     try {
-      const web3Provider = await Moralis.enableWeb3();
+      const signer = library.getSigner();
       const contract = new ethers.Contract(
         REACT_APP_CONTRACT_ADDRESS,
         NoMAContract.abi,
-        web3Provider
+        signer
       );
       console.log(contract);
       const price = await contract.PUBLIC_PRICE();
@@ -57,16 +60,14 @@ function MintHomePublic() {
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
                 Public Mint
               </h1>
+              {error && (<>{error}</>)}
               {customError && (
                 <div className="text-red-500 px-10">
                   <div className="text-2xl">Blockchain errr:</div>
                   <>{customError}</>
                 </div>
               )}
-              {isAuthenticating && 
-                (<div>Authenticating...</div>)
-              }
-              {!isAuthenticated && !isAuthenticating && (
+              {!active && (
                 <>
                   <button
                     onClick={onConnectClick}
@@ -78,9 +79,9 @@ function MintHomePublic() {
                   <strong className="text-sm text-gray-600 block mt-3">Don't forget to unlock your wallet before click the link above!</strong>
                 </>
               )}
-              {user && (
+              {account && (
                 <>
-                  <div className="pb-5">You will mint with: {user.get("ethAddress")}</div>
+                  <div className="pb-5">You will mint with: {account}</div>
                   <h2 className="text-2xl">Quantity</h2>
                   <div className="py-5 flex flex-row justify-center">
                     <button
