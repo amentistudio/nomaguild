@@ -2,11 +2,12 @@
   "name": "nomaguild",
   "version": "1.0",
   "description": "NoMA guild monorepo",
-  "scripts": {
+  "scripts": {},
+  "dependencies": {
   },
-  "dependencies": {},
   "devDependencies": {
     "dotenv": "^14.3.2",
+    "ganache-cli": "^6.12.2",
     "keccak256": "^1.0.6",
     "merkletreejs": "^0.2.27"
   },

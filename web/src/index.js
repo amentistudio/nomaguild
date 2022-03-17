@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
-import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ReactGA from 'react-ga4';
+import { MoralisProvider } from "react-moralis";
+import './index.scss';
+
+const { REACT_APP_MORAILIS_URL, REACT_APP_MORALIS_APP_ID } = process.env;
+
 ReactGA.initialize('G-J6M4SL768E');
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename='/'>
-      <App />
-    </Router>
+    <MoralisProvider serverUrl={REACT_APP_MORAILIS_URL} appId={REACT_APP_MORALIS_APP_ID}>
+      <Router basename='/'>
+        <App />
+      </Router>
+    </MoralisProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

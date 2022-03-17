@@ -4,7 +4,8 @@ const { ethers } = require("hardhat");
 const { CONTRACT_ADDRESS } = process.env;
 const TEAM_PUBLIC_KEYS = [
   "0x05c00ceF0F843000A6F8506a19fa4BEb591C519C", // Ladi
-  "0xA0e3c9200Ef38911C7395FB3ca600acbBF68827c"  // Jan
+  "0xA0e3c9200Ef38911C7395FB3ca600acbBF68827c", // Jan
+  "0x32dEDf3534E3a6e390Da23B54Be36218EB5575C2", // Jan (discofield)
 ];
 const contractAbi = require("../artifacts/contracts/NoMaGuild.sol/NoMaGuild.json");
 

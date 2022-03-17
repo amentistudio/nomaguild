@@ -1,7 +1,22 @@
 
+## Architecture
+
+### The main account
+Hardhat is configured to use PRIVATE_KEY as an address from which everything is done. 
+For developement purposes the first account of ganache-cli is used as PRIVATE_KEY.
+
+### Deploy and mint of team mummies
+1) Make sure the PRIVATE_KEY is set to the owner of the Smart Contract
+1a) Set inside `.env` NETWORK you want to deploy to
+2) Deploy the contract to chain `make deploy-mint-contract`
+3) Verify the contrat `make verify-mint-contract`
+3) Make sure the `.env` CONTRACT_ADDRESS is properly set to what was deployed
+4) Run mint script `make mint-team-mummies`
+
+
 ## Release plan
 
-------------- PHASE 1 (whitelist capture) 5 days (15.1.)
+### PHASE 1 (whitelist capture)
 0) Set region (eu-central-1) and env (dev || prod) + clear all the important .env variables
 1) Deploy backend/whitelist-signup
   - Input: environment to which to deploy (dev is default)
@@ -13,7 +28,7 @@
 2) Deploy website with working whitelist flow
   - Input: UserPoolId, UserPoolWebClient as .env variables
 
-------------- PHASE 2 (whitelist mint) 5 days (22.2. - 27.2.)
+### PHASE 2 (whitelist mint) 5 days (22.2. - 27.2.)
 3) After the whitelist is done we should set date after which the whitelisted address will not matter UserCreateDate <= fixed date time
   - Export list of addresses to data/list.txt
   - Deploy backend/whitelist-verification code
