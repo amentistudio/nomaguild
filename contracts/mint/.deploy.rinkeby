@@ -1,7 +1,0 @@
-yarn run v1.22.17
-$ /Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/node_modules/.bin/hardhat run scripts/deploy.js --network rinkeby
-Deploying...
-Waiting for 2 confirmations...
-The hash of the transaction is 0x1a44f9a711bd6615433721cc3b3b04933f4ea1f4d32fcdc66528e86e1073f5fb
-contract address:  0x82C6662a0Abc2Ad2477e9eafCa31A4AA6c0255a1
-Done in 41.08s.

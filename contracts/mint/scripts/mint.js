@@ -11,7 +11,7 @@ const contractAbi = require("../artifacts/contracts/NoMaGuild.sol/NoMaGuild.json
 
 async function mint() {
     const contract = await ethers.getContractAt(contractAbi.abi, CONTRACT_ADDRESS);
-    TEAM_PUBLIC_KEYS.foreach(async (tkey) => {
+    TEAM_PUBLIC_KEYS.forEach(async (tkey) => {
       const tx = await contract.giveaway(tkey);
       console.log(`Minting for ${tkey} and waiting for receipt...`);
       const receipt = await tx.wait();

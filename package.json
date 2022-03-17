@@ -2,8 +2,11 @@
   "name": "nomaguild",
   "version": "1.0",
   "description": "NoMA guild monorepo",
-  "scripts": {},
+  "scripts": {
+    "start": "nf start"
+  },
   "dependencies": {
+    "foreman": "^3.0.1"
   },
   "devDependencies": {
     "dotenv": "^14.3.2",
