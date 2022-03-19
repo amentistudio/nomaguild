@@ -56,6 +56,28 @@ describe("NoMaGuild", () => {
       });
     });
 
+    context("pausing", async () => {
+      let instance;
+      beforeEach(async () => {
+        instance = await contractFactory();
+      })
+
+      it("should allow pause contract", async () => {
+        await instance.pause()
+        expect(await instance.paused()).to.equal(true)
+      });
+
+      it("should allow unpause contract", async () => {
+        await instance.pause()
+        await instance.unpause()
+        expect(await instance.paused()).to.equal(false)
+      });
+
+      it("should revert if not pause", async () => {
+        expect(instance.unpause()).to.be.revertedWith("Pausable: not paused")
+      });
+    });
+
     context("public sale", async () => {
       let instance;
       beforeEach(async () => {

@@ -32,17 +32,8 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     // Set refunding start datetime to creation time
     uint256 public refundStartTime = block.timestamp;
 
-    // Loans
-    mapping (address => uint256) public totalLoanedPerAddress;
-    mapping (uint256 => address) public tokenOwnersOnLoan;
-    uint256 private currentLoanIndex = 0;
-    bool public areLoansPaused = true;
-
     // Events
     event PublicSaleEvent(bool pause);
-    event LoansOpenEvent(bool pause);
-    event Loan(address indexed from, address indexed to, uint value);
-    event LoanRetrieved(address indexed from, address indexed to, uint value);
 
     // Errors
     error Soldout();
@@ -54,12 +45,6 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     error RefundGuaranteeStillActive();
     error MustOwnToken();
     error IdenticalState();
-    error LoansPaused();
-    error CantTransferTokenOnLoan();
-    error AlreadyLoaned();
-    error NoLoansToZeroAddress();
-    error CantRetriveLoanToYourself();
-    error CantRetriveLoanOfOtherOwner();
 
     constructor(
         string memory __symbol,
@@ -101,85 +86,6 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
             bytes(baseURI).length != 0 && bytes(hiddenURI).length == 0
                 ? string(abi.encodePacked(baseURI, tokenId.toString(), '.json'))
                 : string(abi.encodePacked(hiddenURI));
-    }
-
-    function _beforeTokenTransfers(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 quantity
-    ) internal whenNotPaused override(ERC721A) {
-        super._beforeTokenTransfers(from, to, tokenId, quantity);
-
-        // Note: Non-existent key will have default value of address(0)
-        if (tokenOwnersOnLoan[tokenId] != address(0)) revert CantTransferTokenOnLoan();
-    }
-
-    function loan(uint256 tokenId, address receiver) external nonReentrant {
-        if (areLoansPaused) revert LoansPaused();
-        if (ownerOf(tokenId) != msg.sender) revert MustOwnToken();
-        if (receiver == address(0)) revert NoLoansToZeroAddress();
-        if (tokenOwnersOnLoan[tokenId] != address(0)) revert AlreadyLoaned();
-
-        // Transfer the token
-        safeTransferFrom(msg.sender, receiver, tokenId);
-
-        // Add it to the mapping of originally loaned tokens
-        tokenOwnersOnLoan[tokenId] = msg.sender;
-
-        // Add to the owner's loan balance
-        uint256 loansByAddress = totalLoanedPerAddress[msg.sender];
-        totalLoanedPerAddress[msg.sender] = loansByAddress + 1;
-        currentLoanIndex = currentLoanIndex + 1;
-
-        emit Loan(msg.sender, receiver, tokenId);
-    }
-
-    function retrieveLoan(uint256 tokenId) external nonReentrant {
-        address borrowerAddress = ownerOf(tokenId);
-
-        if (borrowerAddress == msg.sender) revert CantRetriveLoanToYourself();
-        if (tokenOwnersOnLoan[tokenId] != msg.sender) revert CantRetriveLoanOfOtherOwner();
-
-        // Remove it from the array of loaned out tokens
-        delete tokenOwnersOnLoan[tokenId];
-
-        // Subtract from the owner's loan balance
-        uint256 loansByAddress = totalLoanedPerAddress[msg.sender];
-        totalLoanedPerAddress[msg.sender] = loansByAddress - 1;
-        currentLoanIndex = currentLoanIndex - 1;
-        
-        // Transfer the token back
-        safeTransferFrom(borrowerAddress, msg.sender, tokenId);
-
-        emit LoanRetrieved(borrowerAddress, msg.sender, tokenId);
-    }
-
-    function totalLoaned() external view returns (uint256) {
-        return currentLoanIndex;
-    }
-
-    function loanedBalanceOf(address owner) public view returns (uint256) {
-        if (owner == address(0)) revert BalanceQueryForZeroAddress();
-        return totalLoanedPerAddress[owner];
-    }
-
-    function loanedTokensByAddress(address owner) external view returns (uint256[] memory) {
-        if (owner == address(0)) revert BalanceQueryForZeroAddress();
-
-        uint256 totalTokensLoaned = loanedBalanceOf(owner);
-        uint256 mintedSoFar = totalSupply();
-        uint256 tokenIdsIdx = 0;
-
-        uint256[] memory allTokenIds = new uint256[](totalTokensLoaned);
-        for (uint256 i = 0; i < mintedSoFar && tokenIdsIdx != totalTokensLoaned; i++) {
-            if (tokenOwnersOnLoan[i] == owner) {
-                allTokenIds[tokenIdsIdx] = i;
-                tokenIdsIdx++;
-            }
-        }
-
-        return allTokenIds;
     }
 
     function _startTokenId() internal view virtual override returns (uint256) {
@@ -224,12 +130,6 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     function setHiddenURI(string memory hiddenURI) public onlyOwner {
         hiddenTokenURI = hiddenURI;
-    }
-
-    function setLoansPaused(bool _b) public onlyOwner {
-        if (areLoansPaused == _b) revert IdenticalState();
-        areLoansPaused = _b;
-        emit LoansOpenEvent(_b);
     }
 
     function setPublicSale(bool _b) external onlyOwner {
