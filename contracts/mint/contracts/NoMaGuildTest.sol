@@ -12,12 +12,10 @@ contract NoMaGuildTest is NoMaGuild {
         string memory ___symbol,
         string memory ___name,
         uint256 _maxMummies,
-        uint256 _maxWhitelist,
         uint256 _mintLimitPerWallet,
         string memory baseURI,
-        string memory hiddenURI,
-        bytes32 _merkleRoot
-    ) NoMaGuild(___symbol, ___name, _maxMummies, _maxWhitelist, _mintLimitPerWallet, baseURI, hiddenURI, _merkleRoot) {}
+        string memory hiddenURI
+    ) NoMaGuild(___symbol, ___name, _maxMummies, _mintLimitPerWallet, baseURI, hiddenURI) {}
 
     function getBaseURI() external view returns (string memory) {
         return baseTokenURI;

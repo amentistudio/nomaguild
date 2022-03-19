@@ -57,20 +57,6 @@ console-dev: cmd-exists-yarn
 
 ## PRODUCTION 
 
-# Setup API endpoint where we can save whitelisted addresses
-.PHONY: deploy-whitelist-signup
-deploy-whitelist-signup: cmd-exists-serverless cmd-exists-yarn
-	cd backend/whitelist-signup && . deploy.sh && cd ../..
-	scripts/dotenv -f ${ENV_FILE} set USER_POOL_ID="$(shell cat ./backend/whitelist-signup/.userpoolid)"
-	scripts/dotenv -f ${ENV_FILE} set USER_POOL_WEB_CLIENT="$(shell cat ./backend/whitelist-signup/.userpoolwebclient)"
-
-# Setup API endpoint where we can verify if address is whitelisted
-.PHONY: deploy-whitelist-verification
-deploy-whitelist-verification: cmd-exists-serverless cmd-exists-yarn cmd-exists-aws
-	cd backend/whitelist-verification && . deploy.sh && cd ../..
-	scripts/dotenv -f ${ENV_FILE} set VERIFICATION_HTTP_API_URL="$(shell cat ./backend/whitelist-verification/.httpapiurl)"
-	scripts/dotenv -f ${ENV_FILE} set MERKLE_TREE_ROOT="$(shell node ./scripts/merkletree.js ./backend/whitelist-verification/data/list.txt)"
-
 # Deploy mint contract
 .PHONY: deploy-mint-contract
 deploy-mint-contract: cmd-exists-yarn
@@ -87,11 +73,6 @@ verify-mint-contract: cmd-exists-yarn
 .PHONY: open-public-mint-contract
 open-public-mint-contract: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat run scripts/openPublicMint.js --network "${NETWORK}" && cd ../..
-
-# Open whitelist sale
-.PHONY: open-whitelist-mint-contract
-open-whitelist-mint-contract: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat run scripts/openWhitelistMint.js --network "${NETWORK}" && cd ../..
 
 # Mint as giveaway team mummies to their wallets (inside the script)
 .PHONY: mint-team-mummies

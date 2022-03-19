@@ -10,8 +10,7 @@
   },
   "devDependencies": {
     "dotenv": "^14.3.2",
-    "keccak256": "^1.0.6",
-    "merkletreejs": "^0.2.27"
+    "keccak256": "^1.0.6"
   },
   "repository": {
     "type": "git",

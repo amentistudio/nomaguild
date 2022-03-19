@@ -1,17 +1,16 @@
 require('dotenv').config();
 const { ethers } = require("hardhat");
 
-const { BASE_URI, MERKLE_TREE_ROOT, HIDDEN_URI } = process.env;
+const { BASE_URI, HIDDEN_URI } = process.env;
 
 async function deploy() {
   const NoMaGuild = await ethers.getContractFactory("NoMaGuild");
   console.log("Deploying...");
   const contract = await NoMaGuild.deploy(
     "NoMAGuild", "No Mummy Allowed Guild", // Namimng
-    8192, 1024, 3, // Limits (supply, whitelist, perwallet)
+    8192, 3, // Limits (supply, perwallet)
     BASE_URI, // URL for Metadata
-    HIDDEN_URI, // URL for hidden metadata
-    ethers.utils.arrayify("0x" + MERKLE_TREE_ROOT)
+    HIDDEN_URI // URL for hidden metadata
   );
   console.log("Waiting for 2 confirmations...");
   const receipt = await contract.deployTransaction.wait(1);

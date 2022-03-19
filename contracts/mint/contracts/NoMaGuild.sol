@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import '@openzeppelin/contracts/interfaces/IERC2981.sol';
@@ -10,7 +9,6 @@ import '@openzeppelin/contracts/utils/Address.sol';
 import '@openzeppelin/contracts/security/Pausable.sol';
 import 'erc721a/contracts/ERC721A.sol';
 import 'erc721a/contracts/extensions/ERC721ABurnable.sol';
-import "hardhat/console.sol";
 
 contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownable, Pausable {
     using Strings for uint256;
@@ -18,29 +16,21 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     // Contract immutables
     uint256 public immutable maxMummies;
-    uint256 public immutable maxWhitelist;
     uint256 public immutable mintLimitPerWallet;
 
     // Constants
-    uint256 public constant ROYALTY_RATE = 2; // 2%
-    uint256 public constant WHITELIST_PRICE = 0.04096 ether;
-    uint256 public constant PUBLIC_PRICE = 0.08192 ether;
+    uint256 public constant ROYALTY_RATE = 3; // 2%
+    uint256 public constant PUBLIC_PRICE = 0.04096 ether;
 
     // Constructur set constants
-    bytes32 internal merkleRoot;
     string public baseTokenURI;
     string public hiddenTokenURI;
 
     // Switches
-    bool public isWhitelistSaleOpen = false;
     bool public isPublicSaleOpen = false;
 
     // Set refunding start datetime to creation time
     uint256 public refundStartTime = block.timestamp;
-
-    // Whitelist claims
-    mapping(uint256 => bool) internal _whitelistClaims;
-    Counters.Counter private whitelistedMummyCounter;
 
     // Loans
     mapping (address => uint256) public totalLoanedPerAddress;
@@ -49,7 +39,6 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     bool public areLoansPaused = true;
 
     // Events
-    event WhitelistSaleEvent(bool pause);
     event PublicSaleEvent(bool pause);
     event LoansOpenEvent(bool pause);
     event Loan(address indexed from, address indexed to, uint value);
@@ -57,13 +46,9 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
 
     // Errors
     error Soldout();
-    error WhitelistSaleNotOpen();
-    error WhitelistSoldout();
     error PublicSaleClosed();
     error ExceededLimitPerWallet();
-    error ExceededWhitelistSupply();
     error InsufficientPaymentPerItem();
-    error NotWhitelisted();
     error NonZeroWitdraw();
     error RefundGuaranteeExpired();
     error RefundGuaranteeStillActive();
@@ -80,16 +65,12 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         string memory __symbol,
         string memory __name,
         uint256 _maxMummies,
-        uint256 _maxWhitelist,
         uint256 _mintLimitPerWallet,
         string memory baseURI,
-        string memory _hiddenTokenURI,
-        bytes32 _merkleRoot
+        string memory _hiddenTokenURI
     ) ERC721A(__symbol, __name) {
         maxMummies = _maxMummies;
-        maxWhitelist = _maxWhitelist;
         mintLimitPerWallet = _mintLimitPerWallet;
-        merkleRoot = _merkleRoot;
         hiddenTokenURI = _hiddenTokenURI;
         setBaseURI(baseURI);
     }
@@ -99,21 +80,10 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         _;
     }
 
-    modifier whitelistSaleIsOpen() {
-        if (totalSupply() >= maxMummies) revert Soldout();
-        if (!isWhitelistSaleOpen) revert WhitelistSaleNotOpen();
-        if (whitelistedMummiesMinted() >= maxWhitelist) revert WhitelistSoldout();
-        _;
-    }
-
     modifier publicSaleIsOpen() {
         if (!isPublicSaleOpen) revert PublicSaleClosed();
         if (totalSupply() >= maxMummies) revert Soldout();
         _;
-    }
-
-    function whitelistedMummiesMinted() public view returns (uint256) {
-        return whitelistedMummyCounter.current();
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
@@ -228,41 +198,8 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         // Transfer token to owner
         safeTransferFrom(msg.sender, owner(), _tokenId);
 
-        // Determine whitelist or public price
-        uint256 price = WHITELIST_PRICE;
-        if (!_whitelistClaims[_tokenId]) {
-            price = PUBLIC_PRICE;
-        }
-
         // Refund the token owner 100% of the mint price.
-        payable(msg.sender).transfer(price);
-    }
-
-    function whitelistMint(bytes32[] calldata _merkleProof, uint256 _quantity)
-        external
-        payable
-        nonReentrant
-        whitelistSaleIsOpen
-        whenNotPaused
-    {
-        address _to = msg.sender;
-
-        if (balanceOf(_to) + _quantity > mintLimitPerWallet) revert ExceededLimitPerWallet();
-        if (whitelistedMummiesMinted() + _quantity > maxWhitelist) revert ExceededWhitelistSupply();
-        if (msg.value < WHITELIST_PRICE * _quantity) revert InsufficientPaymentPerItem();
-
-        // Verify whitelisted address with MerkleProof
-        bytes32 leaf = keccak256(abi.encodePacked(_to));
-        if (!MerkleProof.verify(_merkleProof, merkleRoot, leaf)) revert NotWhitelisted();
-
-        // Whitelist mint should note the whitelisted token and increment whitelisted counter
-        for (uint256 i = _currentIndex; i < _currentIndex + _quantity; i++) {
-            _whitelistClaims[i] = true;
-            whitelistedMummyCounter.increment();
-        }
-
-        // Mint
-        _mintMummy(_to, _quantity);
+        payable(msg.sender).transfer(PUBLIC_PRICE);
     }
 
     function publicMint(uint256 _quantity) external payable nonReentrant publicSaleIsOpen whenNotPaused {
@@ -293,12 +230,6 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
         if (areLoansPaused == _b) revert IdenticalState();
         areLoansPaused = _b;
         emit LoansOpenEvent(_b);
-    }
-
-    function setWhitelistSale(bool _b) external onlyOwner {
-        if (isWhitelistSaleOpen == _b) revert IdenticalState();
-        isWhitelistSaleOpen = _b;
-        emit WhitelistSaleEvent(_b);
     }
 
     function setPublicSale(bool _b) external onlyOwner {

@@ -1,5 +1,3 @@
-const { MerkleTree } = require('merkletreejs');
-const keccak256 = require('keccak256');
 const { waffle } = require("hardhat");
 const { solidity } = require ("ethereum-waffle");
 const { expect, use } = require('chai');
@@ -8,40 +6,24 @@ const { utils } = require('ethers');
 use(solidity);
 
 describe("NoMaGuild", () => {
-  const contractFactory = async (root, supply = 8192, whitelist = 3000, perwallet = 3) => {
+  const contractFactory = async (supply = 8192, perwallet = 3) => {
     const NoMaGuildFactory = await ethers.getContractFactory('NoMaGuildTest');
     const contract = await NoMaGuildFactory.deploy(
       "NOMA", "NoMa", // Namimng
-      supply, whitelist, perwallet, // Limits (supply, whitelist, perwallet)
+      supply, perwallet, // Limits (supply, perwallet)
       "baseURL", // URL for Metadata
-      "hiddenURI",
-      root
+      "hiddenURI"
     );
     await contract.deployed();
 
     return contract;
   }
 
-  const merkleRootFactory = async () => {
-      const [, addr1, addr2] = await ethers.getSigners();
-      const whitelist = [addr1.address, addr2.address];
-      const leafs = whitelist.map(addr => keccak256(addr));
-      const merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
-      const root = merkleTree.getRoot();
-      return [root, merkleTree, leafs, whitelist]
-  }
-
   describe("setters", async () => {
-    let root;
-
-    before(async () => {
-      [root] = await merkleRootFactory();
-    });
-
     context("tokenURI", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       });
       
       it("should return baseURI if not baseURI empty", async () => {
@@ -64,7 +46,7 @@ describe("NoMaGuild", () => {
     context("baseURI", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       })
 
       it("should allow set base uri to owner", async () => {
@@ -74,28 +56,10 @@ describe("NoMaGuild", () => {
       });
     });
 
-    context("whitelist sale", async () => {
-      let instance;
-      beforeEach(async () => {
-        instance = await contractFactory(root);
-      })
-
-      it("should allow turning on and off", async () => {
-        await instance.setWhitelistSale(true)
-        expect(await instance.isWhitelistSaleOpen()).to.equal(true)
-        await instance.setWhitelistSale(false)
-        expect(await instance.isWhitelistSaleOpen()).to.equal(false)
-      });
-
-      it("should start with white sale off", async () => {
-        expect(await instance.isWhitelistSaleOpen()).to.equal(false)
-      });
-    });
-
     context("public sale", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       })
 
       it("should allow turning on and off", async () => {
@@ -105,7 +69,7 @@ describe("NoMaGuild", () => {
         expect(await instance.isPublicSaleOpen()).to.equal(false)
       });
 
-      it("should start with white sale off", async () => {
+      it("should start with public sale off", async () => {
         expect(await instance.isPublicSaleOpen()).to.equal(false)
       });
     });
@@ -113,7 +77,7 @@ describe("NoMaGuild", () => {
     context("refund start time", async () => {
       let instance;
       beforeEach(async () => {
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       })
 
       it("should set correctly the refund start time", async () => {
@@ -126,12 +90,6 @@ describe("NoMaGuild", () => {
   });
 
   describe("transfers", async () => {
-    let root;
-
-    before(async () => {
-      [root, merkleTree, leafs] = await merkleRootFactory();
-    });
-
     context("refund()", async () => {
       let instance;
       let owner;
@@ -140,33 +98,9 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [owner, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       })
 
-      it("should allow refund for whitelisted mint and return whitelisted price", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        await instance.setWhitelistSale(true)
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 1;
-        const addr1_balance_bm_wei = await waffle.provider.getBalance(addr1.address);
-
-        // Public Mint
-        await instance.connect(addr1).whitelistMint(proof, quantity, {
-          value: price.mul(quantity)
-        });
-
-        // Refund
-        await instance.connect(addr1).refund(1);
-
-        // Contract
-        let contract_balance_wei = await instance.balanceOf(instance.address);
-        expect(contract_balance_wei).to.equal(0);
-
-        // Addr1 should have money back - some fees
-        let addr1_balance_wei = await waffle.provider.getBalance(addr1.address);
-        expect(addr1_balance_wei).to.be.above(addr1_balance_bm_wei.sub(utils.parseEther('0.001')));
-      });
 
       it("should allow refund for public mint and return public price", async () => {
         await instance.setPublicSale(true)
@@ -236,7 +170,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [owner, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       })
 
       it("should allow widthdraw to owner", async () => {
@@ -325,12 +259,6 @@ describe("NoMaGuild", () => {
   });
 
   describe("minting", async () => {
-    let root;
-
-    before(async () => {
-      [root] = await merkleRootFactory();
-    });
-
     context("giveawayMint()", async () => {
       let instance;
       let addr1;
@@ -338,7 +266,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root, 1);
+        instance = await contractFactory(1);
       })
 
       it("should not allow giveaway if soldout", async () => {
@@ -375,290 +303,14 @@ describe("NoMaGuild", () => {
     });
   });
 
-  describe("whitelistMint()", async () => {
-    let root;
-    let merkleTree;
-    let leafs;
-
-    before(async () => {
-      [root, merkleTree, leafs] = await merkleRootFactory();
-    });
-
-    context("overlimit on whitelist max", async () => {
-      let instance;
-      let addr1;
-
-      beforeEach(async () => {
-        [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 3, 2, 3);
-      })
-
-      it("should not mint an mummy if whitelist max reached", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-
-        // Mint 2 (= max per whitelist)
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 2;
-        await instance.connect(addr1).whitelistMint(proof, quantity, {
-          value: price.mul(quantity),
-        })
-
-        expect(await instance.maxMummies()).to.equal(3)
-        expect(await instance.maxWhitelist()).to.equal(2)
-        expect(await instance.totalSupply()).to.equal(2)
-
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(price.mul(quantity));
-
-        // Whitelist max. # exceeded
-        await expect(
-          instance.connect(addr1).whitelistMint(proof, 1, {
-            value: price
-          })
-        ).to.be.revertedWith(
-          'WhitelistSoldout'
-        );
-      });
-    });
-
-    context("overlimit on total supply", async () => {
-      let instance;
-      let addr1;
-
-      beforeEach(async () => {
-        [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 2, 3, 3);
-      })
-
-      it("should not mint an mummy if total supply overlimit", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-
-        // Whitelist
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 2;
-
-        await instance.connect(addr1).whitelistMint(proof, quantity, {
-          value: price.mul(quantity)
-        })
-
-        expect(await instance.maxMummies()).to.equal(2);
-        expect(await instance.totalSupply()).to.equal(2);
-
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(price.mul(quantity));
-
-        await expect(
-          instance.connect(addr1).whitelistMint(proof, 1, {
-            value: price.mul(quantity)
-          })
-        ).to.be.revertedWith(
-          'Soldout'
-        );
-      });
-    });
-
-    context("whitelist sale not open", async () => {
-      let instance;
-      let addr1;
-
-      beforeEach(async () => {
-        [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 3, 3, 2);
-      })
-
-      it("should not mint an mummy", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 1;
-
-        // Mint
-        await expect(
-          instance.connect(addr1).whitelistMint(proof, quantity, {
-            value: price.mul(quantity)
-          })
-        ).to.be.revertedWith('WhitelistSaleNotOpen');
-
-        expect(await instance.totalSupply()).to.equal(0)
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(0);
-      });
-    });
-
-    context("whitelist sale open", async () => {
-      let instance;
-      let addr1;
-      let addr2;
-
-      beforeEach(async () => {
-        [, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root, 3, 3, 2);
-      })
-
-      it("should mint an mummy with correct price", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 1;
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-        // Mint
-        await instance.connect(addr1).whitelistMint(proof, quantity, {
-          value: price.mul(quantity)
-        })
-
-        expect(await instance.totalSupply()).to.equal(1)
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(price.mul(quantity));
-      });
-
-      it("should not mint an mummy with per wallet limit exceeded", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 3;
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-
-        // Mint
-        await expect(
-          instance.connect(addr1).whitelistMint(proof, quantity, {
-            value: price.mul(quantity)
-          })
-        ).to.be.revertedWith(
-          "ExceededLimitPerWallet"
-        );
-
-        // Verify nothing was minted
-        expect(await instance.totalSupply()).to.equal(0)
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(0);
-      });
-
-      it("should not mint an mummy if quantity and totalSupply for whitelist exceeded", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 2;
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-
-        // Mint bellow whitelist supply
-        instance.connect(addr1).whitelistMint(proof, quantity, {
-          value: price.mul(quantity)
-        })
-
-        // Mint
-        await expect(
-          instance.connect(addr2).whitelistMint(proof, quantity, {
-            value: price.mul(quantity)
-          })
-        ).to.be.revertedWith(
-          "ExceededWhitelistSupply"
-        );
-
-        // Verify nothing was minted
-        expect(await instance.totalSupply()).to.equal(2)
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(price.mul(quantity));
-      });
-
-      it("should not mint an mummy with incorrect price", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-
-        // Try to whitelist with unsufficient money
-        await expect(
-          instance.connect(addr1).whitelistMint(proof, 1, {
-            value: price.div(2)
-          })
-        ).to.be.revertedWith(
-          "InsufficientPaymentPerItem"
-        );
-
-        expect(await instance.totalSupply()).to.equal(0);
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(0);
-      });
-
-      it("should not mint an mummy with incorrect proof", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 1;
-
-        // Open whitelist
-        await instance.setWhitelistSale(true)
-
-        // Try to mint without being on the whitelist
-        await expect(
-          instance.connect(addr2).whitelistMint(proof, quantity, {
-            // hint: account[2] isn't part of whitelist
-            value: price.mul(quantity)
-          })
-        ).to.be.revertedWith(
-          "NotWhitelisted"
-        );
-
-        expect(await instance.totalSupply()).to.equal(0);
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(0);
-      });
-
-      it("should not mint an mummy when paused", async () => {
-        const proof = merkleTree.getHexProof(leafs[0]);
-
-        const price = await instance.WHITELIST_PRICE();
-        const quantity = 1;
-
-        // Open whitelist yet pause the contract
-        await instance.setWhitelistSale(true)
-        await instance.pause();
-
-        // Mint should not work when paused
-        await expect(
-          instance.connect(addr1).whitelistMint(proof, quantity, {
-            value: price.mul(quantity)
-          })
-        ).to.be.revertedWith(
-          "Pausable: paused"
-        );
-
-        expect(await instance.totalSupply()).to.equal(0)
-        let balance_wei = await waffle.provider.getBalance(instance.address);
-        expect(balance_wei).to.equal(0);
-        await instance.unpause();
-      });
-    });
-  });
-
   describe("publicMint()", async () => {
-    let root;
-
-    before(async () => {
-      [root] = await merkleRootFactory();
-    });
-
     context("wallet limit", async () => {
       let instance;
       let addr1;
 
       beforeEach(async () => {
         [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 3, 2, 3);
+        instance = await contractFactory(3, 3);
       })
 
       it("should not mint an mummy if wallet limit reached", async () => {
@@ -712,7 +364,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 2, 1, 3);
+        instance = await contractFactory(2, 3);
       })
 
       it("should not mint an mummy if soldout", async () => {
@@ -750,7 +402,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 2, 1, 3);
+        instance = await contractFactory(2, 3);
       })
 
       it("should mint an mummy with correct price", async () => {
@@ -813,7 +465,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [, addr1] = await ethers.getSigners();
-        instance = await contractFactory(root, 2, 1, 3);
+        instance = await contractFactory(2, 3);
       })
 
       it("should not mint an mummy", async () => {
@@ -833,12 +485,6 @@ describe("NoMaGuild", () => {
   });
 
   describe("burnable", async () => {
-    let root;
-
-    before(async () => {
-      [root] = await merkleRootFactory();
-    });
-
     context("burn()", async () => {
       let addr1;
       let addr2;
@@ -846,7 +492,7 @@ describe("NoMaGuild", () => {
 
       beforeEach(async () => {
         [, addr1, addr2] = await ethers.getSigners();
-        instance = await contractFactory(root);
+        instance = await contractFactory();
       })
 
       it("should not allow burn without approval", async () => {
