@@ -75,7 +75,13 @@ open-public-mint-contract: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat run scripts/openPublicMint.js --network "${NETWORK}" && cd ../..
 
 # Mint as giveaway team mummies to their wallets (inside the script)
-.PHONY: mint-team-mummies
-mint-team-mummies: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat run scripts/mint.js --network "${NETWORK}" && cd ../..
+.PHONY: mint-team
+mint-team: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat run scripts/mintTeam.js --network "${NETWORK}" && cd ../..
+
+# Unset hidden URI
+.PHONY: unset-hidden-uri
+unset-hidden-uri: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat run scripts/unsetHiddenURI.js --network "${NETWORK}" && cd ../..
+
 

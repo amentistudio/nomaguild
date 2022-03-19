@@ -2,6 +2,6 @@ yarn run v1.22.17
 $ /Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/node_modules/.bin/hardhat run scripts/deploy.js --network localhost
 Deploying...
 Waiting for 2 confirmations...
-The hash of the transaction is 0xd02a6bfea2608e426581122198a16511220a84e8da7f15bd87c43d81633b4567
+The hash of the transaction is 0xf38322513b44cdecfeca559d59bf2143b3671b44159a02251b44f3f34228bc13
 contract address:  0x5FbDB2315678afecb367f032d93F642f64180aa3
-Done in 1.13s.
+Done in 1.09s.

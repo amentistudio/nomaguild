@@ -19,7 +19,7 @@ contract NoMaGuild is ERC721A, ERC721ABurnable, IERC2981, ReentrancyGuard, Ownab
     uint256 public immutable mintLimitPerWallet;
 
     // Constants
-    uint256 public constant ROYALTY_RATE = 3; // 2%
+    uint256 public constant ROYALTY_RATE = 3; // 3%
     uint256 public constant PUBLIC_PRICE = 0.04096 ether;
 
     // Constructur set constants
