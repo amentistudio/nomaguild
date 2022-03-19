@@ -1,12 +1,14 @@
-app: whitelist-verification
-service: whitelist-verification
-frameworkVersion: '2 || 3'
+service: noma-whitelist-verification
+
+custom:
+  USER_POOL_WEB_CLIENT_NAME: ${cf:noma-whitelist-cognito-${opt:stage,self:provider.stage}.UserPoolWebClient}
+  USER_POOL_ID: ${cf:noma-whitelist-cognito-${opt:stage,self:provider.stage}.UserPoolId}
+  REGION: ${env:REGION, 'eu-central-1'}
 
 provider:
   name: aws
   runtime: nodejs14.x
-  lambdaHashingVersion: '20201221'
-  region: eu-central-1
+  region: ${self:custom.REGION}
 
   httpApi:
     cors: true      
@@ -15,9 +17,9 @@ provider:
         type: jwt
         identitySource: $request.header.Authorization
         cors: true
-        issuerUrl: https://cognito-idp.eu-central-1.amazonaws.com/${cf:noma-whitelist-cognito-${self:provider.stage}.UserPoolId}
+        issuerUrl: https://cognito-idp.eu-central-1.amazonaws.com/${self:custom.USER_POOL_ID}
         audience:
-          - ${cf:noma-whitelist-cognito-${self:provider.stage}.UserPoolWebClient}
+          - ${self:custom.USER_POOL_WEB_CLIENT_NAME}
 
 functions:
   verify:

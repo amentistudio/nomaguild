@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
+import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { ArrowRightIcon } from '@heroicons/react/outline';
@@ -20,6 +21,7 @@ function MintHomePublic() {
   const { active, activate, account, error, library } = useWeb3React();
   const [quantity, setQuantity] = useState(1);
   const [customError, setCustomError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function wconnect() {
@@ -40,13 +42,10 @@ function MintHomePublic() {
         NoMAContract.abi,
         signer
       );
-      console.log(contract);
       const price = await contract.PUBLIC_PRICE();
       const tx = await contract.publicMint(quantity, { value: price.mul(quantity), gasLimit: ethers.utils.hexlify(250000) });
-      console.log("Transaction: ", tx);
-      console.log("Waiting for confirmations...");
       await tx.wait(1);
-      console.log("Done.");
+      navigate("/mint-thank-you");
     } catch (err) {
       setCustomError(err.message.toString());
     }

@@ -35,9 +35,7 @@ module.exports.verify = async (event) => {
     statusCode: 200,
     headers: {
       "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-      "Access-Control-Allow-Credentials" : true, // Required for cookies, authorization headers with HTTPS      
       "Access-Control-Allow-Headers" : "Content-Type,Authorization",
-      // "Access-Control-Allow-Origin": "https://www.example.com",
       "Access-Control-Allow-Methods": "OPTIONS,GET"
     },
     body: JSON.stringify(

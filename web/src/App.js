@@ -8,6 +8,8 @@ import ReactGA from 'react-ga4';
 import Home from './pages/Home';
 import Whitelist from './pages/Whitelist';
 import MintPublic from './pages/MintPublic';
+import MintWhitelist from './pages/MintWhitelist';
+import MintThankYou from './pages/MintThankYou';
 
 window.addEventListener('load', AOS.refresh);
 
@@ -40,6 +42,8 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/whitelist-me" element={<Whitelist />} />
         <Route exact path="/public-mint" element={<MintPublic />} />
+        <Route exact path="/whitelist-mint" element={<MintWhitelist />} />
+        <Route exact path="/mint-thank-you" element={<MintThankYou />} />
       </Routes>
     </>
   );

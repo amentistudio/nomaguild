@@ -5,7 +5,7 @@ aws cognito-idp list-users --user-pool-id ${USER_POOL_ID} | grep -o '"Username":
 
 yarn --silent
 echo "Stage: ${STAGE}"
-# serverless deploy -s "${STAGE}"
+serverless deploy -s "${STAGE}"
 
 config=$(serverless info --verbose)
 echo $config | grep -o 'HttpApiUrl: [^\ ]*' | grep -o '[^\ ]*$' > .httpapiurl
