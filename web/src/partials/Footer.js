@@ -1,5 +1,5 @@
 import React from 'react';
-import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon, ChatAlt2Icon } from '@heroicons/react/outline';
+import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon, ChatAlt2Icon, SparklesIcon, ViewGridIcon } from '@heroicons/react/outline';
 
 const whitePaperUrl = 'https://s3.eu-central-1.amazonaws.com/com.nomaguild.public/NoMA-whitepaper-version-1.2.pdf';
 
@@ -13,6 +13,14 @@ function Footer() {
         <ul className="flex justify-end flex-grow items-center">
           <li>
             <a 
+              target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6"
+              href="/#/public-mint">
+              <SparklesIcon className="h-5 w-5 mr-2 inline" />
+              Mint
+            </a>
+          </li>
+          <li>
+            <a 
               target="_blank" rel="noreferrer" className="text-white font-bold ml-6"
               href="https://discord.gg/MzBjpdgxfu">
               <ChatAlt2Icon className="h-5 w-5 mr-2 inline" />
@@ -20,7 +28,7 @@ function Footer() {
             </a>
           </li>
           <li>
-            <a href={whitePaperUrl} target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
+            <a href={whitePaperUrl} target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
               <AcademicCapIcon className="h-5 w-5 mr-2 inline" />
               Whitepaper
             </a>
@@ -35,6 +43,12 @@ function Footer() {
             <a href="https://twitter.com/nomaguild" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
               <AtSymbolIcon className="h-5 w-5 mr-1 inline" />
               Twitter
+            </a>
+          </li>
+          <li>
+            <a href="https://opensea.io/collection/nomaguild" target="_blank" rel="noreferrer" className="text-blue-600 font-bold ml-6">
+              <ViewGridIcon className="h-5 w-5 mr-1 inline" />
+              Opensea
             </a>
           </li>
         </ul>

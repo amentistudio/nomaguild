@@ -16,9 +16,9 @@ function HeroPublicMintHome () {
               </p>
               <a
                 href="/#/public-mint"
-                className="inline-block text-center text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mt-8 text-bold hover:bg-yellow-300"
+                className="inline-block text-2xl px-10 text-center text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 mt-8 text-bold hover:bg-yellow-300"
               >
-                Slow mint
+                Mint your mummy
                 <ArrowRightIcon className="h-5 w-5 ml-3 inline" />
               </a>
             </div>

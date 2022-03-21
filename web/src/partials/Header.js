@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AcademicCapIcon, ArchiveIcon, AtSymbolIcon, ChatAlt2Icon } from '@heroicons/react/outline';
+import { AcademicCapIcon, ArchiveIcon, SparklesIcon, ViewGridIcon } from '@heroicons/react/outline';
 
 const whitePaperUrl = 'https://s3.eu-central-1.amazonaws.com/com.nomaguild.public/NoMA-whitepaper-version-1.2.pdf';
 
@@ -44,14 +44,14 @@ function Header() {
             <ul className="flex justify-end flex-grow items-center">
               <li>
                 <a 
-                  target="_blank" rel="noreferrer" className="text-white font-bold ml-6"
-                  href="https://discord.gg/MzBjpdgxfu">
-                  <ChatAlt2Icon className="h-5 w-5 mr-2 inline" />
-                  Discord
+                  target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6"
+                  href="/#/public-mint">
+                  <SparklesIcon className="h-5 w-5 mr-2 inline" />
+                  Mint
                 </a>
               </li>
               <li>
-                <a href={whitePaperUrl} target="_blank" rel="noreferrer" className="text-yellow-400 font-bold ml-6">
+                <a href={whitePaperUrl} target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
                   <AcademicCapIcon className="h-5 w-5 mr-2 inline" />
                   Whitepaper
                 </a>
@@ -63,9 +63,11 @@ function Header() {
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/nomaguild" target="_blank" rel="noreferrer" className="text-white font-bold ml-6">
-                  <AtSymbolIcon className="h-5 w-5 mr-1 inline" />
-                  Twitter
+                <a 
+                  target="_blank" rel="noreferrer" className="text-blue-400 font-bold ml-6"
+                  href="https://opensea.io/collection/nomaguild">
+                  <ViewGridIcon className="h-5 w-5 mr-1 inline" />
+                  Opensea
                 </a>
               </li>
             </ul>

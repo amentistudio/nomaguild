@@ -59,7 +59,7 @@ function MintHomePublic() {
         <div className="py-40">
           <div className="text-center relative">
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
-                Slow Mint
+                Mint your mummy
               </h1>
               {error && (<>{error}</>)}
               {customError && (
