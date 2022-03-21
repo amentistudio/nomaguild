@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fd7f2696.css",
+    "main.js": "/static/js/main.2093896c.js",
+    "static/js/27.a19ea78c.chunk.js": "/static/js/27.a19ea78c.chunk.js",
+    "static/media/sarcofag.png": "/static/media/sarcofag.cf12447d06d2b772625c.png",
+    "static/media/mumie-web-lg.png": "/static/media/mumie-web-lg.a1cdbec07d55921fb968.png",
+    "static/media/noma-press-final.png": "/static/media/noma-press-final.9997ba7a5804d63f3b81.png",
+    "static/media/entrepreneurs.svg": "/static/media/entrepreneurs.482e6ad7c8d1c389b6bd0792ed4c7d56.svg",
+    "static/media/mumie-web-md.png": "/static/media/mumie-web-md.92fe5c26f0e56788984d.png",
+    "static/media/NoMA-wtext.svg": "/static/media/NoMA-wtext.0ea8280062f1d0f3ecacabd637d6d5a7.svg",
+    "static/media/creatives.svg": "/static/media/creatives.c123401d0766f2e075a10abc2058642f.svg",
+    "static/media/web3_enthusiasts.svg": "/static/media/web3_enthusiasts.81621675a1521b0d4475d9da01397c62.svg",
+    "static/media/ethernal.png": "/static/media/ethernal.41b7336a3c1f1d731720.png",
+    "static/media/mumie-web-xs.png": "/static/media/mumie-web-xs.0475b4c7c9daeb0c8f87.png",
+    "static/media/developers.svg": "/static/media/developers.8c2f21138a74b0c34bc48f64cedea51c.svg",
+    "static/media/mummy-guide.png": "/static/media/mummy-guide.1d0ddfaa1a8b7e82f5f1.png",
+    "static/media/alien.png": "/static/media/alien.184b6232f36feb4cb36e.png",
+    "static/media/profesor.png": "/static/media/profesor.1aae1213cfae89da89fd.png",
+    "static/media/octopus.png": "/static/media/octopus.cbe19db52e42ddd92078.png",
+    "static/media/brain.png": "/static/media/brain.0545ada4aebc1ff15184.png",
+    "static/media/honza.png": "/static/media/honza.5b4e17c1f4bcae60133d.png",
+    "static/media/ladi.png": "/static/media/ladi.752f9e021e5f5111b1f8.png",
+    "static/media/egypt.png": "/static/media/egypt.d7708a16a3a61353a3f1.png",
+    "static/media/lukas.png": "/static/media/lukas.c0a08f1d4db8ba6a772d.png",
+    "static/media/marek.png": "/static/media/marek.7d7282f0058a342bed2c.png",
+    "static/media/jan.png": "/static/media/jan.79cd90234bb5dd2b748c.png",
+    "static/media/serum.png": "/static/media/serum.e8b3b55752288ebef787.png",
+    "static/media/amenti.png": "/static/media/amenti.16bb01744f7e285bfc5e.png",
+    "static/media/tomas.png": "/static/media/tomas.3af5b59eeb015ecc3ddd.png",
+    "static/media/mummy-simon.png": "/static/media/mummy-simon.3f5252de46b12e058b64.png",
+    "static/media/noma-dark-poster.png": "/static/media/noma-dark-poster.4b0c0c2e8a5e40cb1092.png",
+    "static/media/mummy-jan.png": "/static/media/mummy-jan.bd78944ec783011711a2.png",
+    "static/media/noma-news.svg": "/static/media/noma-news.6bbef474c731c41ff4d35856e4e58a1a.svg",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.fd7f2696.css",
+    "static/js/main.2093896c.js"
+  ]
+}
