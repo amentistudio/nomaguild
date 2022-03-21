@@ -19,6 +19,7 @@ async function connect(activate) {
 
 function MintHomePublic() {
   const { active, activate, account, error, library } = useWeb3React();
+  const [minting, mintProcessing] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [customError, setCustomError] = useState(null);
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ function MintHomePublic() {
       );
       const price = await contract.PUBLIC_PRICE();
       const tx = await contract.publicMint(quantity, { value: price.mul(quantity), gasLimit: ethers.utils.hexlify(250000) });
+      mintProcessing();
       await tx.wait(1);
       navigate("/mint-thank-you");
     } catch (err) {
@@ -84,7 +86,12 @@ function MintHomePublic() {
                   <strong className="text-sm text-gray-600 block mt-3">Don't forget to unlock your wallet before clicking the link above!</strong>
                 </>
               )}
-              {account && (
+              {account && minting && (
+                <h1 className="h1 lg:text-4xl md:text-4xl text-3xl mb-8 font-extrabold">
+                  Please wait... minting.
+                </h1>
+              )}
+              {account && !minting && (
                 <>
                   <div className="pb-5">You will mint with: {account}</div>
                   <h2 className="text-2xl">Quantity</h2>

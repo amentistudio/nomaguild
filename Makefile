@@ -1,7 +1,7 @@
 ## CONFIG
 
 SHELL = /bin/sh
-ENV_FILE = .env.production
+ENV_FILE = .env.development
 
 ## UTILS
 
