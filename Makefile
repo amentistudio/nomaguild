@@ -1,7 +1,7 @@
 ## CONFIG
 
 SHELL = /bin/sh
-ENV_FILE = .env.development
+ENV_FILE = .env.production
 
 ## UTILS
 
@@ -67,7 +67,7 @@ deploy-mint-contract: cmd-exists-yarn
 # Verify contract on Etherscan
 .PHONY: verify-mint-contract
 verify-mint-contract: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat verify --constructor-args arguments.js ${CONTRACT_ADDRESS} --network ${NETWORK} && cd ../..
+	cd contracts/mint && yarn hardhat compile && yarn hardhat verify --constructor-args arguments.js ${CONTRACT_ADDRESS} --network ${NETWORK} && cd ../..
 
 # Open public sale
 .PHONY: open-public-mint-contract
@@ -80,8 +80,8 @@ mint-team: cmd-exists-yarn
 	cd contracts/mint && yarn hardhat run scripts/mintTeam.js --network "${NETWORK}" && cd ../..
 
 # Unset hidden URI
-.PHONY: unset-hidden-uri
-unset-hidden-uri: cmd-exists-yarn
-	cd contracts/mint && yarn hardhat run scripts/unsetHiddenURI.js --network "${NETWORK}" && cd ../..
+.PHONY: reveal
+reveal: cmd-exists-yarn
+	cd contracts/mint && yarn hardhat run scripts/reveal.js --network "${NETWORK}" && cd ../..
 
 

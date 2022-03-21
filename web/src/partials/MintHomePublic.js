@@ -57,7 +57,7 @@ function MintHomePublic() {
         <div className="py-40">
           <div className="text-center relative">
               <h1 className="h1 lg:text-5xl md:text-4xl text-3xl mb-8 font-extrabold" data-aos="fade-down">
-                Public Mint
+                Slow Mint
               </h1>
               {error && (<>{error}</>)}
               {customError && (
@@ -66,6 +66,12 @@ function MintHomePublic() {
                   <>{customError}</>
                 </div>
               )}
+              <img
+                className="mx-auto w-80 mb-10"
+                data-aos="fade-up"
+                src={require('../images/sarcofag.png')}
+                alt="Sarcofag"
+              />
               {!active && (
                 <>
                   <button
@@ -75,7 +81,7 @@ function MintHomePublic() {
                     Connect wallet
                     <ArrowRightIcon className="h-5 w-5 ml-3 inline" />
                   </button>
-                  <strong className="text-sm text-gray-600 block mt-3">Don't forget to unlock your wallet before click the link above!</strong>
+                  <strong className="text-sm text-gray-600 block mt-3">Don't forget to unlock your wallet before clicking the link above!</strong>
                 </>
               )}
               {account && (
@@ -99,10 +105,10 @@ function MintHomePublic() {
                       +
                     </button>
                   </div>
-                  <div className="pt-20">
+                  <div className="pt-5">
                     <button
                       onClick={mint}
-                      className="text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 text-bold hover:bg-yellow-300"
+                      className="text-2xl w-52 text-yellow-300 hover:bg-yellow-300 hover:text-black border-2 border-yellow-300 py-3 px-5 text-bold hover:bg-yellow-300"
                     >
                       Mint
                       <ArrowRightIcon className="h-5 w-5 ml-3 inline" />

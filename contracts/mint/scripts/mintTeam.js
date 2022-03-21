@@ -4,7 +4,7 @@ const { ethers } = require("hardhat");
 const { CONTRACT_ADDRESS } = process.env;
 const TEAM_PUBLIC_KEYS = [
   "0x05c00ceF0F843000A6F8506a19fa4BEb591C519C", // Ladi
-  "0xA0e3c9200Ef38911C7395FB3ca600acbBF68827c", // Jan
+  "0xE74dEfAABCE98DA3F4c2CE60262aFd9C07b732Ee", // Jan
   "0x147b30371dD852C0AB0ca22593B5c61051400E44", // Simon
   "0x746DEdaf8902F28f4eAaB1c87466d8b989af9e20", // Marek
   "0x32dEDf3534E3a6e390Da23B54Be36218EB5575C2", // Jan (discofield)

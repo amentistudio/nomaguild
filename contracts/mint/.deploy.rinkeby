@@ -1,0 +1,2 @@
+yarn run v1.22.17
+$ /Users/martincik/Projects/amenti/nft/nomaguild/contracts/mint/node_modules/.bin/hardhat run scripts/deploy.js --network rinkeby
